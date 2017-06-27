@@ -1,0 +1,17 @@
+<template name="userInfo">
+  <form>
+    <h1>Here to create your own profile</h1>
+    <div>
+      <strong>Username</strong>
+      <input type="text" class="form-control" id="name" placeholder="Username">
+    </div>
+    <div>
+      <strong>Age</strong>
+      echo '<select>'
+        foreach (range(1,24) as $number) {
+        echo '<option value='.$number.'>'.$number.'</option>';
+        }
+      </select>
+    </div>
+  </form>
+</template>
