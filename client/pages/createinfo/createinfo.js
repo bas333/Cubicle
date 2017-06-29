@@ -39,11 +39,11 @@ Template.addproduct.events({
     }
   }
 })
-// Template.productrow.helpers({
-//   isOwner(){console.dir(this);
-//     return this.person.owner == Meteor.userId()}
-//
-// })
+Template.productrow.helpers({
+  isOwner(){console.dir(this);
+    return this.person.owner == Meteor.userId()}
+
+})
 Template.productrow.events({
   'click span'(elt,instance){
     console.dir(this);

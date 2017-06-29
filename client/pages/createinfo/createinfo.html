@@ -1,5 +1,10 @@
 <template name="createinfo">
   <h1>Fill in information of your item</h1>
+  {{> addproduct}}
+  <hr>
+  {{> showproduct}}
+</template>
+<template name="addproduct">
   <div class="form-style-5">
   <form action="/my-handling-form-page" method="post">
       <div>
@@ -41,4 +46,42 @@
     Submit
   </button>
   </div>
+</template>
+
+<template name="showproduct">
+  <!-- {{#if currentUser}} -->
+  <table class="table table-bordered">
+    <tr>
+      <th>Product Name</th>
+      <th>Condition</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+    {{#each p in productlist}}
+      {{> productrow product=p}}
+    {{/each}}
+  </table>
+    <!-- {{else}}
+      <h1>You must log in to access the information.</h1>
+      <hr>
+    {{/if}} -->
+</template>
+
+<template name="productrow">
+  <tr>
+    <td>{{product.itemname}}</td>
+    <td>{{product.condition}}</td>
+    <td>{{product.category}}</td>
+    <td>{{product.description}}</td>
+    <!-- {{#each type in person.types}}
+      {{type}}
+      <br>
+    {{/each}} -->
+    <!-- <td>{{person.countries}}</td> -->
+    {{#if isOwner}}
+      <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
+    {{/if}}
+  </tr>
+
 </template>
