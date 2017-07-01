@@ -3,15 +3,35 @@
     <h1>Here to create your own profile</h1>
     <div>
       <strong>Username</strong>
-      <input type="text" class="form-control" id="name" placeholder="Username">
+      <input type="text" class="form-control" id="username" placeholder="Username">
     </div>
+    <hr>
     <div>
       <strong>Age</strong>
-      <select>
+      <select class="form-control" id="age">
         {{#each number in numberList}}
           <option>{{number}}</option>
         {{/each}}
       </select>
     </div>
+    <hr>
+    <div>
+      <strong>School</strong>
+      <select class="form-control" id="school">
+        {{#each school in schoolData}}
+        <option>{{school.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <hr>
+    <div>
+      <strong>Vehicle</strong>
+      <select class="form-control" id="vehicle">
+        <option>yes</option>
+        <option>no</option>
+      </select>
+    </div>
+    <hr>
+    <button type="submit" class="btn button btn btn-lg" id="submitnow">Submit</button>
   </form>
 </template>
