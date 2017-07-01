@@ -4,6 +4,7 @@
   <hr>
   {{> showproduct}}
 </template>
+
 <template name="addproduct">
   <div class="form-style-5">
   <form action="/my-handling-form-page" method="post">
@@ -26,20 +27,14 @@
             <option value="Textbook">Textbook</option>
             <option value="Furniture" selected>Furniture</option>
             <option value="Clothes">Clothes</option>
+            <option value="Handicraft">Handicraft</option>
+            <option value="Home">Home</option>
           </select>
       </div>
       <div>
         <label for="description">Please enter more detailed product description here</label>
         <input type="text" id="description">
       </div>
-      <!-- <fieldset>
-        <legend>Choose your desired travel destinations</legend>
-        <div id="typelist">
-            {{#each type in typelist}}
-            <input type="checkbox" name="type" value="{{type}}">{{type}}<br>
-            {{/each}}
-        </div>
-      </fieldset> -->
     </form>
 
   <button id="addproduct" class="btn btn-primary">
@@ -49,8 +44,8 @@
 </template>
 
 <template name="showproduct">
-  <!-- {{#if currentUser}} -->
-  <table class="table table-bordered">
+  {{#if currentUser}}
+  <table class="table">
     <tr>
       <th>Product Name</th>
       <th>Condition</th>
@@ -62,10 +57,11 @@
       {{> productrow product=p}}
     {{/each}}
   </table>
-    <!-- {{else}}
+    {{else}}
       <h1>You must log in to access the information.</h1>
       <hr>
-    {{/if}} -->
+    {{/if}}
+
 </template>
 
 <template name="productrow">
@@ -74,14 +70,8 @@
     <td>{{product.condition}}</td>
     <td>{{product.category}}</td>
     <td>{{product.description}}</td>
-    <!-- {{#each type in person.types}}
-      {{type}}
-      <br>
-    {{/each}} -->
-    <!-- <td>{{person.countries}}</td> -->
     {{#if isOwner}}
       <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
     {{/if}}
   </tr>
-
 </template>
