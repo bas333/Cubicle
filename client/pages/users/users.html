@@ -1,4 +1,4 @@
-<template name="userInfo">
+<template name="users">
   <form>
     <h1>Here to create your own profile</h1>
     <div>
@@ -7,10 +7,10 @@
     </div>
     <div>
       <strong>Age</strong>
-      echo '<select>
-        foreach (range(1,24) as $number) {
-        echo '<option value='.$number.'>'.$number.'</option>';
-        }
+      <select>
+        {{#each number in numberList}}
+          <option>{{number}}</option>
+        {{/each}}
       </select>
     </div>
   </form>
