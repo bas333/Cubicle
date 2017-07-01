@@ -1,5 +1,11 @@
 <template name="createinfo">
   <h1>Fill in information of your item</h1>
+  {{> addproduct}}
+  <hr>
+  {{> showproduct}}
+</template>
+
+<template name="addproduct">
   <div class="form-style-5">
   <form action="/my-handling-form-page" method="post">
       <div>
@@ -21,24 +27,51 @@
             <option value="Textbook">Textbook</option>
             <option value="Furniture" selected>Furniture</option>
             <option value="Clothes">Clothes</option>
+            <option value="Handicraft">Handicraft</option>
+            <option value="Home">Home</option>
           </select>
       </div>
       <div>
         <label for="description">Please enter more detailed product description here</label>
         <input type="text" id="description">
       </div>
-      <!-- <fieldset>
-        <legend>Choose your desired travel destinations</legend>
-        <div id="typelist">
-            {{#each type in typelist}}
-            <input type="checkbox" name="type" value="{{type}}">{{type}}<br>
-            {{/each}}
-        </div>
-      </fieldset> -->
     </form>
 
   <button id="addproduct" class="btn btn-primary">
     Submit
   </button>
   </div>
+</template>
+
+<template name="showproduct">
+  {{#if currentUser}}
+  <table class="table">
+    <tr>
+      <th>Product Name</th>
+      <th>Condition</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+    {{#each p in productlist}}
+      {{> productrow product=p}}
+    {{/each}}
+  </table>
+    {{else}}
+      <h1>You must log in to access the information.</h1>
+      <hr>
+    {{/if}}
+
+</template>
+
+<template name="productrow">
+  <tr>
+    <td>{{product.itemname}}</td>
+    <td>{{product.condition}}</td>
+    <td>{{product.category}}</td>
+    <td>{{product.description}}</td>
+    {{#if isOwner}}
+      <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
+    {{/if}}
+  </tr>
 </template>
