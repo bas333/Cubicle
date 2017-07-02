@@ -7,10 +7,20 @@ Template.addproduct.events({
     const condition=instance.$('#condition :selected').text();
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
+    const price= instance.$('#price').val();
 
-    Product.insert({itemname:itemname,condition:condition,category:category,description:description,createdAt:new Date(),owner:Meteor.userId()});
+    Product.insert({
+      itemname:itemname,
+      price:price,
+      condition:condition,
+      category:category,
+      description:description,
+      createdAt:new Date(),
+      owner:Meteor.userId()
+    });
     console.log('adding'+itemname);
     instance.$('#itemname').val("");
+    instance.$('#price').val("");
     instance.$('#condition').val("");
     instance.$('#category').val("");
     instance.$('#description').val("");
