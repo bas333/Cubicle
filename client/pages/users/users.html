@@ -25,11 +25,24 @@
     </div>
     <hr>
     <div>
-      <strong>Vehicle</strong>
-      <select class="form-control" id="vehicle">
-        <option>yes</option>
-        <option>no</option>
-      </select>
+      <strong>Gender</strong><br>
+      <input type="radio" name="gender" id="male" checked> Male<br>
+      <input type="radio" name="gender" id="female"> Female<br>
+      <input type="radio" name="gender" id="other"> Other
+      <hr>
+    </div>
+    <div id="paymentlist">
+      <strong>Payment Method</strong><br>
+    <input type="checkbox" name="payment" value="Paypal">Paypal<br>
+    <input type="checkbox" name="payment" value="Venmo">Venmo<br>
+    <input type="checkbox" name="payment" value="Cash">Cash<br>
+    </div>
+    <hr>
+    <div>
+      <strong>Email</strong>
+      <input type="text" class="form-control" id="email" placeholder="EmailAddress"><hr>
+      <strong>Phone Number</strong>
+      <input type="text" class="form-control" id="phone" placeholder="Phone Number">
     </div>
     <hr>
     <button type="submit" class="btn button btn btn-lg" id="submitnow">Submit</button>

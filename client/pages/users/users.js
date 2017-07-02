@@ -23,6 +23,8 @@ Template.users.events({
     const username=instance.$('#username').val();
     const school=instance.$('#school').val();
     const age=instance.$('#age').val();
+    const email=instance.$('#email').val();
+    const phone=instance.$('#email').val();
     var gender="";
     if($('input[id="male"]').is(':checked')){
       gender="male";
@@ -31,16 +33,27 @@ Template.users.events({
     }else{
       gender="other";
     };
-    console.log('adding '+name);
+    paymethodinputs = instance.$("#paymentlist input");
+    paymethod = [];
+    paymethodinputs.each(function(a,b){
+      if (b.checked) { paymethod.push(b.value);}
+    });
+
+    console.log('adding '+username);
     instance.$('#username').val("");
     instance.$('#school').val("");
     instance.$('#gender').val("");
     instance.$('#age').val("");
+    instance.$('#email').val("");
+    instance.$('#phone').val("");
 
     var newUser={
       username:username,
       school:school,
       gender:gender,
+      email:email,
+      phone:phone,
+      paymethod:paymethod,
       owner:Meteor.userId(),
       createAt:new Date()
     };
