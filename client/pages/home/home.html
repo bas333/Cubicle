@@ -1,10 +1,32 @@
 <template name="home">
-  <div class = "header">
-    <h1> Get It </h1>
+  <!-- <div class = "header">
+    <img src=images/Cubicle-Logo.png id="logo" width=300 length=300>
+  </div> -->
+  <div class = "background">
+    <img src=images/background.jpg id="background">
   </div>
 
   <div class="search">
-    <h2> Find What You Need</h2>
-    <input type="text" id="search">
+    <form>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">Find What You Want</i></label>
+          <i class="material-icons">close</i>
+        </div>
+    </form>
+    <form>
+  			<select name="select" id="Category-Home">
+          <option value="1">All Categories</option>
+  				<option value="5">Textbooks/Books</option>
+  				<option value="10">Electronics</option>
+  				<option value="20">Clothes,Shoes,and Accessories</option>
+  				<option value="50">Furniture/Home</option>
+  				<option value="state">Art/Handcrafts</option>
+  				<option value="us">Others</option>
+  			</select>
+  		</form>
+    <form action="itempage.html">
+      <input type="submit" value="Search"/>
+    </form>
   </div>
 </template>

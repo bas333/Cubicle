@@ -1,9 +1,9 @@
-<template name="main">
+<!-- <template name="main">
 	<div class="container">
 		<nav class="navbar navbar-default">
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		      	<ul class="nav navbar-nav">
-							<li><a href="{{pathFor 'home'}}">Get It</a></li>
+							<li><a href="{{pathFor 'home'}}">Home</a></li>
 							<li><a href="{{pathFor 'about'}}">About</a></li>
 							<li><a href="{{pathFor 'createinfo'}}">Sell</a></li>
 							<li><a href="{{pathFor 'users'}}">Users</a></li>
@@ -14,4 +14,49 @@
 		  </nav>
 		{{> yield}}
 	</div>
+</template> -->
+
+<template name="main">
+		<!-- Navbar -->
+		<nav class="navbar" role="navigation">
+				<div class="container">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="menu-container">
+								<!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+										<span class="sr-only">Toggle navigation</span>
+										<span class="toggle-icon"></span>
+								</button> -->
+
+								<!-- Logo -->
+								<div class="logo">
+										<a class="logo-wrap">
+												<img class="logo-img logo-img-main" src="images/Cubicle-Logo.png" id="logo" width=300 height=300>
+										</a>
+								</div>
+								<!-- End Logo -->
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="main-nav">
+								<div class="menu-container">
+										<ul class="navbar-nav navbar-nav-right">
+											<li><a href="{{pathFor 'home'}}">Home</a></li>
+											<li><a href="{{pathFor 'about'}}">About</a></li>
+											<li><a href="{{pathFor 'createinfo'}}">Sell</a></li>
+											<li><a href="{{pathFor 'users'}}">Users</a></li>
+											<li><a href="{{pathFor 'contact'}}">Contact us</a></li>
+											<!-- <li>{{> loginButtons}}</li> -->
+										</ul>
+										<ul id="nav-bar" class="right hide-on-med-and-down">
+											<li>{{> loginButtons}}</li>
+										</ul>
+								</div>
+						</div>
+						<!-- End Navbar Collapse -->
+				</div>
+		</nav>
+		<!-- Navbar -->
+		<div class="body">
+			{{> yield}}
+		</div>
 </template>

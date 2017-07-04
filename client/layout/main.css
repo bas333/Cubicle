@@ -1,4 +1,32 @@
-/* CSS declarations go here */
-li {
-  display: inline;
+.main-nav {
+  float:right;
+}
+ul
+{
+  list-style-type:none;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+}
+li
+{
+  display:inline;
+  float:left;
+}
+a:link,a:visited
+{
+  display:block;
+  width:120px;
+  font-weight:bold;
+  color:#489FDF;
+  background-color:#FFFFFF;
+  text-align:center;
+  padding:4px;
+  text-decoration:none;
+  text-transform:uppercase;
+  float:right;
+}
+a:hover,a:active
+{
+background-color:#489FDF;
 }
