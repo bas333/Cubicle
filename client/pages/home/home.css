@@ -1,14 +1,33 @@
-html{overflow-y:scroll; overflow-x:hidden;}
+/*html{overflow-y:scroll; overflow-x:hidden;}*/
 html, body{margin:0; padding:0; font-size:14px; line-height:1.6; background-color:#ADDFBB;}
 
+.input {
+  margin-left: 30%;
+  margin-top: 10%;
+  padding-bottom: :0;
+  margin-bottom: 0;
+}
+
+.background {
+  margin-top: 0;
+}
 *, *::before, *::after{box-sizing:border-box;}
 
-body, input, textarea, select{font-family:Verdana, Geneva, sans-serif;}
-h1, h2, h3, h4, h5, h6, .heading{font-family:Georgia, "Times New Roman", Times, serif;}
+/*body, input, textarea, select{font-family:Verdana, Geneva, sans-serif;}
+h1, h2, h3, h4, h5, h6, .heading{font-family:Georgia, "Times New Roman", Times, serif;}*/
 
-img#background {width:auto; max-width:100%; height:auto; margin:0; padding:0; border:none; line-height:normal; vertical-align:middle;}
+img#background {
+  width:auto;
+  max-width:100%;
+  height:auto;
+  margin:15%;
+  padding:0;
+  border:none;
+  line-height:normal;
+  vertical-align:middle; 
+}
 
-.btmspace-10{margin-bottom:10px;}
+/*.btmspace-10{margin-bottom:10px;}
 .btmspace-15{margin-bottom:15px;}
 .btmspace-30{margin-bottom:30px;}
 .btmspace-50{margin-bottom:50px;}
@@ -19,7 +38,7 @@ img#background {width:auto; max-width:100%; height:auto; margin:0; padding:0; bo
 .inspace-15{padding:15px;}
 .inspace-30{padding:30px;}
 .inspace-50{padding:50px;}
-.inspace-80{padding:80px;}
+.inspace-80{padding:80px;}*/
 
 /*form, fieldset, legend{margin:0; padding:0; border:none;}
 legend{display:none;}

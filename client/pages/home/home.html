@@ -2,31 +2,23 @@
   <!-- <div class = "header">
     <img src=images/Cubicle-Logo.png id="logo" width=300 length=300>
   </div> -->
-  <div class = "background">
-    <img src=images/background.jpg id="background">
-  </div>
 
-  <div class="search">
-    <form>
-        <div class="input-field">
-          <input id="search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">Find What You Want</i></label>
-          <i class="material-icons">close</i>
-        </div>
-    </form>
-    <form>
-  			<select name="select" id="Category-Home">
+<div class="search">
+  <div class="input">
+    <input type="text" id="inputbox" style="width:300px"/>
+        <select name="select" id="Category-Home">
           <option value="1">All Categories</option>
-  				<option value="5">Textbooks/Books</option>
-  				<option value="10">Electronics</option>
-  				<option value="20">Clothes,Shoes,and Accessories</option>
-  				<option value="50">Furniture/Home</option>
-  				<option value="state">Art/Handcrafts</option>
-  				<option value="us">Others</option>
-  			</select>
-  		</form>
-    <form action="itempage">
-      <input type="submit" value="Search"/>
-    </form>
+          <option value="5">Textbooks/Books</option>
+          <option value="10">Electronics</option>
+          <option value="20">Clothes,Shoes,and Accessories</option>
+          <option value="50">Furniture/Home</option>
+          <option value="state">Art/Handcrafts</option>
+          <option value="us">Others</option>
+        </select>
+      <input type="submit" value="Search" style="width:150px"/>
   </div>
+    <div class="background">
+      <img src=images/background.jpg id="background">
+    </div>
+</div>
 </template>

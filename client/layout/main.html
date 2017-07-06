@@ -47,9 +47,6 @@
 											<li><a href="{{pathFor 'contact'}}">Contact us</a></li>
 											<!-- <li>{{> loginButtons}}</li> -->
 										</ul>
-										<ul id="nav-bar" class="right hide-on-med-and-down">
-											<li>{{> loginButtons}}</li>
-										</ul>
 								</div>
 						</div>
 						<!-- End Navbar Collapse -->
@@ -57,6 +54,7 @@
 		</nav>
 		<!-- Navbar -->
 		<div class="body">
+			{{> loginButtons}}
 			{{> yield}}
 		</div>
 </template>
