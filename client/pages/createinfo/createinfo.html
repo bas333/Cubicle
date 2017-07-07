@@ -68,7 +68,7 @@
     {{/each}}
   </table>
     {{else}}
-      <h1>You must log in to access the information.</h1>
+      <h1>You must log in to access the information. {{> loginButtons}}</h1>
       <hr>
     {{/if}}
 
@@ -81,6 +81,7 @@
     <td>{{product.condition}}</td>
     <td>{{product.category}}</td>
     <td>{{product.description}}</td>
+    <td>{{product.status}}</td>
     {{#if isOwner}}
       <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
     {{/if}}

@@ -1,20 +1,35 @@
-.main-nav {
-  margin-left: 31%;
-  margin-top: 0;
+.container {
+  margin-left: 0;
+  margin-right:0;
 }
-ul
+
+.container .logo {
+  margin-top: 0;
+  float:left;
+  padding:0;
+}
+/*.container .main-nav .dropdown-menu li {
+  display:block;
+}*/
+.container .main-nav {
+  position:fixed;
+  margin-left:0;
+  margin-top:0;
+  float: right;
+}
+/*.container .main-nav ul
 {
-  list-style-type:none;
+  /*list-style-type:none;*/
   margin:0;
   padding:0;
   overflow:hidden;
-}
-li
+}*/
+/*.container .main-nav li
 {
-  display:inline;
+  /*display:inline;*/
   float:left;
-}
-a:link,a:visited
+}*/
+.container .main-nav a:link,a:visited
 {
   display:block;
   width:120px;
@@ -27,7 +42,7 @@ a:link,a:visited
   text-transform:uppercase;
   float:right;
 }
-a:hover,a:active
+.container .main-nav a:hover,a:active
 {
 background-color:#489FDF;
 }

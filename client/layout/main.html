@@ -21,7 +21,7 @@
 		<nav class="navbar" role="navigation">
 				<div class="container">
 						<!-- Brand and toggle get grouped for better mobile display -->
-						<div class="menu-container">
+						<!-- <div class="menu-container"> -->
 								<!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
 										<span class="sr-only">Toggle navigation</span>
 										<span class="toggle-icon"></span>
@@ -34,27 +34,48 @@
 										</a>
 								</div>
 								<!-- End Logo -->
-						</div>
+						<!-- </div> -->
 
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="main-nav">
-								<div class="menu-container">
-										<ul class="navbar-nav navbar-nav-right">
+								<!-- <div class="menu-container">  -->
+										<ul class="nav navbar-nav">
 											<li><a href="{{pathFor 'home'}}">Home</a></li>
 											<li><a href="{{pathFor 'about'}}">About</a></li>
-											<li><a href="{{pathFor 'createinfo'}}">Sell</a></li>
-											<li><a href="{{pathFor 'users'}}">Users</a></li>
+											<!-- <li><a href="{{pathFor 'createinfo'}}">Posts</a></li> -->
+											<li class="dropdown">
+        									<a class="dropdown-toggle" data-toggle="dropdown" href="#">Posts</a>
+        										<!-- <span class="caret"></span></a>  -->
+        												<ul class="dropdown-menu">
+																	<li><a href="{{pathFor 'createinfo'}}">Create a post</a></li>
+        											</ul>
+      									</li>
+											<!-- <li><a href="{{pathFor 'users'}}">My Cubicle</a></li> -->
+											<li class="dropdown">
+        									<a class="dropdown-toggle" data-toggle="dropdown" href="#">My Cubicle</a>
+        										<!-- <span class="caret"></span></a>  -->
+        												<ul class="dropdown-menu">
+																	<li><a href="{{pathFor 'users'}}">My Profile</a></li>
+          												<li><a href="{{pathFor 'users'}}">View Sale History</a></li>
+          												<li><a href="{{pathFor 'users'}}">View Purchase History</a></li>
+          												<li><a href="{{pathFor 'users'}}">Wishlist</a></li>
+        											</ul>
+      									</li>
 											<li><a href="{{pathFor 'contact'}}">Contact us</a></li>
 											<!-- <li>{{> loginButtons}}</li> -->
 										</ul>
-								</div>
+
+										<ul class="nav navbar-nav navbar-right">
+      								<li><a href="{{pathFor 'users'}}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      								<li><a href="{{pathFor 'login'}}"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+    								</ul>
+								<!-- </div> -->
 						</div>
 						<!-- End Navbar Collapse -->
 				</div>
 		</nav>
 		<!-- Navbar -->
 		<div class="body">
-			{{> loginButtons}}
 			{{> yield}}
 		</div>
 </template>
