@@ -5,17 +5,26 @@ Template.addrent.events({
     const time = instance.$('#time').val();
     const roomsize = instance.$('#roomsize').val();
     const facilities = instance.$('#facilities').val();
-    const detaileddescription = instance.$('#detailed-description').val();
-    const roommatedescription = instance.$('#roommate-description').val();
+    const detailed = instance.$('#detaileddescription').val();
+    const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#price').val();
     const contact = instance.$('#contact-information').val();
     console.log("adding " + location);
+    instance.$('#location').val("");
+    instance.$('#time').val("");
+    instance.$('#roomsize').val("");
+    instance.$('#facilities').val("");
+    instance.$('#detailed-description').val("");
+    instance.$('#roommate-description').val("");
+    instance.$('#price').val("");
+    instance.$('#contact-information').val("");
     var rentpost =
     { location:location,
       time:time,
       roomsize:roomsize,
-      detailed:detaileddescription,
-      roommate:roommatedescription,
+      facilities:facilities,
+      detailed:detailed,
+      roommate:roommate,
       price:price,
       contact:contact,
       createdAt: new Date(),
