@@ -49,6 +49,7 @@ Template.users.events({
 
     var newUser={
       username:username,
+      age:age,
       school:school,
       gender:gender,
       email:email,
@@ -65,19 +66,105 @@ Template.users.events({
     });
   }})
 
-Template.showuser.helpers({
-  peoplelist() {return AllUsers.find()},
+Template.showprofile.helpers({
+  numberList(){
+    const a= [];
+    for(var i=1; i<=100; i++){
+      a.push(i);
+    }
+    return a;
+  },
 })
 
 Template.showuser.helpers({
-    isOwner(person){
-      console.log(person);
-      return person.owner==Meteor.userId();
-    }
-  })
+  peoplelist() {return AllUsers.find()},
+  isOwner(person){
+    console.log(person);
+    return person.owner==Meteor.userId();
+  }
+})
 
 Template.users.helpers({
     hasPerson(){
       return AllUsers.findOne({owner:Meteor.userId()})
     }
+})
+
+Template.showprofile.events({
+   'click #editName':function(elt,instance){
+      $("#newname").css("display", "block");
+   },
+   'click #editAge':function(elt,instance){
+      $("#newage").css("display", "block");
+   },
+   'click #editGender':function(elt,instance){
+      $("#newgender").css("display", "block");
+   },
+   'click #editEmail':function(elt,instance){
+      $("#newemail").css("display", "block");
+   },
+   'click #editPaymethod':function(elt,instance){
+      $("#newpayment").css("display", "block");
+   },
+   'click #canclePaymethod':function(elt,instance){
+      $("#newpayment").css("display", "none");
+   },
+   'click #cancleEmail':function(elt,instance){
+      $("#newemail").css("display", "none");
+   },
+   'click #cancleGender':function(elt,instance){
+      $("#newgender").css("display", "none");
+   },
+   'click #cancleAge':function(elt,instance){
+      $("#newage").css("display", "none");
+   },
+   'click #cancleName':function(elt,instance){
+      $("#newname").css("display", "none");
+   },
+   'click #updateUsername1':function(elt,instance){
+     const name=instance.$('#usernameUpdate').val();
+     console.log('modifying '+name);
+     Meteor.call('allusers.updateName',Meteor.userId(),name);
+     instance.$('#usernameUpdate').val("");
+     instance.$("#newname").css("display", "none");
+   },
+   'click #removeProfile':function(elt,instance){
+     console.log(this.person);
+     Meteor.call('users.remove',this.person);
+   },
+   'click #updateAge':function(elt,instance){
+     const age=instance.$('#age2').val();
+     console.log(age);
+     Meteor.call('users.updateAge',Meteor.userId(),age);
+     $("#newage").css({display:"none"});
+   },
+   'click #updateGender':function(elt,instance){
+     const age=instance.$('#age2').val();
+     var gender="";
+     if($('input[id="male1"]').is(':checked')){
+       gender="male";
+     }else if($('input[id="female1"]').is(':checked')){
+       gender="female";
+     }else{
+       gender="other";
+     };
+     Meteor.call('users.updateGender',Meteor.userId(),gender);
+     $("#newgender").css({display:"none"});
+   },
+   'click #updateEmail':function(elt,instance){
+     const email=instance.$('#emailUpdate').val();
+     Meteor.call('users.updateEmail',Meteor.userId(),email);
+     instance.$('#emailUpdate').val("");
+     $("#newemail").css({display:"none"});
+   },
+   'click #updatePaymethod':function(elt,instance){
+     paymethodinputs = instance.$("#newpayment input");
+     paymethod = [];
+     paymethodinputs.each(function(a,b){
+       if (b.checked) { paymethod.push(b.value);}
+     });
+     console.log(paymethod);
+     Meteor.call('users.updatePaymethod',Meteor.userId(),paymethod);
+     $("#newpayment").css({display:"none"});
+   }
 })

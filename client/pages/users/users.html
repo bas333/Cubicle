@@ -56,29 +56,64 @@
 
 <template name="showprofile">
   <div class="profileprint">
-  <p>Name:{{person.username}} <button class="edit" onclick="document.getElementById('newname').style.display='block'">Edit</button></p>
-     <div id="newname" class="modal">  <input type="text" id="usernameUpdate1"><p><span class="glyphicon glpyicon glyphicon-tree-deciduous" onclick="document.getElementById('newname').style.display='none'"
-       id="updateUsername1" aria-hidden="true">updateName</span></p></div>
+  <p><strong>Name: {{person.username}} </strong><button class="edit" id="editName" >Edit</button></p>
+     <div id="newname">  <input type="text" id="usernameUpdate" value={{person.username}}>
+    <p><button class="edit" id="updateUsername1">updateName</button>
+    <button class="cancle" id="cancleName">Cancle</button></p></div>
 
-    <p> School:{{person.school}} <button class="edit" onclick="document.getElementById('newcareer').style.display='block'">Edit</button></p>
-     <div id="newcareer" class="modal"><input type="text" id="careerUpdate1"><p><span class="glyphicon glpyicon glyphicon-tree-deciduous"  onclick="document.getElementById('newcareer').style.display='none'"
-        id="updateCareer1" aria-hidden="true">updateCareer</span></p></div>
+    <p><strong> School: {{person.school}}</strong> </p>
 
-    <p> Age:{{person.age}}<span class="glyphicon glpyicon glyphicon-tree-deciduous" id="updateVehicle1" aria-hidden="true">update</span></p>
+    <p><strong> Age: {{person.age}}</strong> <button class="edit" id="editAge">Edit</button></p>
+    <div id="newage">
+    <select class="form-control" id="age2">
+      {{#each number in numberList}}
+        <option>{{number}}</option>
+      {{/each}}
+    </select>
+    <p><button class="edit" id="updateAge">updateAge</button>
+    <button class="cancle" id="cancleAge">Cancle</button></p>
+    </div>
 
-    <p> Gender:{{person.gender}}</p>
+    <p><strong> Gender: {{person.gender}} </strong><button class="edit" id="editGender">Edit</button></p>
+    <div id="newgender">
+      <strong>Gender</strong><br>
+      <input type="radio" name="gender" id="male1" checked> Male<br>
+      <input type="radio" name="gender" id="female1"> Female<br>
+      <input type="radio" name="gender" id="other1"> Other<br>
+      <p><button class="edit" id="updateGender">updateGender</button>
+      <button class="cancle" id="cancleGender">Cancle</button></p>
+    </div>
 
-    <p> Email:{{person.email}} <button class="edit" onclick="document.getElementById('newotherinfo').style.display='block'">Edit</button></p>
-     <div id="newotherinfo" class="modal"><input type="text" id="otherinfoUpdate1"><p><span class="glyphicon glpyicon glyphicon-tree-deciduous" onclick="document.getElementById('newotherinfo').style.display='none'"
-       id="updateotherinfo1" aria-hidden="true">update</span></p></div>
-    <p> Payment Method:{{person.paymethod}}</p>
-  <span class="glyphicon glyphicon glyphicon-erase" id="erase2" aria-hidden="true">delete</span>
-  </div>
+    <p><strong> Email: {{person.email}}</strong> <button class="edit" id="editEmail" >Edit</button></p>
+     <div id="newemail" ><input type="text" id="emailUpdate"><p>
+     <button class="edit" id="updateEmail">updateEmail</button>
+     <button class="cancle" id="cancleEmail">Cancle</button></p>
+     </div>
+
+
+
+    <p> <strong>Payment Method: {{person.paymethod}}</strong>
+    <button class="edit" id="editPaymethod" >Edit</button></p>
+    <div id="newpayment">
+      <strong>Payment Method</strong><br>
+    <input type="checkbox" name="payment" value="Paypal">Paypal<br>
+    <input type="checkbox" name="payment" value="Venmo">Venmo<br>
+    <input type="checkbox" name="payment" value="Cash">Cash<br>
+    <button class="edit" id="updatePaymethod">updatePayment</button>
+    <button class="cancle" id="canclePaymethod">Cancle</button>
+    </div>
+    </div>
+
+
+
+  <p><span class="glyphicon glyphicon glyphicon-erase" id="removeProfile" aria-hidden="true">delete</span></p>
 </template>
 
 
 <template name="showuser">
-  <p>This is your Profile</p>
+  <div class="showuser">
+  <h1>This is your Profile</h1>
+  <hr>
   {{#each p in peoplelist}}
     {{#if currentUser}}
       {{#if isOwner p}}
@@ -86,4 +121,5 @@
       {{/if}}
     {{/if}}
   {{/each}}
+  </div>
 </template>
