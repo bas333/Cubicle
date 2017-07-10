@@ -42,12 +42,23 @@
 										<ul class="nav navbar-nav">
 											<li><a href="{{pathFor 'home'}}">Home</a></li>
 											<li><a href="{{pathFor 'about'}}">About</a></li>
+											<li class="rent-dropdown">
+												<a class="dropdown-toggle" data-toggle="dropdown" href="#">Rental Posts</a>
+												<!-- <span class="caret"></span></a>  -->
+															<ul class="dropdown-menu">
+																<li><a href="{{pathFor 'displayrent'}}">View All Rental Posts</a></li>
+																<li><a href="{{pathFor 'createrent'}}">Create a Rental Post</a></li>
+															</ul>
+											</li>
 											<!-- <li><a href="{{pathFor 'createinfo'}}">Posts</a></li> -->
 											<li class="dropdown">
-        									<a class="dropdown-toggle" data-toggle="dropdown" href="#">Posts</a>
+        									<a class="dropdown-toggle" data-toggle="dropdown" href="#">Product Posts</a>
+
         										<!-- <span class="caret"></span></a>  -->
         												<ul class="dropdown-menu">
-																	<li><a href="{{pathFor 'createinfo'}}">Create a post</a></li>
+																	<li><a href="{{pathFor 'itempage'}}">View All Product Posts</a></li>
+																	<li><a href="{{pathFor 'createinfo'}}">Create a product post</a></li>
+
         											</ul>
       									</li>
 											<!-- <li><a href="{{pathFor 'users'}}">My Cubicle</a></li> -->

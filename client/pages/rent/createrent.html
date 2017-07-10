@@ -1,0 +1,28 @@
+<template name="createrent">
+  <h1> Create a Post for your Rental Information </h1>
+  {{> addrent}}
+</template>
+
+<template name="addrent">
+    <!-- Housing Type:
+      <input type="radio" name="housetype" value="house"> House
+      <input type="radio" name="housetype" value=""> Apartment
+      <input type="radio" name="housetype" value="other"> Other <br> -->
+    Location:
+    <input type="text" id="location"><br>
+    Available Months:
+    <input type="text" id="time"><br>
+    Room Size:
+    <input type="text" id="roomsize"><br>
+    Facilities:
+    <input type="text" id="facilities"><br>
+    Detailed Descriptions:
+    <input type="text" id="detailed-description"><br>
+    Roommate Descriptions:
+    <input type="text" id="room-description"><br>
+    Price / month:
+    <input type="text" id="price"><br>
+    Contact information:
+    <input type="text" id="contact-information"><br>
+    <button> submit </button>
+</template>

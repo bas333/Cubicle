@@ -8,8 +8,8 @@ Template.addproduct.events({
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
     const price= instance.$('#price').val();
-
-    Product.insert({
+    var productinfo =
+    {
       itemname:itemname,
       price:price,
       condition:condition,
@@ -17,14 +17,15 @@ Template.addproduct.events({
       description:description,
       createdAt:new Date(),
       owner:Meteor.userId()
-    });
+    }
+    Meteor.call('product.insert',productinfo);
+
     console.log('adding'+itemname);
     instance.$('#itemname').val("");
     instance.$('#price').val("");
     instance.$('#condition').val("");
     instance.$('#category').val("");
     instance.$('#description').val("");
-
   }
 })
 Template.productrow.helpers({
@@ -36,11 +37,35 @@ Template.productrow.events({
     console.dir(this);
     console.log(this);
     console.log(this.product._id);
-    Meteor.call('item.remove',this.product);
+    Meteor.call('product.remove',this.product);
   //   if (this.person.owner==Meteor.userId()){
   //     People.remove(this.person._id);
   // }else {
   //   alert("You are not allowed to delete this information");
   // }
-}
+},
+
+'click button'() {
+  // console.dir(this);
+  // console.log(this.person._id);
+  // const name = $('#name').val();
+  const newitemname = $('#itemname').val();
+  const newcondition=$('#condition :selected').text();
+  const newcategory=$('#category :selected').val();
+  const newdescription=$('#description').val();
+  const newprice=$('#price').val();
+  id = Meteor.userId();
+  var newproductinfo =
+  {
+    itemname:newitemname,
+    price:newprice,
+    condition:newcondition,
+    category:newcategory,
+    description:newdescription,
+    createdAt:new Date(),
+    owner:Meteor.userId()
+  }
+    console.dir(this);
+    Meteor.call('product.update',newproductinfo);
+  }
 })

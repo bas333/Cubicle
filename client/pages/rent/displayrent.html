@@ -1,0 +1,26 @@
+<template name="displayrent">
+  <h1> All Rental Posts </h1>
+  {{> showrent}}
+</template>
+
+<template name="showrent">
+  <div class=rentpost>
+    <ul>
+      {{#each r in rentlist}}
+          {{> rentrow rent=r}}
+      {{/each}}
+    </ul>
+  </div>
+</template>
+
+<template name="rentrow">
+  <li>{{rent.location}}</li>
+  <li>{{rent.time}}</li>
+  <li>{{rent.roomsize}}</li>
+  <li>{{rent.facilities}}</li>
+  <li>{{rent.detaileddescription}}</li>
+  <li>{{rent.roommatedescription}}</li>
+  <li>{{rent.price}}</li>
+  <li>{{rent.contact}}</li>
+  <button> Delete </button>
+</template>
