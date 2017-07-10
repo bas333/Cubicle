@@ -1,4 +1,7 @@
 <template name="users">
+  {{#if hasPerson}}
+    {{> showuser}}
+  {{else}}
   <form>
     <h1>Create your profile</h1>
     <div>
@@ -47,7 +50,40 @@
     <hr>
     <button type="submit" class="btn button btn btn-lg" id="submitnow">Submit</button>
   </form>
+  {{/if}}
+
+</template>
+
+<template name="showprofile">
+  <div class="profileprint">
+  <p>Name:{{person.username}} <button class="edit" onclick="document.getElementById('newname').style.display='block'">Edit</button></p>
+     <div id="newname" class="modal">  <input type="text" id="usernameUpdate1"><p><span class="glyphicon glpyicon glyphicon-tree-deciduous" onclick="document.getElementById('newname').style.display='none'"
+       id="updateUsername1" aria-hidden="true">updateName</span></p></div>
+
+    <p> School:{{person.school}} <button class="edit" onclick="document.getElementById('newcareer').style.display='block'">Edit</button></p>
+     <div id="newcareer" class="modal"><input type="text" id="careerUpdate1"><p><span class="glyphicon glpyicon glyphicon-tree-deciduous"  onclick="document.getElementById('newcareer').style.display='none'"
+        id="updateCareer1" aria-hidden="true">updateCareer</span></p></div>
+
+    <p> Age:{{person.age}}<span class="glyphicon glpyicon glyphicon-tree-deciduous" id="updateVehicle1" aria-hidden="true">update</span></p>
+
+    <p> Gender:{{person.gender}}</p>
+
+    <p> Email:{{person.email}} <button class="edit" onclick="document.getElementById('newotherinfo').style.display='block'">Edit</button></p>
+     <div id="newotherinfo" class="modal"><input type="text" id="otherinfoUpdate1"><p><span class="glyphicon glpyicon glyphicon-tree-deciduous" onclick="document.getElementById('newotherinfo').style.display='none'"
+       id="updateotherinfo1" aria-hidden="true">update</span></p></div>
+    <p> Payment Method:{{person.paymethod}}</p>
+  <span class="glyphicon glyphicon glyphicon-erase" id="erase2" aria-hidden="true">delete</span>
+  </div>
+</template>
 
 
-
+<template name="showuser">
+  <p>This is your Profile</p>
+  {{#each p in peoplelist}}
+    {{#if currentUser}}
+      {{#if isOwner p}}
+        {{>showprofile person=p}}<hr>
+      {{/if}}
+    {{/if}}
+  {{/each}}
 </template>

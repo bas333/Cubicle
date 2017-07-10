@@ -24,7 +24,7 @@ Template.users.events({
     const school=instance.$('#school').val();
     const age=instance.$('#age').val();
     const email=instance.$('#email').val();
-    const phone=instance.$('#email').val();
+    const phone=instance.$('#phone').val();
     var gender="";
     if($('input[id="male"]').is(':checked')){
       gender="male";
@@ -57,5 +57,27 @@ Template.users.events({
       owner:Meteor.userId(),
       createAt:new Date()
     };
-    Meteor.call('users.insert',newUser);
+    Meteor.call('users.insert',newUser, function(err, result){
+      if(err){
+        window.alert(err);
+        return;
+      }
+    });
   }})
+
+Template.showuser.helpers({
+  peoplelist() {return AllUsers.find()},
+})
+
+Template.showuser.helpers({
+    isOwner(person){
+      console.log(person);
+      return person.owner==Meteor.userId();
+    }
+  })
+
+Template.users.helpers({
+    hasPerson(){
+      return AllUsers.findOne({owner:Meteor.userId()})
+    }
+})
