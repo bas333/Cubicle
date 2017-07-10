@@ -1,0 +1,24 @@
+#newname{
+  display:none;
+}
+#newage{
+  display:none;
+}
+#newgender{
+  display:none;
+}
+#newemail{
+  display:none;
+}
+#newpayment{
+  display:none;
+}
+#newpayment{
+  padding-left: calc(50% - 57.5px);
+}
+#newgender{
+  padding-left: calc(50% - 57.5px);
+}
+.showuser h1{
+  padding-left: calc(50% - 431px);
+}
