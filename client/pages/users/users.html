@@ -1,4 +1,7 @@
 <template name="users">
+  {{#if hasPerson}}
+    {{> showuser}}
+  {{else}}
   <form>
     <h1>Create your profile</h1>
     <div>
@@ -47,7 +50,76 @@
     <hr>
     <button type="submit" class="btn button btn btn-lg" id="submitnow">Submit</button>
   </form>
+  {{/if}}
+
+</template>
+
+<template name="showprofile">
+  <div class="profileprint">
+  <p><strong>Name: {{person.username}} </strong><button class="edit" id="editName" >Edit</button></p>
+     <div id="newname">  <input type="text" id="usernameUpdate" value={{person.username}}>
+    <p><button class="edit" id="updateUsername1">updateName</button>
+    <button class="cancle" id="cancleName">Cancle</button></p></div>
+
+    <p><strong> School: {{person.school}}</strong> </p>
+
+    <p><strong> Age: {{person.age}}</strong> <button class="edit" id="editAge">Edit</button></p>
+    <div id="newage">
+    <select class="form-control" id="age2">
+      {{#each number in numberList}}
+        <option>{{number}}</option>
+      {{/each}}
+    </select>
+    <p><button class="edit" id="updateAge">updateAge</button>
+    <button class="cancle" id="cancleAge">Cancle</button></p>
+    </div>
+
+    <p><strong> Gender: {{person.gender}} </strong><button class="edit" id="editGender">Edit</button></p>
+    <div id="newgender">
+      <strong>Gender</strong><br>
+      <input type="radio" name="gender" id="male1" checked> Male<br>
+      <input type="radio" name="gender" id="female1"> Female<br>
+      <input type="radio" name="gender" id="other1"> Other<br>
+      <p><button class="edit" id="updateGender">updateGender</button>
+      <button class="cancle" id="cancleGender">Cancle</button></p>
+    </div>
+
+    <p><strong> Email: {{person.email}}</strong> <button class="edit" id="editEmail" >Edit</button></p>
+     <div id="newemail" ><input type="text" id="emailUpdate"><p>
+     <button class="edit" id="updateEmail">updateEmail</button>
+     <button class="cancle" id="cancleEmail">Cancle</button></p>
+     </div>
 
 
 
+    <p> <strong>Payment Method: {{person.paymethod}}</strong>
+    <button class="edit" id="editPaymethod" >Edit</button></p>
+    <div id="newpayment">
+      <strong>Payment Method</strong><br>
+    <input type="checkbox" name="payment" value="Paypal">Paypal<br>
+    <input type="checkbox" name="payment" value="Venmo">Venmo<br>
+    <input type="checkbox" name="payment" value="Cash">Cash<br>
+    <button class="edit" id="updatePaymethod">updatePayment</button>
+    <button class="cancle" id="canclePaymethod">Cancle</button>
+    </div>
+    </div>
+
+
+
+  <p><span class="glyphicon glyphicon glyphicon-erase" id="removeProfile" aria-hidden="true">delete</span></p>
+</template>
+
+
+<template name="showuser">
+  <div class="showuser">
+  <h1>This is your Profile</h1>
+  <hr>
+  {{#each p in peoplelist}}
+    {{#if currentUser}}
+      {{#if isOwner p}}
+        {{>showprofile person=p}}<hr>
+      {{/if}}
+    {{/if}}
+  {{/each}}
+  </div>
 </template>

@@ -14,13 +14,13 @@
 </template>
 
 <template name="rentrow">
-  <li>{{rent.location}}</li>
-  <li>{{rent.time}}</li>
-  <li>{{rent.roomsize}}</li>
-  <li>{{rent.facilities}}</li>
-  <li>{{rent.detaileddescription}}</li>
-  <li>{{rent.roommatedescription}}</li>
-  <li>{{rent.price}}</li>
-  <li>{{rent.contact}}</li>
-  <button> Delete </button>
+  <li>Location: {{rent.location}}</li>
+  <li>Time available: {{rent.time}}</li>
+  <li>Roomsize: {{rent.roomsize}}</li>
+  <li>Facilities: {{rent.facilities}}</li>
+  <li>Detailed description: {{rent.detailed}}</li>
+  <li>Roommate info: {{rent.roommate}}</li>
+  <li>Price/month: {{rent.price}}</li>
+  <li>Contact info: {{rent.contact}}</li>
+  <button id="delete"> Delete </button>
 </template>
