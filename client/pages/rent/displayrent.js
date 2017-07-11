@@ -8,7 +8,7 @@ Template.rentrow.helpers({
 })
 
 Template.rentrow.events({
-  'click button'(elt,instance) {
+  'click #delete':function(elt,instance) {
     console.log("remove");
     Meteor.call('rent.remove',this.rent);
   }

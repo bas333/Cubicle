@@ -9,7 +9,12 @@
       <input type="radio" name="housetype" value=""> Apartment
       <input type="radio" name="housetype" value="other"> Other <br> -->
     Location:
-    <input type="text" id="location"><br>
+    <select class="form-control" id="location">
+      {{#each location in locationdata}}
+      <option>{{location.name}}</option>
+      {{/each}}
+    </select>
+    <br>
     Available Months:
     <input type="text" id="time"><br>
     Room Size:

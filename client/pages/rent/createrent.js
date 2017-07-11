@@ -42,3 +42,20 @@ Template.addrent.events({
     );
   },
 })
+Template.addrent.helpers({
+  locationdata(){
+    return location;
+  },
+
+})
+
+const location=[
+  {name:"Waltham"},
+  {name:"Watertown"},
+  {name:"Newton"},
+  {name:"Cambridge"},
+  {name:"Boston"},
+  {name:"Brookline"},
+  {name:"Somerville"},
+  {name:"Malden"},
+]
