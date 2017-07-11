@@ -1,3 +1,11 @@
+if(Meteor.isClient){
+    Template.addproduct.onCreated(function(){
+      Meteor.subscribe('product');
+    });
+    Template.showproduct.onCreated(function(){
+      Meteor.subscribe('product');
+    });
+}
 Template.showproduct.helpers({
   productlist() {return Product.find()},
 })
@@ -30,25 +38,17 @@ Template.addproduct.events({
 })
 Template.productrow.helpers({
   isOwner(){
-    return (this.product.owner == Meteor.userId())}
+    return (this.p.owner == Meteor.userId())}
 })
 Template.productrow.events({
   'click span'(elt,instance){
     console.dir(this);
     console.log(this);
-    console.log(this.product._id);
-    Meteor.call('product.remove',this.product);
-  //   if (this.person.owner==Meteor.userId()){
-  //     People.remove(this.person._id);
-  // }else {
-  //   alert("You are not allowed to delete this information");
-  // }
+    console.log(this.p._id);
+    Meteor.call('product.remove',this.p);
 },
 
-'click button'() {
-  // console.dir(this);
-  // console.log(this.person._id);
-  // const name = $('#name').val();
+'click #updateitem'() {
   const newitemname = $('#itemname').val();
   const newcondition=$('#condition :selected').text();
   const newcategory=$('#category :selected').val();
