@@ -6,3 +6,9 @@ if(Meteor.isClient){
 Template.showAll.helpers({
   productlist() {return Product.find()},
 })
+
+Template.allproducts.events({
+  'click .return' (elt,instance) {
+    Router.go("home");
+  }
+})

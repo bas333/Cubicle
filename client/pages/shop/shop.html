@@ -1,15 +1,32 @@
 <template name="shop">
-  <ul>
-    {{#each p in filteredlist}}
-      {{> itemrow p=p}}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Condition</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+    {{#each i in filteredlist}}
+      <tr>{{> itemrow item=i}}</tr>
     {{/each}}
-  </ul>
+  </tbody>
+</table>
+
+<div class = "return-home">
+  <button class="return"> Home </button>
+</div>
 </template>
 
 <template name="itemrow">
-  <li>item.name</li>
-  <li>item.category</li>
-  <li>item.price</li>
-  <li>item.condition</li>
-  <li>item.description</li>
+  <td>{{item.itemname}}</td>
+  <td>{{item.category}}</td>
+  <td>{{item.price}}</td>
+  <td>{{item.condition}}</td>
+  <td>{{item.description}}</td>
+  <td>{{item.status}}</td>
 </template>

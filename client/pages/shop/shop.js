@@ -4,9 +4,11 @@ Template.shop.onRendered(function(){
   window.location.hash = "#"+Router.current().params.hash;
 })
 
-Template.shop.onCreated(function bodyOnCreated() {
-  Meteor.subscribe('shop_products');
-});
+Template.shop.events({
+  'click .return' (elt,instance) {
+    Router.go("home");
+  }
+})
 
 Template.shop.helpers({
   filteredlist() {return Product.find().fetch()},

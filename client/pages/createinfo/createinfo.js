@@ -1,11 +1,11 @@
-if(Meteor.isClient){
-    Template.addproduct.onCreated(function(){
-      Meteor.subscribe('product');
-    });
-    Template.showproduct.onCreated(function(){
-      Meteor.subscribe('product');
-    });
-}
+// if(Meteor.isClient){
+//     Template.addproduct.onCreated(function(){
+//       Meteor.subscribe('info_allproducts');
+//     });
+//     Template.showproduct.onCreated(function(){
+//       Meteor.subscribe('info_allproducts');
+//     });
+// }
 Template.showproduct.helpers({
   productlist() {
     return Product.find()},
@@ -40,6 +40,13 @@ Template.addproduct.events({
     instance.$('#description').val("");
   }
 })
+
+
+Template.productrow.helpers({
+  isOwner(){
+    return (this.p.owner == Meteor.userId())}
+})
+
 Template.ownerproduct.events({
   'click span'(elt,instance){
     console.dir(this);
