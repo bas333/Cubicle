@@ -62,7 +62,7 @@
       <th>Update</th>
     </tr>
     {{#each p in productlist}}
-      {{> productrow product=p}}
+      {{> productrow p=p}}
     {{/each}}
   </table>
     {{else}}
@@ -74,15 +74,15 @@
 
 <template name="productrow">
   <tr>
-    <td><a href="/singleitem/{{product.itemname}}">{{product.itemname}}</a></td>
-    <td>{{product.price}}</td>
-    <td>{{product.condition}}</td>
-    <td>{{product.category}}</td>
-    <td>{{product.description}}</td>
-    <td>{{product.status}}</td>
     {{#if isOwner}}
-      <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
-      <td><button id="update">update</button></td>
+    <td><a href="/singleitem/{{product.itemname}}">{{p.itemname}}</a></td>
+    <td>{{p.price}}</td>
+    <td>{{p.condition}}</td>
+    <td>{{p.category}}</td>
+    <td>{{p.description}}</td>
+    <td>{{p.status}}</td>
+    <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
+    <td><button type="button" class="btn btn-primary btn-sm" id="updateitem">update</button></td>
     {{/if}}
   </tr>
 </template>

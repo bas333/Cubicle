@@ -1,16 +1,17 @@
 <template name="shop">
-  <ul>
-    <h1> Hey </h1>
+    <table>
+      <tbody>
     {{#each i in filteredlist}}
-      {{> itemrow item=i}}
+      <tr>{{> itemrow item=i}}</tr>
     {{/each}}
-  </ul>
+  </tbody>
+</table>
 </template>
 
 <template name="itemrow">
-  <li>{{item.itemname}}</li>
-  <li>{{item.category}}</li>
-  <li>{{item.price}}</li>
-  <li>{{item.condition}}</li>
-  <li>{{item.description}}</li>
+  <td>{{item.itemname}}</td>
+  <td>{{item.category}}</td>
+  <td>{{item.price}}</td>
+  <td>{{item.condition}}</td>
+  <td>{{item.description}}</td>
 </template>

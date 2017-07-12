@@ -1,0 +1,25 @@
+<template name="allproducts">
+  {{> showAll}}
+</template>
+<template name="showAll">
+  <table class="table">
+    <tr>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th>Condition</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+    {{#each p in productlist}}
+    <tr>
+      <td><a href="/singleitem/{{product.itemname}}">{{p.itemname}}</a></td>
+      <td>{{p.price}}</td>
+      <td>{{p.condition}}</td>
+      <td>{{p.category}}</td>
+      <td>{{p.description}}</td>
+      <td>{{p.status}}</td>
+    </tr>
+    {{/each}}
+  </table>
+</template>
