@@ -4,9 +4,9 @@ Template.shop.onRendered(function(){
   window.location.hash = "#"+Router.current().params.hash;
 })
 
-Template.shop.onCreated(function bodyOnCreated() {
-  Meteor.subscribe('shop_products');
-});
+// Template.shop.onCreated(function() {
+//   Meteor.subscribe('shop_products', Router.current().params.query.type);
+// });
 
 Template.shop.helpers({
   filteredlist() {return Product.find().fetch()},

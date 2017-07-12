@@ -28,6 +28,11 @@ Template.addproduct.events({
     instance.$('#description').val("");
   }
 })
+
+Template.createinfo.onCreated(function(){
+  Meteor.subscribe('info_allproducts');
+});
+
 Template.productrow.helpers({
   isOwner(){
     return (this.product.owner == Meteor.userId())}

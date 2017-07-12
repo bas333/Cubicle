@@ -1,3 +1,7 @@
-Meteor.publish('shop_products', function(type, text){
-  return Product.find({type: Router.current().params.query.type, name:text});
+Meteor.publish('shop_products', function(type){
+  return Product.find({category: type});
+})
+
+Meteor.publish('info_allproducts', function(){
+  return Product.find();
 })
