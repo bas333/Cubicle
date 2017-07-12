@@ -7,7 +7,11 @@ if(Meteor.isClient){
     });
 }
 Template.showproduct.helpers({
-  productlist() {return Product.find()},
+  productlist() {
+    return Product.find()},
+  isOwner(product){
+    console.log(product.owner);
+    return (product.owner == Meteor.userId())}
 })
 Template.addproduct.events({
   'click button'(elt,instance){
@@ -36,11 +40,7 @@ Template.addproduct.events({
     instance.$('#description').val("");
   }
 })
-Template.productrow.helpers({
-  isOwner(){
-    return (this.p.owner == Meteor.userId())}
-})
-Template.productrow.events({
+Template.ownerproduct.events({
   'click span'(elt,instance){
     console.dir(this);
     console.log(this);

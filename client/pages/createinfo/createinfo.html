@@ -62,27 +62,29 @@
       <th>Update</th>
     </tr>
     {{#each p in productlist}}
-      {{> productrow p=p}}
+      {{#if isOwner p}}
+        <tr>
+          {{> ownerproduct p=p}}
+        </tr>
+      {{/if}}
     {{/each}}
   </table>
     {{else}}
       <h1>You must log in to access the information. {{> loginButtons}}</h1>
       <hr>
     {{/if}}
-
 </template>
 
 <template name="productrow">
-  <tr>
-    {{#if isOwner}}
     <td><a href="/singleitem/{{product.itemname}}">{{p.itemname}}</a></td>
     <td>{{p.price}}</td>
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
     <td>{{p.description}}</td>
     <td>{{p.status}}</td>
-    <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
-    <td><button type="button" class="btn btn-primary btn-sm" id="updateitem">update</button></td>
-    {{/if}}
-  </tr>
+</template>
+<template name="ownerproduct">
+  {{> productrow p=p}}
+  <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
+  <td><button type="button" class="btn btn-primary btn-sm" id="updateitem">update</button></td>
 </template>
