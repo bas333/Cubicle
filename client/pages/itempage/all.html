@@ -12,14 +12,17 @@
       <th>Status</th>
     </tr>
     {{#each p in productlist}}
-    <tr>
+    <!-- <tr>
       <td><a href="/singleitem/{{product.itemname}}">{{p.itemname}}</a></td>
       <td>{{p.price}}</td>
       <td>{{p.condition}}</td>
       <td>{{p.category}}</td>
       <td>{{p.description}}</td>
       <td>{{p.status}}</td>
-    </tr>
+    </tr> -->
+    <tr>
+    {{>productrow p=p}}
+  </tr>
     {{/each}}
   </table>
 </template>
