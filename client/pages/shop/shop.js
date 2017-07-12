@@ -4,6 +4,11 @@ Template.shop.onRendered(function(){
   window.location.hash = "#"+Router.current().params.hash;
 })
 
+Template.shop.events({
+  'click .return' (elt,instance) {
+    Router.go("home");
+  }
+})
 
 Template.shop.helpers({
   filteredlist() {return Product.find().fetch()},

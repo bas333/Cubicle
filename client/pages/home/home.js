@@ -5,8 +5,12 @@ Template.home.helpers ({
 Template.home.events ({
   'click button' (elt,instance){
     var selectedcategory = instance.$('#category :selected').text();
-    console.log(selectedcategory);
     console.log(Product.find());
-    Router.go("shop", {}, {query:'type='+selectedcategory});
+    if (selectedcategory == "All Categories") {
+      console.log("Are You here " + selectedcategory);
+      Router.go("allproducts");
+    } else {
+      Router.go("shop", {}, {query:'type='+selectedcategory});
+    }
   },
 })
