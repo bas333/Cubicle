@@ -20,6 +20,7 @@ Template.addproduct.events({
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
     const price= instance.$('#price').val();
+    const status=instance.$('#sold').val();
     var productinfo =
     {
       itemname:itemname,
@@ -49,9 +50,6 @@ Template.productrow.helpers({
 
 Template.ownerproduct.events({
   'click span'(elt,instance){
-    console.dir(this);
-    console.log(this);
-    console.log(this.p._id);
     Meteor.call('product.remove',this.p);
 },
 

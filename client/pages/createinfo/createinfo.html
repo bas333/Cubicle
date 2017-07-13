@@ -58,8 +58,8 @@
       <th>Category</th>
       <th>Description</th>
       <th>Status</th>
-      <th>Remove</th>
       <th>Update</th>
+      <th>Remove</th>
     </tr>
     {{#each p in productlist}}
       {{#if isOwner p}}
@@ -81,10 +81,14 @@
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
     <td>{{p.description}}</td>
-    <td>{{p.status}}</td>
 </template>
 <template name="ownerproduct">
   {{> productrow p=p}}
+  <td>
+    <div>
+    <input type="checkbox" name="status" value="sold" id="status">sold<br>
+  </div>
+  </td>
   <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
   <!-- <td><button type="button" class="btn btn-primary btn-sm" id="updateitem">update</button></td> -->
   <td>

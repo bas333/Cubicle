@@ -1,5 +1,6 @@
 <template name="allproducts">
   {{> showAll}}
+  <button class="return"> Home </button>
 </template>
 <template name="showAll">
   <table class="table">
@@ -9,21 +10,16 @@
       <th>Condition</th>
       <th>Category</th>
       <th>Description</th>
-      <th>Status</th>
+      <th>Add to Cart</th>
     </tr>
     {{#each p in productlist}}
-    <!-- <tr>
-      <td><a href="/singleitem/{{product.itemname}}">{{p.itemname}}</a></td>
-      <td>{{p.price}}</td>
-      <td>{{p.condition}}</td>
-      <td>{{p.category}}</td>
-      <td>{{p.description}}</td>
-      <td>{{p.status}}</td>
-    </tr> -->
-    <tr>
-    {{>productrow p=p}}
-  </tr>
+      <tr>
+        {{>addcart p=p}}
+      </tr>
     {{/each}}
   </table>
-<button class="return"> Home </button>
+</template>
+<template name="addcart">
+  {{>productrow p=p}}
+  <td><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
 </template>
