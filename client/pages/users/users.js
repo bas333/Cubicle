@@ -38,7 +38,7 @@ Template.users.events({
     paymethodinputs.each(function(a,b){
       if (b.checked) { paymethod.push(b.value);}
     });
-
+    cart=[];
     console.log('adding '+username);
     instance.$('#username').val("");
     instance.$('#school').val("");
@@ -55,6 +55,7 @@ Template.users.events({
       email:email,
       phone:phone,
       paymethod:paymethod,
+      cart:cart,
       owner:Meteor.userId(),
       createAt:new Date()
     };
