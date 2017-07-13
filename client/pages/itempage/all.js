@@ -17,7 +17,7 @@ Template.allproducts.events({
 })
 Template.addcart.events({
   'click span'(elt,instance){
-    // if (currentUser){
+
       Meteor.call('product.addcart',Meteor.userId(),this.p);
     // }else{
     //   alert('Please login first.')
