@@ -1,0 +1,21 @@
+<template name="mycart">
+  <table class="table">
+    <tr>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th>Condition</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Remove from Cart</th>
+    </tr>
+    {{#each p in cartlist}}
+      <tr>
+        {{>removecart p=p}}
+      </tr>
+    {{/each}}
+  </table>
+</template>
+<template name="removecart">
+  {{>productrow p=p}}
+  <td><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></td>
+</template>

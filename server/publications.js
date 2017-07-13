@@ -12,3 +12,6 @@ Meteor.publish('allusers',function(){
 Meteor.publish('rent',function(){
   return Rent.find();
 })
+Meteor.publish('product',function(){
+  return Product.find();
+})
