@@ -55,12 +55,15 @@ Template.ownerproduct.events({
     Meteor.call('product.remove',this.p);
 },
 
-'click #updateitem'() {
-  const newitemname = $('#itemname').val();
-  const newcondition=$('#condition :selected').text();
-  const newcategory=$('#category :selected').val();
-  const newdescription=$('#description').val();
-  const newprice=$('#price').val();
+'click #updateitem'(event, instance) {
+  const product_id = this.p._id;
+  const newitemname = $('#newitemname_'+product_id).val();;
+  const newcondition=$('#newcondition :selected').text();
+
+  const newcategory=instance.$('#newcategory :selected').val();
+  const newdescription=instance.$('#newdescription').val();
+  const newprice=instance.$('#newprice').val();
+
   id = Meteor.userId();
   var newproductinfo =
   {
@@ -72,7 +75,13 @@ Template.ownerproduct.events({
     createdAt:new Date(),
     owner:Meteor.userId()
   }
+    console.log(this.p);
     console.dir(this);
-    Meteor.call('product.update',newproductinfo);
+    Meteor.call('product.update',product_id,newproductinfo);
+  },
+  'click #enableedit'(event,instance){
+    const newcategory=instance.$('#newcategory').val(this.p.category);
+    const newcondition=instance.$('#newcondition').val(this.p.condition);
+    console.log(newcategory);
   }
 })

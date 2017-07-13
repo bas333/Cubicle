@@ -1,8 +1,8 @@
 <template name="createinfo">
-  <h1>Fill in information of your item</h1>
   {{> addproduct}}
   <hr>
   {{> showproduct}}
+  <hr>
 </template>
 
 <template name="addproduct">
@@ -69,10 +69,10 @@
       {{/if}}
     {{/each}}
   </table>
-    {{else}}
-      <h1>You must log in to access the information. {{> loginButtons}}</h1>
-      <hr>
-    {{/if}}
+  {{else}}
+    <h1>You must log in to access the information. {{> loginButtons}}</h1>
+    <hr>
+  {{/if}}
 </template>
 
 <template name="productrow">
@@ -86,5 +86,59 @@
 <template name="ownerproduct">
   {{> productrow p=p}}
   <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
-  <td><button type="button" class="btn btn-primary btn-sm" id="updateitem">update</button></td>
+  <!-- <td><button type="button" class="btn btn-primary btn-sm" id="updateitem">update</button></td> -->
+  <td>
+    <button type="button" id="enableedit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal_{{p._id}}">
+      Edit
+    </button>
+  <div class="modal fade" id="myModal_{{p._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Edit Product</h4>
+        </div>
+        <div class="modal-body">
+          <form action="/my-handling-form-page" method="post">
+            <div>
+              <label for="category">Category:</label>
+                <select name="select" id="newcategory" value={{p.category}}>
+                    <option value="Textbooks/Books">Textbooks/Books</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
+                    <option value="Furniture/Home">Furniture/Home</option>
+                    <option value="Art/Handcrafts">Art/Handcrafts</option>
+                    <option value="Others">Others</option>
+                  </select>
+            </div>
+              <div>
+                  <label for="itemname">Product Name:</label>
+                  <input type="text" id="newitemname_{{p._id}}" value="{{p.itemname}}">
+              </div>
+              <div>
+                  <label for="price">Price:</label>
+                  <input type="number" id="newprice" value={{p.price}}>$
+              </div>
+              <div>
+                <label for="condition">Condition:</label>
+                  <select name="select" id="newcondition" select={{p.condition}}>
+                    <option value="likenew">like new</option>
+                    <option value="very good" selected>very good</option>
+                    <option value="good">good</option>
+                    <option value="acceptable">acceptable</option>
+                  </select>
+              </div>
+              <div>
+                <label for="description">Please enter more detailed product description here</label>
+                <input type="text" id="newdescription" value={{p.description}}>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="updateitem">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</td>
 </template>
