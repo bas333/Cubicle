@@ -9,7 +9,7 @@ Template.home.events ({
     console.log(Product.find());
     if (selectedcategory == "All Categories") {
       if(searchstring != "") {
-        Router.go("allproducts", {}, {query:'&keywords='+searchstring});
+        Router.go("allproducts", {}, {query:'keywords='+searchstring});
       } else {
         console.log("Are you here!");
         Router.go("allproducts");
