@@ -21,5 +21,9 @@
 </template>
 <template name="addcart">
   {{>productrow p=p}}
-  <td><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
+  {{#if isOwner p}}
+    <td><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></td>
+  {{else}}
+    <td><span id="add" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
+  {{/if}}
 </template>
