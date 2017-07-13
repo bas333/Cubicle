@@ -2,6 +2,7 @@ Template.addrent.events({
   'click button'(elt,instance){
     // type = instance.$('#housetype').is(':checked').val();
     const location = instance.$('#location').val();
+    const street = instance.$('#street-address').val();
     const time = instance.$('#time').val();
     const roomsize = instance.$('#roomsize').val();
     const facilities = instance.$('#facilities').val();
@@ -11,6 +12,7 @@ Template.addrent.events({
     const contact = instance.$('#contact-information').val();
     console.log("adding " + location);
     instance.$('#location').val("");
+    instance.$('#street-address').val("");
     instance.$('#time').val("");
     instance.$('#roomsize').val("");
     instance.$('#facilities').val("");
@@ -20,6 +22,7 @@ Template.addrent.events({
     instance.$('#contact-information').val("");
     var rentpost =
     { location:location,
+      street:street,
       time:time,
       roomsize:roomsize,
       facilities:facilities,

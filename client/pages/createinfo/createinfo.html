@@ -76,7 +76,7 @@
 </template>
 
 <template name="productrow">
-    <td><a href="/singleitem/{{product.itemname}}">{{p.itemname}}</a></td>
+    <td><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></td>
     <td>{{p.price}}</td>
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
@@ -89,8 +89,6 @@
     <input type="checkbox" name="status" value="sold" id="status">sold<br>
   </div>
   </td>
-  <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
-  <!-- <td><button type="button" class="btn btn-primary btn-sm" id="updateitem">update</button></td> -->
   <td>
     <button type="button" id="enableedit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal_{{p._id}}">
       Edit
@@ -145,4 +143,5 @@
     </div>
   </div>
 </td>
+<td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
 </template>
