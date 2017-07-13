@@ -8,8 +8,12 @@ Template.home.events ({
     var searchstring = instance.$('#input').val();
     console.log(Product.find());
     if (selectedcategory == "All Categories") {
-      console.log("Are You here " + selectedcategory);
-      Router.go("allproducts");
+      if(searchstring != "") {
+        Router.go("allproducts", {}, {query:'&keywords='+searchstring});
+      } else {
+        console.log("Are you here!");
+        Router.go("allproducts");
+      }
     } else {
       Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
     }
