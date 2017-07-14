@@ -27,6 +27,7 @@ Template.addproduct.events({
     const description= instance.$('#description').val();
     const price= instance.$('#price').val();
     var status=instance.$('#sold').val();
+    const buyer=instance.$('#buyer').val();
     var productinfo =
     {
       itemname:itemname,
@@ -35,6 +36,7 @@ Template.addproduct.events({
       category:category,
       description:description,
       createdAt:new Date(),
+      buyer:buyer,
       owner:Meteor.userId()
     }
     Meteor.call('product.insert',productinfo);
@@ -98,8 +100,6 @@ Template.ownerproduct.events({
   },
  'change #jsstatus'(event, instance) {
     instance.itemsold.set(event.currentTarget.checked);
-    console.log("item is sold");
-    console.log(this.p);
     instance.$("")
     Meteor.call('product.sold',Meteor.userId(),this.p);
   }

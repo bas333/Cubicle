@@ -6,8 +6,9 @@ Template.mycart.helpers({
     return cart;
   }
 })
-Template.mycart.events({
+Template.removecart.events({
   'click span'(){
+    console.log(this.p);
     Meteor.call('product.removecart',Meteor.userId(),this.p);
   }
 })
