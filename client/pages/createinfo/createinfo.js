@@ -1,11 +1,17 @@
-// if(Meteor.isClient){
-//     Template.addproduct.onCreated(function(){
-//       Meteor.subscribe('info_allproducts');
-//     });
-//     Template.showproduct.onCreated(function(){
-//       Meteor.subscribe('info_allproducts');
-//     });
-// }
+import { Template } from 'meteor/templating';
+ import { ReactiveVar } from 'meteor/reactive-var';
+
+ Template.ownerproduct.onCreated(function ownerproductOnCreated(){
+   this.itemsold= new ReactiveVar(false);
+ })
+ if(Meteor.isClient){
+     Template.showproduct.onCreated(function(){
+       Meteor.subscribe('product');
+     });
+     Template.showproduct.onCreated(function(){
+       Meteor.subscribe('allusers');
+     })
+ }
 Template.showproduct.helpers({
   productlist() {
     return Product.find()},
@@ -20,7 +26,7 @@ Template.addproduct.events({
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
     const price= instance.$('#price').val();
-    const status=instance.$('#sold').val();
+    var status=instance.$('#sold').val();
     var productinfo =
     {
       itemname:itemname,
@@ -47,7 +53,15 @@ Template.productrow.helpers({
   isOwner(){
     return (this.p.owner == Meteor.userId())}
 })
-
+Template.ownerproduct.helpers({
+   displayitem() {
+        if (Template.instance().itemsold.get())
+          return "solditem";
+        else {
+          return "unsolditem";
+        }
+   }
+ })
 Template.ownerproduct.events({
   'click span'(elt,instance){
     Meteor.call('product.remove',this.p);
@@ -81,5 +95,12 @@ Template.ownerproduct.events({
     const newcategory=instance.$('#newcategory').val(this.p.category);
     const newcondition=instance.$('#newcondition').val(this.p.condition);
     console.log(newcategory);
+  },
+ 'change #jsstatus'(event, instance) {
+    instance.itemsold.set(event.currentTarget.checked);
+    console.log("item is sold");
+    console.log(this.p);
+    instance.$("")
+    Meteor.call('product.sold',Meteor.userId(),this.p);
   }
 })
