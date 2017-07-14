@@ -1,6 +1,5 @@
 Template.addrent.events({
-  'click button'(elt,instance){
-    // type = instance.$('#housetype').is(':checked').val();
+  'click #submitrent'(elt,instance){
     const location = instance.$('#location').val();
     const street = instance.$('#street-address').val();
     const time = instance.$('#time').val();
@@ -16,8 +15,8 @@ Template.addrent.events({
     instance.$('#time').val("");
     instance.$('#roomsize').val("");
     instance.$('#facilities').val("");
-    instance.$('#detailed-description').val("");
-    instance.$('#roommate-description').val("");
+    instance.$('#detaileddescription').val("");
+    instance.$('#roommatedescription').val("");
     instance.$('#price').val("");
     instance.$('#contact-information').val("");
     var rentpost =
@@ -49,9 +48,52 @@ Template.addrent.helpers({
   locationdata(){
     return location;
   },
-
+})
+Template.ownpostrow.helpers({
+  isOwner(){
+    console.dir(this);
+    console.log(this);
+    return this.rent.owner==Meteor.userId();
+  },
+  locationdata(){
+    return location;
+  },
 })
 
+Template.ownpostrow.events({
+  'click #deleteRent':function(elt,instance){
+    Meteor.call('rent.remove',this.rent);
+  },
+  'click #updateRent':function(elt,instance){
+    const rent_id = this.rent._id;
+    const newLocation=instance.$("#newlocation").val();
+    const newStreet=instance.$("#newstreet").val();
+    const newTime=instance.$("#newtime").val();
+    const newRoomSize=instance.$("#newsize").val();
+    const newFacilities=instance.$("#newfacilities").val();
+    const newDetail=instance.$("#newdetail").val();
+    const newRoommate=instance.$("#newroommate").val();
+    const newPrice=instance.$("#newprice").val();
+    const newContact=instance.$("#newcontact").val();
+    var newRent={
+      location:newLocation,
+      street:newStreet,
+      time:newTime,
+      roomsize:newRoomSize,
+      facilities:newFacilities,
+      detail:newDetail,
+      roommate:newRoommate,
+      price:newPrice,
+      contact:newContact,
+    }
+    Meteor.call('rent.update',rent_id,newRent);
+  }
+})
+
+
+Template.showOwnPost.helpers({
+  rentlist() {return Rent.find()},
+})
 const location=[
   {name:"Waltham"},
   {name:"Watertown"},
