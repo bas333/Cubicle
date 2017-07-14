@@ -81,7 +81,7 @@ Template.ownpostrow.events({
       time:newTime,
       roomsize:newRoomSize,
       facilities:newFacilities,
-      detail:newDetail,
+      detailed:newDetail,
       roommate:newRoommate,
       price:newPrice,
       contact:newContact,
