@@ -16,11 +16,17 @@ Template.allproducts.events({
   }
 })
 Template.addcart.events({
-  'click span'(elt,instance){
-
+  'click #add'(elt,instance){
+    if (AllUsers.findOne({owner:Meteor.userId()})!=undefined){
       Meteor.call('product.addcart',Meteor.userId(),this.p);
-    // }else{
-    //   alert('Please login first.')
-    // }
+    }else{
+      alert('Please log in first.')
+    }
+    alert('Item added to cart')
   }
+})
+Template.addcart.helpers({
+  isOwner(product){
+    console.log(product.owner);
+    return (product.owner == Meteor.userId())}
 })

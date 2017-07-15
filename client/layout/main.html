@@ -1,92 +1,54 @@
-<!-- <template name="main">
-	<div class="container">
-		<nav class="navbar navbar-default">
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      	<ul class="nav navbar-nav">
-							<li><a href="{{pathFor 'home'}}">Home</a></li>
-							<li><a href="{{pathFor 'about'}}">About</a></li>
-							<li><a href="{{pathFor 'createinfo'}}">Sell</a></li>
-							<li><a href="{{pathFor 'users'}}">Users</a></li>
-							<li><a href="{{pathFor 'contact'}}">Contact us</a></li>
-							<li>{{> loginButtons}}</li>
-						</ul>
-		    </div>
-		  </nav>
-		{{> yield}}
-	</div>
-</template> -->
-
 <template name="main">
-		<!-- Navbar -->
-		<nav class="navbar" role="navigation">
-				<div class="container">
-						<!-- Brand and toggle get grouped for better mobile display -->
-						<!-- <div class="menu-container"> -->
-								<!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-										<span class="sr-only">Toggle navigation</span>
-										<span class="toggle-icon"></span>
-								</button> -->
-
-								<!-- Logo -->
-								<div class="logo">
-										<a class="logo-wrap">
-												<img class="logo-img logo-img-main" src="images/Cubicle-Logo.png" id="logo" width=300 height=300>
-										</a>
-								</div>
-								<!-- End Logo -->
-						<!-- </div> -->
-
-						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="main-nav">
-								<!-- <div class="menu-container">  -->
-										<ul class="nav navbar-nav">
-											<li><a href="{{pathFor 'home'}}">Home</a></li>
-											<li><a href="{{pathFor 'about'}}">About</a></li>
-											<li class="rent-dropdown">
-												<a class="dropdown-toggle" data-toggle="dropdown" href="#">Rental Posts
-												<span class="caret"></span></a>
-															<ul class="dropdown-menu">
-																<li><a href="{{pathFor 'displayrent'}}">View All Rental Posts</a></li>
-																<li><a href="{{pathFor 'createrent'}}">Create a Rental Post</a></li>
-															</ul>
-											</li>
-											<!-- <li><a href="{{pathFor 'createinfo'}}">Posts</a></li> -->
-											<li class="dropdown">
-        									<a class="dropdown-toggle" data-toggle="dropdown" href="#">Product Posts
-        										<span class="caret"></span></a>
-        												<ul class="dropdown-menu">
-																	<li><a href="{{pathFor 'allproducts'}}">View All Products</a></li>
-																	<li><a href="{{pathFor 'createinfo'}}">Create a product post</a></li>
-
-        											</ul>
-      									</li>
-											<!-- <li><a href="{{pathFor 'users'}}">My Cubicle</a></li> -->
-											<li class="dropdown">
-        									<a class="dropdown-toggle" data-toggle="dropdown" href="#">My Cubicle
-        										<span class="caret"></span></a>
-        												<ul class="dropdown-menu">
-																	<li><a href="{{pathFor 'users'}}">My Profile</a></li>
-																	<li><a href="{{pathFor 'mycart'}}">My Cart</a></li>
-          												<li><a href="{{pathFor 'users'}}">View Sale History</a></li>
-          												<li><a href="{{pathFor 'users'}}">View Purchase History</a></li>
-          												<li><a href="{{pathFor 'users'}}">Wishlist</a></li>
-        											</ul>
-      									</li>
-											<li><a href="{{pathFor 'contact'}}">Contact us</a></li>
-											<!-- <li>{{> loginButtons}}</li> -->
-										</ul>
-
-										<ul class="nav navbar-nav navbar-right">
-      								<li><a href="{{pathFor 'users'}}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      								<li><a href="{{pathFor 'login'}}"><span class="glyphicon glyphicon-user"></span> Login</a></li>
-    								</ul>
-								<!-- </div> -->
-						</div>
-						<!-- End Navbar Collapse -->
+		 <div class="ui menu" id="navigation-bar">
+	   		<a class="item" href="{{pathFor 'home'}}">
+	     		Home
+	   		</a>
+		 		<a class="item" href="{{pathFor 'about'}}">
+	     		About
+	   		</a>
+		 		<div class="ui simple dropdown item">
+	 	 			Rental Posts
+	 			<i class="dropdown icon"></i>
+	 			  <div class="menu">
+		 			<div class="item"><a href="{{pathFor 'displayrent'}}">View all Rental Posts</a></div>
+		 			<div class="item"><a href="{{pathFor 'createrent'}}">Create a Rental Post</a></div>
+	 			</div>
+			</div>
+	 		<div class="ui simple dropdown item">
+					Product Posts
+				<i class="dropdown icon"></i>
+				<div class="menu">
+					<div class="item"><a href="{{pathFor 'allproducts'}}">View all Products</a></div>
+	 			  <div class="item"><a href="{{pathFor 'createinfo'}}">Create a Product Post</a></div>
+ 		    </div>
+			</div>
+ 		<div class="ui simple dropdown item">
+				My Cubicle
+				<i class="dropdown icon"></i>
+				<div class="menu">
+					<div class="item"><a href="{{pathFor 'users'}}">My Profile</a></div>
+		 			<div class="item"><a href="{{pathFor 'users'}}">View Sale History</a></div>
+		 			<div class="item"><a href="{{pathFor 'users'}}">View Purchase History</a></div>
+		 			<div class="item"><a href="{{pathFor 'users'}}">Wishlist</a></div>
 				</div>
-		</nav>
-		<!-- Navbar -->
-		<div class="body">
-			{{> yield}}
+			 </div>
+	   <a class="item" href="{{pathFor 'contact'}}">
+	     Contact Us
+	   </a>
+		 <div class="right menu">
+		 	<a class="item" href="{{pathFor 'login'}}">
+	     Sign In
+	   </a>
+		 <a class="item" href="{{pathFor 'users'}}">
+	     Sign Up
+	   </a>
+		 <a class="item" href="{{pathFor 'mycart'}}">
+			 <i class="shop icon"></i>
+			</a>
+	 </div>
+ </div>
+		<div name=body>
+			 {{> yield}}
 		</div>
+
 </template>

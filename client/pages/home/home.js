@@ -2,6 +2,7 @@ Template.home.helpers ({
   productlist() {return Product.find()},
 })
 
+
 Template.home.events ({
   'click #shopnow' (elt,instance){
     var selectedcategory = instance.$('#category :selected').text();

@@ -66,6 +66,7 @@
         <tr>
           {{> ownerproduct p=p}}
         </tr>
+
       {{/if}}
     {{/each}}
   </table>
@@ -82,11 +83,11 @@
     <td>{{p.category}}</td>
     <td>{{p.description}}</td>
 </template>
-<template name="ownerproduct">
+<template name="ownerproduct" class="{{displayitem}}">
   {{> productrow p=p}}
   <td>
     <div>
-    <input type="checkbox" name="status" value="sold" id="status">sold<br>
+    <input type="checkbox" name="status" value="sold" id="jsstatus">sold<br>
   </div>
   </td>
   <td>
@@ -144,4 +145,5 @@
   </div>
 </td>
 <td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td>
+
 </template>

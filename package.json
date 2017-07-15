@@ -9,5 +9,13 @@
     "bcrypt": "^1.0.2",
     "jquery": "^2.2.4",
     "meteor-node-stubs": "~0.2.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.1"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {"browsers": ["last 2 versions"]}
+    }
   }
 }

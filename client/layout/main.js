@@ -20,3 +20,7 @@
 //     instance.counter.set(instance.counter.get() + 1);
 //   },
 // });
+Template.main.rendered = function() {
+  this.$('.ui.dropdown').dropdown({on: 'hover'});
+  // other SUI modules initialization
+};

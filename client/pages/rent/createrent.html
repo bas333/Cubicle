@@ -1,35 +1,179 @@
 <template name="createrent">
-  <h1> Create a Post for your Rental Information </h1>
   {{> addrent}}
+  <hr>
+  {{>showOwnPost}}
 </template>
 
 <template name="addrent">
-    <!-- Housing Type:
-      <input type="radio" name="housetype" value="house"> House
-      <input type="radio" name="housetype" value=""> Apartment
-      <input type="radio" name="housetype" value="other"> Other <br> -->
-    Location:
-    <select class="form-control" id="location">
-      {{#each location in locationdata}}
-      <option>{{location.name}}</option>
+  <div class="rentform">
+    <form class="ui form">
+      <h4 class="ui dividing header">Create a Post for your Rental Information</h4>
+      <div class="inline fields">
+        <div class="five wide field">
+          <label>Location:</label>
+          <select class="ui fluid dropdown" id="location">
+            {{#each location in locationdata}}
+            <option>{{location.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      <div class="eleven wide field">
+        <label>Street Address:</label>
+        <input type="text" id="street-address">
+      </div>
+    </div>
+      <div class="inline fields">
+        <div class="three wide field">
+          <label>Available Months:</label>
+          <input type="text" id="time">
+        </div>
+        <div class="three wide field">
+          <label>Room Size:</label>
+          <input type="text" id="roomsize">
+        </div>
+        <div class="ten wide field">
+          <label>Facilities:</label>
+          <input type="text" id="facilities">
+        </div>
+      </div>
+      <div class="field">
+        <label>Detailed Descriptions:</label>
+        <input type="text" id="detaileddescription">
+      </div>
+      <div class="field">
+        <label>Roommate Descriptions:</label>
+        <input type="text" id="roommatedescription">
+      </div>
+      <div class="inline fields">
+        <div class="five wide field">
+          <label>Price / month:</label>
+          <input type="text" id="price">
+        </div>
+      <div class="eleven wide field">
+        <label>Contact information:</label>
+        <input type="text" id="contact-information">
+      </div>
+    </div>
+      <hr>
+        <button class="ui button" type="submit" id="submitrent"> submit </button>
+      </form>
+    </div>
+</template>
+
+<template name="showOwnPost">
+  <div class="showrent">
+  <h4 class="ui dividing header">Rental Posts</h4>
+  {{#if currentUser}}
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Location</th>
+      <th>Street Address</th>
+      <th>Available Months</th>
+      <th>Room Size</th>
+      <th>Facilities</th>
+      <th>Detailed Description</th>
+      <th>Roomate Description</th>
+      <th>Price/month</th>
+      <th>Contact information</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+      {{#each rent in rentlist}}
+          <tr>
+            {{>ownpostrow rent=rent}}
+          </tr>
       {{/each}}
-    </select>
-    <br>
-    Street Address:
-    <input type="text" id="street-address"><br>
-    Available Months:
-    <input type="text" id="time"><br>
-    Room Size:
-    <input type="text" id="roomsize"><br>
-    Facilities:
-    <input type="text" id="facilities"><br>
-    Detailed Descriptions:
-    <input type="text" id="detaileddescription"><br>
-    Roommate Descriptions:
-    <input type="text" id="roommatedescription"><br>
-    Price / month:
-    <input type="text" id="price"><br>
-    Contact information:
-    <input type="text" id="contact-information"><br>
-    <button> submit </button>
+    </tbody>
+  </table>
+  {{else}}
+  Please log in
+  {{/if}}
+</div>
+</template>
+
+
+<template name="ownpostrow">
+  {{#if isOwner rent}}
+  <td>{{rent.location}}</td>
+  <td>{{rent.street}}</td>
+  <td>{{rent.time}}</td>
+  <td>{{rent.roomsize}}</td>
+  <td>{{rent.facilities}}</td>
+  <td>{{rent.detailed}}</td>
+  <td>{{rent.roommate}}</td>
+  <td>{{rent.price}}</td>
+  <td>{{rent.contact}}</td>
+
+  <!-- Button trigger modal -->
+  <td><button type="button" id="editRentPost" class="ui button" data-toggle="modal" data-target="#myModal_{{rent._id}}">Edit</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal_{{rent._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel">Edit Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/my-handling-form-page" method="post">
+          <div>
+          <label for="location">Location:</label>
+          <select class="form-control" id="newlocation" value={{rent.location}}>
+            {{#each location in locationdata}}
+            <option>{{location.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div>
+            <label for="streetaddress">Street Address:</label>
+            <input type="text" id="newstreet" value="{{rent.street}}">
+        </div>
+        <div>
+            <label for="time">Available Time:</label>
+            <input type="text" id="newtime" value={{rent.time}}>
+        </div>
+        <div>
+            <label for="roomsize">Room Size:</label>
+            <input type="text" id="newsize" value={{rent.roomsize}}>
+        </div>
+        <div>
+            <label for="facilities">Facilities:</label>
+            <input type="text" id="newfacilities" value={{rent.facilities}}>
+        </div>
+        <div>
+            <label for="detaileddescription">Detailed Description:</label>
+            <input type="text" id="newdetail" value={{rent.detailed}}>
+        </div>
+        <div>
+            <label for="roommate">Roommate</label>
+            <input type="text" id="newroommate" value={{rent.roommate}}>
+        </div>
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" id="newprice" value={{rent.price}}>
+        </div>
+        <div>
+            <label for="contact">Contact:</label>
+            <input type="text" id="newcontact" value={{rent.contact}}>
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="updateRent">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</td>
+<td><button class="ui button" id="deleteRent">Delete</button></td>
+{{/if}}
+
 </template>

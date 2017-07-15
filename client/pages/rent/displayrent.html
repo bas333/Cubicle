@@ -1,27 +1,55 @@
 <template name="displayrent">
-  <h1> All Rental Posts </h1>
   {{> showrent}}
 </template>
 
 <template name="showrent">
-  <div class=rentpost>
-    <ul>
-      {{#each r in rentlist}}
+<div class=rentpost>
+  <h4 class="ui dividing header">All Rental Posts</h4>
+      <div class="ui list">
+        {{#each r in rentlist}}
+          <div class="four wide column" id="singlerent">
           {{> rentrow rent=r}}
-      {{/each}}
-    </ul>
-  </div>
+        </div>
+          {{/each}}
+        </div>
+    </div>
 </template>
 
 <template name="rentrow">
-  <li>Location: {{rent.location}}</li>
-  <li>Street Adress: {{rent.street}}</li>
-  <li>Time available: {{rent.time}}</li>
-  <li>Roomsize: {{rent.roomsize}}</li>
-  <li>Facilities: {{rent.facilities}}</li>
-  <li>Detailed description: {{rent.detailed}}</li>
-  <li>Roommate description: {{rent.roommate}}</li>
-  <li>Price/month: {{rent.price}}</li>
-  <li>Contact info: {{rent.contact}}</li>
-  <button id="delete"> Delete </button>
+  <div class="item">
+    <i class="marker icon"></i>
+     Location: {{rent.location}}
+  </div>
+  <div class="item">
+    <i class="address book icon"></i>
+     Address: {{rent.street}}
+  </div>
+  <div class="item">
+    <i class="address to calendar icon"></i>
+     Available Time: {{rent.time}}
+  </div>
+  <div class="item">
+    <i class="home icon"></i>
+     Room Size: {{rent.roomsize}}
+  </div>
+  <div class="item">
+    <i class="building outline icon"></i>
+      Facilities: {{rent.facilities}}
+  </div>
+  <div class="item">
+    <i class="sticky note outline icon"></i>
+      Detailed Description: {{rent.detailed}}
+  </div>
+  <div class="item">
+    <i class="users icon"></i>
+      Roommate Description: {{rent.roommate}}
+  </div>
+  <div class="item">
+    <i class="dollar icon"></i>
+      Price/Month: {{rent.price}}
+  </div>
+  <div class="item">
+    <i class="volume control phone icon"></i>
+      Contact info: {{rent.contact}}
+  </div>
 </template>

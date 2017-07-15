@@ -3,3 +3,34 @@
   height: 50px;
   border: solid black 2px;
 }*/
+#newOwner{
+  display:none;
+}
+#newLocation{
+  display:none;
+}
+#newStreet{
+  display:none;
+}
+
+.rentform{
+  padding:5em;
+}
+.showrent{
+  padding:5em;
+}
+.rentpost{
+  padding:5em;
+}
+#singlerent{
+  background-image:url("images/post-background.jpg");
+  background-size:cover;
+  filter: alpha(opacity=70);
+  max-width: 100%;
+  background-position: center;
+  width: 400px;
+  height: 300px;
+  text-align: center;
+  margin-bottom: 2.5em;
+  padding-top: 50px;
+}
