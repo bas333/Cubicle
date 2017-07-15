@@ -3,3 +3,12 @@
   height: 50px;
   border: solid black 2px;
 }*/
+#newOwner{
+  display:none;
+}
+#newLocation{
+  display:none;
+}
+#newStreet{
+  display:none;
+}
