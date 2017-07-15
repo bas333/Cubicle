@@ -1,17 +1,18 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+ import { ReactiveVar } from 'meteor/reactive-var';
 
-Template.ownerproduct.onCreated(function ownerproductOnCreated(){
-  this.itemsold= new ReactiveVar(false);
-})
-if(Meteor.isClient){
-    Template.showproduct.onCreated(function(){
-      Meteor.subscribe('product');
-    });
-    Template.showproduct.onCreated(function(){
-      Meteor.subscribe('allusers');
-    })
-}
+ Template.ownerproduct.onCreated(function ownerproductOnCreated(){
+   this.itemsold= new ReactiveVar(false);
+ })
+ if(Meteor.isClient){
+     Template.showproduct.onCreated(function(){
+       Meteor.subscribe('product');
+     });
+     Template.showproduct.onCreated(function(){
+       Meteor.subscribe('allusers');
+     })
+ }
+
 Template.showproduct.helpers({
   productlist() {
     return Product.find()},
@@ -27,6 +28,7 @@ Template.addproduct.events({
     const description= instance.$('#description').val();
     const price= instance.$('#price').val();
     var status=instance.$('#sold').val();
+    const buyer=instance.$('#buyer').val();
     var productinfo =
     {
       itemname:itemname,
@@ -35,6 +37,7 @@ Template.addproduct.events({
       category:category,
       description:description,
       createdAt:new Date(),
+      buyer:buyer,
       owner:Meteor.userId()
     }
     Meteor.call('product.insert',productinfo);
@@ -54,15 +57,14 @@ Template.productrow.helpers({
     return (this.p.owner == Meteor.userId())}
 })
 Template.ownerproduct.helpers({
-  displayitem() {
-       if (Template.instance().itemsold.get())
-         return "solditem";
-       else {
-         return "unsolditem";
-       }
-  }
-})
-
+   displayitem() {
+        if (Template.instance().itemsold.get())
+          return "solditem";
+        else {
+          return "unsolditem";
+        }
+   }
+ })
 Template.ownerproduct.events({
   'click span'(elt,instance){
     Meteor.call('product.remove',this.p);
@@ -97,10 +99,9 @@ Template.ownerproduct.events({
     const newcondition=instance.$('#newcondition').val(this.p.condition);
     console.log(newcategory);
   },
-  'change #jsstatus'(event, instance) {
+ 'change #jsstatus'(event, instance) {
     instance.itemsold.set(event.currentTarget.checked);
-    console.log("item is sold");
-    console.log(this.p);
+    instance.$("")
     Meteor.call('product.sold',Meteor.userId(),this.p);
   }
 })

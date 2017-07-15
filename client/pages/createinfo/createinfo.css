@@ -12,6 +12,7 @@ th, td {
 .modal-backdrop {
     z-index: 0;
 }
+
 div#productrow .unsolditem{
   color: #333;
 }
