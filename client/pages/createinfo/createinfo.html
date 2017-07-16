@@ -1,3 +1,10 @@
+<head>
+  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+</head>
+
+
+
+
 <template name="createinfo">
   {{> addproduct}}
   <hr>
@@ -7,16 +14,20 @@
 
 <template name="addproduct">
   <div class="form-style-5">
+    <div class="voice_search">
+      <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
+      <input type="text" id="usersay">
+    </div>
   <form action="/my-handling-form-page" method="post">
     <div>
       <label for="category">Category:</label>
         <select name="select" id="category">
-            <option value="Textbooks/Books">Textbooks/Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
-            <option value="Furniture/Home">Furniture/Home</option>
-            <option value="Art/Handcrafts">Art/Handcrafts</option>
-            <option value="Others">Others</option>
+            <option value="textbooks/books">Textbooks/Books</option>
+            <option value="electronics">Electronics</option>
+            <option value="clothes,shoes,and accessories">Clothes,Shoes,and Accessories</option>
+            <option value="furniture/home">Furniture/Home</option>
+            <option value="art/handcrafts">Art/Handcrafts</option>
+            <option value="others">Others</option>
           </select>
     </div>
       <div>

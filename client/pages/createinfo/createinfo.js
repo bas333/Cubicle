@@ -21,7 +21,7 @@ Template.showproduct.helpers({
     return (product.owner == Meteor.userId())}
 })
 Template.addproduct.events({
-  'click button'(elt,instance){
+  'click #addproduct'(elt,instance){
     const itemname = instance.$('#itemname').val();
     const condition=instance.$('#condition :selected').text();
     const category=instance.$('#category :selected').val();
@@ -48,6 +48,118 @@ Template.addproduct.events({
     instance.$('#condition').val("");
     instance.$('#category').val("");
     instance.$('#description').val("");
+  },
+  'click #additemrec':function(elt,instance){
+      var recognition;
+      var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
+      var baseUrl = "https://api.api.ai/v1/";
+      switchRecognition();
+      function startRecognition() {
+  			recognition = new webkitSpeechRecognition();
+  			recognition.onstart = function(event) {
+  				updateRec();
+  			};
+  			recognition.onresult = function(event) {
+  				var text = "";
+  			    for (var i = event.resultIndex; i < event.results.length; ++i) {
+  			    	text += event.results[i][0].transcript;
+  			    }
+  			    setInput(text);
+  				stopRecognition();
+  			};
+  			recognition.onend = function() {
+  				stopRecognition();
+  			};
+  			recognition.lang = "en-US";
+  			recognition.start();
+  		}
+
+  		function stopRecognition() {
+  			if (recognition) {
+  				recognition.stop();
+  				recognition = null;
+  			}
+  			updateRec();
+  		}
+  		function switchRecognition() {
+  			if (recognition) {
+  				stopRecognition();
+  			} else {
+  				startRecognition();
+  			}
+  		}
+  		function setInput(text) {
+  			$("#usersay").val(text);
+  			send();
+  		}
+  		function updateRec() {
+  			$("#additemrec").text(recognition ? "Stop" : "Speak");
+  		}
+  		function send() {
+  			var text = $("#usersay").val();
+  			$.ajax({
+  				type: "POST",
+  				url: baseUrl + "query?v=20150910",
+  				contentType: "application/json; charset=utf-8",
+  				dataType: "json",
+  				headers: {
+  					"Authorization": "Bearer " + accessToken
+  				},
+  				data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
+  				success: function(data) {
+  					setResponse(JSON.stringify(data, undefined, 2));
+            if(data.result.parameters.Category!=""){
+              $("#category").val(data.result.parameters.Category).trigger("change");
+            }
+            if(data.result.parameters.Name!=""){
+              $("#itemname").val(data.result.parameters.Name);
+            }
+            if(data.result.parameters.Quality!=""){
+              $("#condition").val(data.result.parameters.Quality).trigger("change");
+            }
+            if(data.result.parameters.unit-currency.amount!=""){
+              $("#price").val(data.result.parameters.unit-currency.amount);
+            }
+            $("#usersay").val(data.result.parameters.Category);
+  				},
+  				error: function() {
+  					setResponse("Internal Server Error");
+  				}
+  			});
+  			setResponse("Loading...");
+  		}
+  		function setResponse(val) {
+  			$("#response").text(val);
+  		}
+  },
+  'keypress #usersay' (elt,instance){
+    if (event.which == 13) {
+      event.preventDefault();
+      send();
+    }
+    function send() {
+      var text = $("#input").val();
+      $.ajax({
+        type: "POST",
+        url: baseUrl + "query?v=20150910",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        headers: {
+          "Authorization": "Bearer " + accessToken
+        },
+        data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
+        success: function(data) {
+          setResponse(JSON.stringify(data, undefined, 2));
+        },
+        error: function() {
+          setResponse("Internal Server Error");
+        }
+      });
+      setResponse("Loading...");
+    };
+    function setResponse(val) {
+      $("#response").text(val);
+    };
   }
 })
 
