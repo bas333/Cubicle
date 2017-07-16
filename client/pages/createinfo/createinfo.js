@@ -163,7 +163,7 @@ Template.addproduct.events({
               console.log(data.result.parameters.Category);
               $("#category").val(data.result.parameters.Category).trigger("change");
             }else if(data.result.parameters.Category==""){
-              responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female");
+              responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.8});
             }
             if(data.result.parameters.Name!=""){
               $("#itemname").val(data.result.parameters.Name);
@@ -173,7 +173,7 @@ Template.addproduct.events({
             if(data.result.parameters.Quality!=""){
               $("#condition").val(data.result.parameters.Quality).trigger("change");
             }else if(data.result.parameters.Quality==""){
-              responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female");
+              responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
             }
             if(data.result.parameters.Price!=""){
               $("#price").val(data.result.parameters.Price);
