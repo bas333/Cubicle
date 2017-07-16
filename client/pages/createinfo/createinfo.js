@@ -23,7 +23,7 @@ Template.showproduct.helpers({
 Template.addproduct.events({
   'click #addproduct'(elt,instance){
     const itemname = instance.$('#itemname').val();
-    const condition=instance.$('#condition :selected').text();
+    const condition=instance.$('#condition :selected').val();
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
     const price= instance.$('#price').val();
@@ -117,10 +117,9 @@ Template.addproduct.events({
             if(data.result.parameters.Quality!=""){
               $("#condition").val(data.result.parameters.Quality).trigger("change");
             }
-            if(data.result.parameters.unit-currency.amount!=""){
-              $("#price").val(data.result.parameters.unit-currency.amount);
+            if(data.result.parameters.number!=""){
+              $("#price").val(data.result.parameters.number);
             }
-            $("#usersay").val(data.result.parameters.Category);
   				},
   				error: function() {
   					setResponse("Internal Server Error");
