@@ -163,25 +163,25 @@ Template.addproduct.events({
               console.log(data.result.parameters.Category);
               $("#category").val(data.result.parameters.Category).trigger("change");
             }else if(data.result.parameters.Category==""){
-              responsivevoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female");
+              responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female");
             }
             if(data.result.parameters.Name!=""){
               $("#itemname").val(data.result.parameters.Name);
             }else if(data.result.parameters.Name==""){
-              responsivevoice.speak("What is the name of this product?","UK English Female");
+              responsiveVoice.speak("What is the name of this product?","UK English Female");
             }
             if(data.result.parameters.Quality!=""){
               $("#condition").val(data.result.parameters.Quality).trigger("change");
             }else if(data.result.parameters.Quality==""){
-              responsivevoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female");
+              responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female");
             }
             if(data.result.parameters.Price!=""){
               $("#price").val(data.result.parameters.Price);
             }else if(data.result.parameters.Price==""){
-                responsivevoice.speak("What is the price of this product?","UK English Female");
+                responsiveVoice.speak("What is the price of this product?","UK English Female");
             }
             if(data.result.parameters.Detaildescription==""){
-              responsivevoice.speak("Please add some detailed description to this product","UK English Female");
+              responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
             }
   				},
   				error: function() {
