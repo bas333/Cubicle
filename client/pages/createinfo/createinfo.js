@@ -63,6 +63,41 @@ Template.addproduct.events({
   				var text = "";
   			    for (var i = event.resultIndex; i < event.results.length; ++i) {
   			    	text += event.results[i][0].transcript;
+              if(event.results[i][0].transcript.includes('stop')){
+                console.log("stop recording");
+                recognition.stop();
+              }
+               if(event.results[i][0].transcript.includes('submit')){
+                console.log("user want to submit");
+                const itemname = instance.$('#itemname').val();
+                const condition=instance.$('#condition :selected').val();
+                const category=instance.$('#category :selected').val();
+                const description= instance.$('#description').val();
+                const price= instance.$('#price').val();
+                var status=instance.$('#sold').val();
+                const buyer=instance.$('#buyer').val();
+                var productinfo =
+                {
+                  itemname:itemname,
+                  price:price,
+                  condition:condition,
+                  category:category,
+                  description:description,
+                  createdAt:new Date(),
+                  buyer:buyer,
+                  owner:Meteor.userId()
+                }
+                Meteor.call('product.insert',productinfo);
+
+                console.log('adding'+itemname);
+                instance.$('#itemname').val("");
+                instance.$('#price').val("");
+                instance.$('#condition').val("");
+                instance.$('#category').val("");
+                instance.$('#description').val("");
+
+                recognition.stop();
+              }
   			    }
   			    setInput(text);
   				stopRecognition();
@@ -105,11 +140,14 @@ Template.addproduct.events({
   				headers: {
   					"Authorization": "Bearer " + accessToken
   				},
-  				data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
+  				data: JSON.stringify({ query: text, lang: "en", sessionId: "66666666" }),
   				success: function(data) {
   					setResponse(JSON.stringify(data, undefined, 2));
             if(data.result.parameters.Category!=""){
+              console.log(data.result.parameters.Category);
               $("#category").val(data.result.parameters.Category).trigger("change");
+            }else if(data.result.parameters.Category==""){
+              responsivevoice.speak()
             }
             if(data.result.parameters.Name!=""){
               $("#itemname").val(data.result.parameters.Name);
