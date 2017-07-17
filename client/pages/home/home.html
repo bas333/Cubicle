@@ -1,5 +1,5 @@
 <template name="home">
-
+<!-- <div class="homebg"> -->
 <div class="home-header">
     <!-- <div class="logo">
       <img src="images/Cubicle-Logo.png" width="200" length="200" id="logo-pic">
@@ -25,10 +25,13 @@
     </div>
 </div>
 <div>
-  <button class="ui secondary basic button">Add New Product</button>
+  <button class="ui secondary basic button"><a href="{{pathFor 'createinfo'}}">Sell A Product</a></button>
+</div>
+<div>
+  <button class="ui secondary basic button"><a href="{{pathFor 'allproducts'}}">Browse All</a></button>
 </div>
 <div class="background">
   <img src=images/background-cub.png id="background">
 </div>
-
+<!-- </div> -->
 </template>

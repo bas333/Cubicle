@@ -73,7 +73,9 @@ input[type="search"]::-webkit-input-placeholder{
   filter: alpha(opacity=80);
   background-color: #000;
 }
-
+div.homebg{
+  background-image:url("images/background-cub.png");
+}
 #background {
   max-width: 100%;
   width:auto;
