@@ -12,30 +12,6 @@
 </template>
 
 <template name="addproduct">
-  <!-- <div>
-  <form method="post">
-    <div>
-        <label for="itemname">Product Name:</label>
-        <input type="text" id="itemname">
-    </div> -->
-    <!-- <div>
-      <label for="category">Category:</label>
-        <select name="select" id="category" class="ui search dropdown">
-            <option value="Textbooks/Books">Textbooks/Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
-            <option value="Furniture/Home">Furniture/Home</option>
-            <option value="Art/Handcrafts">Art/Handcrafts</option>
-            <option value="Others">Others</option>
-          </select>
-    </div>
-      <div>
-          <label for="price">Price:</label>
-          <input type="number" id="price">$
-      </div>
-      <div>
-        <label for="condition">Condition:</label>
-          <select name="select" id="condition" class="ui search dropdown"> -->
   <div class="productform">
   <form class="ui form" method="post">
     <h4 class="ui dividing header">Create a Post for your Product</h4>
@@ -52,7 +28,6 @@
         <label for="itemname">Product Name:</label>
         <input type="text" id="itemname">
       </div>
-
       <div class="three fields">
         <div class="field">
           <label for="category">Category:</label>
@@ -107,9 +82,7 @@
   <tbody>
     {{#each p in productlist}}
       {{#if isOwner p}}
-
           {{> ownerproduct p=p}}
-
       {{/if}}
     {{/each}}
   </tbody>
