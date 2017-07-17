@@ -3,9 +3,9 @@ Template.home.helpers ({
 })
 
 Template.home.onRendered(function(){
+  this.$('#category').dropdown({on: 'hover'});
   $('#category').select2();
 })
-
 
 Template.home.events ({
   'click #shopnow' (elt,instance){

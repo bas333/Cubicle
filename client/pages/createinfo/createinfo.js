@@ -12,7 +12,11 @@ import { Template } from 'meteor/templating';
        Meteor.subscribe('allusers');
      })
  }
-
+ Template.main.onRendered(function() {
+   this.$('#category_info').dropdown({on: 'hover'});
+   // other SUI modules initialization
+   this.$('#condition').dropdown({on: 'hover'});
+ });
 Template.showproduct.helpers({
   productlist() {
     return Product.find()},
