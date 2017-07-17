@@ -1,11 +1,3 @@
-if(Meteor.isClient){
-    Template.showAll.onCreated(function(){
-      Meteor.subscribe('product');
-    });
-    Template.showAll.onCreated(function(){
-      Meteor.subscribe('allusers');
-    })
-}
 Template.showAll.helpers({
   productlist() {return Product.find()},
 })

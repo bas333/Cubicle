@@ -14,7 +14,7 @@ Template.home.events ({
     console.log(Product.find());
     if (selectedcategory == "All Categories") {
       console.log("Are You here " + selectedcategory);
-      Router.go("allproducts");
+      Router.go("allproducts", {}, {query:'keywords='+searchstring});
     } else {
       Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
     }
