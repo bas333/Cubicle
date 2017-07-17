@@ -1,15 +1,16 @@
 Meteor.publish('shop_products', function(type, keywords){
   var key = new RegExp(keywords, "i");
-  console.log(type);
-  console.log(keywords)
+  console.log("publish");
   if(type){
+    console.log("Are you here?");
+    console.log(key);
     return Product.find({category:type, itemname:{$regex:key}});
   } else {
+    console.log("You are here right")
     return Product.find({itemname:{$regex:key}});
   }
-
 })
-// {category: type,itemname:{$regex: '/'+keywords+'/'}}
+
 Meteor.publish('info_allproducts', function(keywords){
   var re = new RegExp(keywords, "i");
   return Product.find({itemname:{$regex:re}});

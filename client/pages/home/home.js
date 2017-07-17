@@ -10,12 +10,13 @@ Template.home.onRendered(function(){
 Template.home.events ({
   'click #shopnow' (elt,instance){
     var selectedcategory = instance.$('#category :selected').text();
+    var searchstring = instance.$('#input').val();
     console.log(Product.find());
     if (selectedcategory == "All Categories") {
       console.log("Are You here " + selectedcategory);
       Router.go("allproducts");
     } else {
-      Router.go("shop", {}, {query:'type='+selectedcategory});
+      Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
     }
   },
 
@@ -32,10 +33,22 @@ Template.home.events ({
   				updateRec();
   			};
   			recognition.onresult = function(event) {
+          console.log(event);
   				var text = "";
   			    for (var i = event.resultIndex; i < event.results.length; ++i) {
   			    	text += event.results[i][0].transcript;
   			    }
+            if(event.results[i][0].transcript.includes('search')){
+              var selectedcategory = instance.$('#category :selected').text();
+              var searchstring = instance.$('#input').val();
+              console.log(Product.find());
+              if (selectedcategory == "All Categories") {
+                console.log("Are You here " + selectedcategory);
+                Router.go("allproducts");
+              } else {
+                Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
+              }
+            }
   			    setInput(text);
   				stopRecognition();
   			};

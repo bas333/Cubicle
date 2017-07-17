@@ -78,11 +78,12 @@ Template.addproduct.events({
   			    	text += event.results[i][0].transcript;
               if(event.results[i][0].transcript.includes('stop')){
                 console.log("stop recording");
-                instance.$('#itemname').val("");
-                instance.$('#price').val("");
-                instance.$('#condition').val("");
-                instance.$('#category').val("");
-                instance.$('#description').val("");
+                $('#itemname').val("");
+                $('#price').val("");
+                $('#condition').val()==null;
+                $('#category').val()==null;
+                $('#description').val("");
+
                 console.log("hihihi");
                 recognition.stop();
                 stopRecognition();
@@ -114,13 +115,14 @@ Template.addproduct.events({
                 console.log(description);
                 console.log(condition);
                 Meteor.call('product.insert',productinfo);
+
                 console.log("weweewe");
                 recognition.stop();
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
-                instance.$('#condition').val("");
-                instance.$('#category').val("");
+                instance.$('#condition').val()==null;
+                instance.$('#category').val()==null;
                 instance.$('#description').val("");
                 console.log("you stop we stop");
                 stopRecognition();
@@ -157,8 +159,8 @@ Template.addproduct.events({
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
-                instance.$('#condition').val("");
-                instance.$('#category').val("");
+                instance.$('#condition').val()==null;
+                instance.$('#category').val()==null;
                 instance.$('#description').val("");
                 console.log("mmm");
                 stopRecognition();
@@ -206,10 +208,12 @@ Template.addproduct.events({
   				data: JSON.stringify({ query: text, lang: "en", sessionId: "66666666" }),
   				success: function(data) {
   					setResponse(JSON.stringify(data, undefined, 2));
+            console.log("---");
             console.log(data);
             console.log($("#category").val());
             var isAdded=false;
             if($("#category").val()==null){
+              console.log("into category");
               console.log($("#category").val());
               if(data.result.parameters.Category!=""){
                 console.log(data.result.parameters.Category);
@@ -219,25 +223,53 @@ Template.addproduct.events({
                 responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.8});
               }
             }
+            console.log($("#price").val());
+            if($("#price").val()==""){
+              console.log("into price");
+              if(data.result.parameters.Price!=""){
+                $("#price").val(data.result.parameters.Price);
+              }else if(data.result.parameters.Price==""){
+                responsiveVoice.speak("What is the price of this product?","UK English Female");
+                if(data.result.metadata.intentName!="AddItem"){
+                  $("#price").val(text);
+                }
+                return;
+              }
+            }
+            console.log($("#itemname").val());
             if($("#itemname").val()==""){
+              console.log("into itemname");
               if(data.result.parameters.Name!=""){
                 $("#itemname").val(data.result.parameters.Name);
               }else if(data.result.parameters.Name==""||("#itemname").val()==""){
                 responsiveVoice.speak("What is the name of this product?","UK English Female");
-                $("#itemname").val(text);
+                console.log(data.result.parameters.Name=="");
+                console.log(data.result.parameters.Detaildescription=="");
+                console.log(data.result.parameters.Price=="");
+                console.log(data.result.parameters.Condition=="");
+                console.log(data.result.parameters.Category=="");
+                console.log(data.result.parameters.Name==""&&data.result.parameters.Detaildescription=="");
+                if(data.result.parameters.Name==""&&data.result.parameters.Detaildescription==""&&data.result.parameters.Category==""&&data.result.parameters.Condition==""){
+                  $("#itemname").val(text);
+                }
                 return;
               }
             }
+            console.log($("#condition").val());
             if($("#condition").val()==null){
+              console.log("into condition");
               if(data.result.parameters.Quality!=""){
                 $("#condition").val(data.result.parameters.Quality).trigger("change");
+                return;
               }else if(data.result.parameters.Quality==""){
                 responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
                 $("#condition").val(text);
                 return;
               }
             }
+            console.log($("#price").val());
             if($("#price").val()==""){
+              console.log("into price");
               if(data.result.parameters.Price!=""){
                 $("#price").val(data.result.parameters.Price);
               }else if(data.result.parameters.Price==""){
@@ -246,7 +278,9 @@ Template.addproduct.events({
                 return;
               }
             }
+            console.log($("#description").val());
             if($("#description").val()==""){
+              console.log("into description");
               if(data.result.parameters.Detaildescription==""){
                 responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
                 $("#description").val(text);

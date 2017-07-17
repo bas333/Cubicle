@@ -4,7 +4,6 @@
 
 
 <template name="createinfo">
-  <!--<h2>Create a New Product</h2>-->
   {{> addproduct}}
   <hr>
   {{> showproduct}}
@@ -12,42 +11,18 @@
 </template>
 
 <template name="addproduct">
-  <!-- <div>
-  <form method="post">
-    <div>
-        <label for="itemname">Product Name:</label>
-        <input type="text" id="itemname">
-    </div> -->
-    <!-- <div>
-      <label for="category">Category:</label>
-        <select name="select" id="category" class="ui search dropdown">
-            <option value="Textbooks/Books">Textbooks/Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
-            <option value="Furniture/Home">Furniture/Home</option>
-            <option value="Art/Handcrafts">Art/Handcrafts</option>
-            <option value="Others">Others</option>
-          </select>
+  <div class="voice_search">
+      <h2 class="ui dividing header">Create a New Product</h2>
+      <div class="ui form">
+        <div class="field">
+          <input type="text" id="usersay">
+        </div>
+        <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
     </div>
-      <div>
-          <label for="price">Price:</label>
-          <input type="number" id="price">$
-      </div>
-      <div>
-        <label for="condition">Condition:</label>
-          <select name="select" id="condition" class="ui search dropdown"> -->
+</div>
+
   <div class="productform">
   <form class="ui form" method="post">
-    <h4 class="ui dividing header">Create a Post for your Product</h4>
-      <div class="voice_search">
-        <div class="ui form">
-          <div class="field">
-            <input type="text" id="usersay">
-          </div>
-          <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
-        </div>
-      </div>
-      <br>
       <div class="field">
         <label for="itemname">Product Name:</label>
         <input type="text" id="itemname">
@@ -72,10 +47,10 @@
         <div class="field">
           <label for="condition">Condition:</label>
           <select name="select" class="ui fluid dropdown" id="condition">
-            <option value="likenew">like new</option>
+            <option value="like new">like new</option>
             <option value="very good" selected>very good</option>
-            <option value="good" selected>good</option>
-            <option value="acceptable" selected>acceptable</option>
+            <option value="good">good</option>
+            <option value="acceptable">acceptable</option>
           </select>
         </div>
       </div>
