@@ -54,6 +54,13 @@ Template.addproduct.events({
       var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
       var baseUrl = "https://api.api.ai/v1/";
       switchRecognition();
+      function switchRecognition() {
+  			if (recognition) {
+  				stopRecognition();
+  			} else {
+  				startRecognition();
+  			}
+  		}
       function startRecognition() {
   			recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
@@ -73,9 +80,43 @@ Template.addproduct.events({
                 instance.$('#description').val("");
                 recognition.stop();
                 stopRecognition();
-              }
-               if(event.results[i][0].transcript.includes('submit')){
+              }else if(event.results[i][0].transcript.includes('submit')){
                 console.log("user want to submit");
+                const itemname = instance.$('#itemname').val();
+                const condition=instance.$('#condition :selected').val();
+                const category=instance.$('#category :selected').val();
+                const description= instance.$('#description').val();
+                const price= instance.$('#price').val();
+                var status=instance.$('#sold').val();
+                const buyer=instance.$('#buyer').val();
+                var productinfo =
+                {
+                  itemname:itemname,
+                  price:price,
+                  condition:condition,
+                  category:category,
+                  description:description,
+                  createdAt:new Date(),
+                  buyer:buyer,
+                  owner:Meteor.userId()
+                }
+                console.log(itemname);
+                console.log(price);
+                console.log(category);
+                console.log(description);
+                console.log(condition);
+                Meteor.call('product.insert',productinfo);
+
+                recognition.stop();
+                console.log('adding'+itemname);
+                instance.$('#itemname').val("");
+                instance.$('#price').val("");
+                instance.$('#condition').val("");
+                instance.$('#category').val("");
+                instance.$('#description').val("");
+                stopRecognition();
+              }else if(instance.$('#itemname').val()!=""&&instance.$('#price').val()!=""&&instance.$('#condition').val()!=""&&instance.$('#category').val()!=""&&instance.$('#description').val()!=""){
+                console.log("user has filled all the fields")
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
                 const category=instance.$('#category :selected').val();
@@ -132,13 +173,6 @@ Template.addproduct.events({
   			}
   			updateRec();
   		}
-  		function switchRecognition() {
-  			if (recognition) {
-  				stopRecognition();
-  			} else {
-  				startRecognition();
-  			}
-  		}
   		function setInput(text) {
   			$("#usersay").val(text);
   			send();
@@ -169,19 +203,23 @@ Template.addproduct.events({
               $("#itemname").val(data.result.parameters.Name);
             }else if(data.result.parameters.Name==""){
               responsiveVoice.speak("What is the name of this product?","UK English Female");
+              $("#itemname").val(text);
             }
             if(data.result.parameters.Quality!=""){
               $("#condition").val(data.result.parameters.Quality).trigger("change");
             }else if(data.result.parameters.Quality==""){
               responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
+              $("#condition").val(text);
             }
             if(data.result.parameters.Price!=""){
               $("#price").val(data.result.parameters.Price);
             }else if(data.result.parameters.Price==""){
                 responsiveVoice.speak("What is the price of this product?","UK English Female");
+                $("#price").val(text);
             }
             if(data.result.parameters.Detaildescription==""){
               responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
+              $("#description").val(text);
             }
   				},
   				error: function() {
