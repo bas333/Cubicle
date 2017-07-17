@@ -7,10 +7,10 @@ Template.singleitem.events({
   'click #add'(elt,instance){
     if (AllUsers.findOne({owner:Meteor.userId()})!=undefined){
       Meteor.call('product.addcart',Meteor.userId(),this);
+        alert('Item added to cart');
     }else{
       alert('Please log in first.')
     }
-    alert('Item added to cart')
   }
 })
 Template.singleitem.helpers({
