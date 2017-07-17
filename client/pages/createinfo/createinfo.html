@@ -27,7 +27,6 @@
         <label for="itemname">Product Name:</label>
         <input type="text" id="itemname">
       </div>
-
       <div class="three fields">
         <div class="field">
           <label for="category">Category:</label>
@@ -82,9 +81,7 @@
   <tbody>
     {{#each p in productlist}}
       {{#if isOwner p}}
-
           {{> ownerproduct p=p}}
-
       {{/if}}
     {{/each}}
   </tbody>
