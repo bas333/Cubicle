@@ -28,6 +28,9 @@ tr#productrow.solditem{
 .productaccess{
   padding:5em;
 }
-.productform .voice_search {
+
+.voice_search {
   text-align: center;
+  padding:5em;
+  padding-bottom: 0;
 }

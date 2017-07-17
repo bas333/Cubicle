@@ -4,7 +4,6 @@
 
 
 <template name="createinfo">
-  <h2>Create a New Product</h2>
   {{> addproduct}}
   <hr>
   {{> showproduct}}
@@ -12,18 +11,18 @@
 </template>
 
 <template name="addproduct">
+  <div class="voice_search">
+      <h2 class="ui dividing header">Create a New Product</h2>
+      <div class="ui form">
+        <div class="field">
+          <input type="text" id="usersay">
+        </div>
+        <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
+    </div>
+</div>
+
   <div class="productform">
   <form class="ui form" method="post">
-    <h4 class="ui dividing header">Create a Post for your Product</h4>
-      <div class="voice_search">
-        <div class="ui form">
-          <div class="field">
-            <input type="text" id="usersay">
-          </div>
-          <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
-        </div>
-      </div>
-      <br>
       <div class="field">
         <label for="itemname">Product Name:</label>
         <input type="text" id="itemname">
@@ -49,8 +48,8 @@
           <select name="select" class="ui fluid dropdown" id="condition">
             <option value="likenew">like new</option>
             <option value="very good" selected>very good</option>
-            <option value="good" selected>good</option>
-            <option value="acceptable" selected>acceptable</option>
+            <option value="good">good</option>
+            <option value="acceptable">acceptable</option>
           </select>
         </div>
       </div>
