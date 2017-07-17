@@ -6,7 +6,7 @@ Template.shop.onRendered(function(){
 })
 
 Template.shop.events({
-  'click .return' (elt,instance) {
+  'click #return' (elt,instance) {
     Router.go("home");
   }
 })

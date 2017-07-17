@@ -19,3 +19,13 @@ div#productrow .unsolditem{
 div#productrow .solditem{
   color: rgb(172, 173, 175);
 }
+
+.productform{
+  padding:5em;
+}
+.displayproduct{
+  padding:5em;
+}
+.productaccess{
+  padding:5em;
+}
