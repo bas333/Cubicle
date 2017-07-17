@@ -22,3 +22,11 @@
 .showuser h1{
   padding-left: calc(50% - 431px);
 }
+
+.profileprint{
+  padding:5em;
+}
+.deletebutton{
+  padding-right: 40em;
+  text-align: right;
+}

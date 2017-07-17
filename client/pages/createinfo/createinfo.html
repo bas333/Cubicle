@@ -1,11 +1,5 @@
-<head>
-  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
-</head>
-
-
-
-
 <template name="createinfo">
+  <h2>Create a New Product</h2>
   {{> addproduct}}
   <hr>
   {{> showproduct}}
@@ -13,55 +7,93 @@
 </template>
 
 <template name="addproduct">
-  <div class="form-style-5">
-    <div class="voice_search">
-      <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
-      <input type="text" id="usersay">
+<<<<<<< HEAD
+  <div>
+  <form method="post">
+    <div>
+        <label for="itemname">Product Name:</label>
+        <input type="text" id="itemname">
     </div>
-  <form action="/my-handling-form-page" method="post">
     <div>
       <label for="category">Category:</label>
-        <select name="select" id="category">
-            <option value="textbooks/books">Textbooks/Books</option>
-            <option value="electronics">Electronics</option>
-            <option value="clothes,shoes,and accessories">Clothes,Shoes,and Accessories</option>
-            <option value="furniture/home">Furniture/Home</option>
-            <option value="art/handcrafts">Art/Handcrafts</option>
-            <option value="others">Others</option>
+        <select name="select" id="category" class="ui search dropdown">
+            <option value="Textbooks/Books">Textbooks/Books</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
+            <option value="Furniture/Home">Furniture/Home</option>
+            <option value="Art/Handcrafts">Art/Handcrafts</option>
+            <option value="Others">Others</option>
           </select>
     </div>
-      <div>
+      <!-- <div>
           <label for="itemname">Product Name:</label>
           <input type="text" id="itemname">
-      </div>
+      </div> -->
       <div>
           <label for="price">Price:</label>
-          $<input type="text" id="price">
+          <input type="number" id="price">$
       </div>
       <div>
         <label for="condition">Condition:</label>
-          <select name="select" id="condition">
-            <option value="like new">like new</option>
-            <option value="very good">very good</option>
-            <option value="good">good</option>
-            <option value="acceptable">acceptable</option>
+          <select name="select" id="condition" class="ui search dropdown">
+=======
+  <div class="productform">
+  <form action="/my-handling-form-page" class="ui form" method="post">
+    <h4 class="ui dividing header">Create a Post for your Product</h4>
+      <div class="voice_search">
+        <div class="ui form">
+          <div class="field">
+            <input type="text" id="usersay">
+          </div>
+          <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
+        </div>
+      </div>
+      <br>
+        <div class="field">
+          <label for="category">Category:</label>
+            <select name="select" class="ui fluid dropdown" id="category">
+              <option value="Textbooks/Books">Textbooks/Books</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
+              <option value="Furniture/Home">Furniture/Home</option>
+              <option value="Art/Handcrafts">Art/Handcrafts</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+      <div class="three fields">
+        <div class="field">
+          <label for="itemname">Product Name:</label>
+          <input type="text" id="itemname">
+        </div>
+        <div class="field">
+          <label for="price">Price: $</label>
+          <input type="number" id="price">
+        </div>
+        <div class="field">
+        <label for="condition">Condition:</label>
+          <select name="select" class="ui fluid dropdown" id="condition">
+            <option value="likenew">like new</option>
+            <option value="very good" selected>very good</option>
+            <option value="good" selected>good</option>
+            <option value="acceptable" selected>acceptable</option>
           </select>
       </div>
-      <div>
-        <label for="description">Please enter more detailed product description here</label>
-        <input type="text" id="description">
-      </div>
-    </form>
 
-  <button id="addproduct" class="btn btn-primary">
-    Submit
-  </button>
+    </div>
+      <div class="field">
+        <label for="description">Please enter more detailed product description here</label>
+        <textarea rows="2" id="description"></textarea>
+      </div>
+      <button class="ui button" id="addproduct" type="submit">Submit</button>
+    </form>
   </div>
 </template>
 
 <template name="showproduct">
   {{#if currentUser}}
-  <table class="table">
+  <div class="displayproduct">
+  <table class="ui celled padded table">
+  <thead>
     <tr>
       <th>Product Name</th>
       <th>Price</th>
@@ -72,6 +104,8 @@
       <th>Update</th>
       <th>Remove</th>
     </tr>
+  </thead>
+  <tbody>
     {{#each p in productlist}}
       {{#if isOwner p}}
 
@@ -79,19 +113,26 @@
 
       {{/if}}
     {{/each}}
+  </tbody>
   </table>
+  </div>
   {{else}}
+  <div class="productaccess">
     <h1>You must log in to access the information. {{> loginButtons}}</h1>
     <hr>
+  </div>
   {{/if}}
 </template>
 
 <template name="productrow">
-    <td><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></td>
+    <td>
+      <h2 class="ui center aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
+    </td>
     <td>{{p.price}}</td>
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
     <td>{{p.description}}</td>
+
 </template>
 
 <template name="ownerproduct">
@@ -101,9 +142,10 @@
       <div>
       <input type="checkbox" name="status" value="sold" id="jsstatus"><abbr title="Once an item is marked sold, it can not be marked unsold">sold</abbr><br>
     </div>
+
     </td>
     <td>
-      <button type="button" id="enableedit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal_{{p._id}}">
+      <button type="button" id="enableedit" class="tiny ui button" data-toggle="modal" data-target="#myModal_{{p._id}}">
         Edit
       </button>
     <div class="modal fade" id="myModal_{{p._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

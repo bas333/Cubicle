@@ -11,7 +11,7 @@ Template.showAll.helpers({
 })
 
 Template.allproducts.events({
-  'click .return' (elt,instance) {
+  'click #return' (elt,instance) {
     Router.go("home");
   }
 })

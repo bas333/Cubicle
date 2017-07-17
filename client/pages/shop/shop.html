@@ -1,12 +1,12 @@
 <template name="shop">
-  <table class="table">
+  <div class="shop-table">
+  <table class="ui celled padded table">
     <thead>
       <tr>
         <th>Product Name</th>
         <th>Category</th>
         <th>Price</th>
         <th>Condition</th>
-        <!-- <th>Category</th> -->
         <th>Description</th>
         <th>Status</th>
         </tr>
@@ -19,12 +19,13 @@
 </table>
 
 <div class = "return-home">
-  <button class="return"> Home </button>
+  <button class="ui button" id="return"> Home </button>
+</div>
 </div>
 </template>
 
 <template name="itemrow">
-  <td>{{item.itemname}}</td>
+  <td><h3 class="ui center aligned header">{{item.itemname}}</h3></td>
   <td>{{item.category}}</td>
   <td>{{item.price}}</td>
   <td>{{item.condition}}</td>
