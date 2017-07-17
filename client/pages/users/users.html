@@ -56,68 +56,67 @@
 
 <template name="showprofile">
   <div class="profileprint">
-  <p><strong>Name: {{person.username}} </strong><button class="edit" id="editName" >Edit</button></p>
-     <div id="newname">  <input type="text" id="usernameUpdate" value={{person.username}}>
-    <p><button class="edit" id="updateUsername1">updateName</button>
-    <button class="cancle" id="cancleName">Cancle</button></p></div>
+  <h1 class="ui dividing header"> Welcome {{person.username}} !</h1>
+  <p><strong>Name: {{person.username}} </strong><i class="edit icon" id="editName"></i></p>
+     <div class="ui form"><div class="two wide field" id="newname">  <input type="text" id="usernameUpdate" value={{person.username}}>
+    <p><i class="checkmark icon" id="updateUsername1">Update</i></p>
+    <p><i class="remove circle icon" id="cancleName">Cancel</i></p></div></div>
 
     <p><strong> School: {{person.school}}</strong> </p>
 
-    <p><strong> Age: {{person.age}}</strong> <button class="edit" id="editAge">Edit</button></p>
+    <p><strong> Age: {{person.age}}</strong> <i class="edit icon" id="editAge"></i></p>
     <div id="newage">
-    <select class="form-control" id="age2">
+    <select class="ui fluid dropdown" id="age2">
       {{#each number in numberList}}
         <option>{{number}}</option>
       {{/each}}
     </select>
-    <p><button class="edit" id="updateAge">updateAge</button>
-    <button class="cancle" id="cancleAge">Cancle</button></p>
+    <p><i class="checkmark icon" id="updateAge">Update</i></p>
+    <p><i class="remove circle icon" id="cancleAge">Cancel</i></p>
     </div>
 
-    <p><strong> Gender: {{person.gender}} </strong><button class="edit" id="editGender">Edit</button></p>
+    <p><strong> Gender: {{person.gender}} </strong><i class="edit icon" id="editGender"></i></p>
     <div id="newgender">
       <strong>Gender</strong><br>
       <input type="radio" name="gender" id="male1" checked> Male<br>
       <input type="radio" name="gender" id="female1"> Female<br>
       <input type="radio" name="gender" id="other1"> Other<br>
-      <p><button class="edit" id="updateGender">updateGender</button>
-      <button class="cancle" id="cancleGender">Cancle</button></p>
+      <p><i class="checkmark icon" id="updateGender">Update</i></p>
+      <p><i class="remove circle icon" id="cancleGender">Cancel</i></p>
     </div>
 
-    <p><strong> Email: {{person.email}}</strong> <button class="edit" id="editEmail" >Edit</button></p>
-     <div id="newemail" ><input type="text" id="emailUpdate"><p>
-     <button class="edit" id="updateEmail">updateEmail</button>
-     <button class="cancle" id="cancleEmail">Cancle</button></p>
+    <p><strong> Email: {{person.email}}</strong><i class="edit icon" id="editEmail"></i></p>
+     <div class="ui form" id="newemail"><div class="two wide field"><input type="text" id="emailUpdate">
+     <p><i class="checkmark icon" id="updateEmail">Update</i></p>
+     <p><i class="remove circle icon" id="cancleEmail">Cancel</i></p>
+    </div>
      </div>
 
 
 
     <p> <strong>Payment Method: {{person.paymethod}}</strong>
-    <button class="edit" id="editPaymethod" >Edit</button></p>
+    <i class="edit icon" id="editPaymethod"></i></p>
     <div id="newpayment">
       <strong>Payment Method</strong><br>
     <input type="checkbox" name="payment" value="Paypal">Paypal<br>
     <input type="checkbox" name="payment" value="Venmo">Venmo<br>
     <input type="checkbox" name="payment" value="Cash">Cash<br>
-    <button class="edit" id="updatePaymethod">updatePayment</button>
-    <button class="cancle" id="canclePaymethod">Cancle</button>
+    <p><i class="checkmark icon" id="updatePaymethod">Update</i></p>
+    <p><i class="remove circle icon" id="canclePaymethod">Cancel</i></p>
     </div>
     </div>
-
-
-
-  <p><span class="glyphicon glyphicon glyphicon-erase" id="removeProfile" aria-hidden="true">delete</span></p>
+    <div class="deletebutton">
+      <p><span class="glyphicon glyphicon glyphicon-erase" id="removeProfile" aria-hidden="true">Delete</span></p>
+    </div>
 </template>
 
 
 <template name="showuser">
   <div class="showuser">
-  <h1>This is your Profile</h1>
-  <hr>
   {{#each p in peoplelist}}
     {{#if currentUser}}
       {{#if isOwner p}}
-        {{>showprofile person=p}}<hr>
+        {{>showprofile person=p}}
       {{/if}}
     {{/if}}
   {{/each}}

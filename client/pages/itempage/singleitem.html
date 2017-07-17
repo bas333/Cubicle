@@ -1,9 +1,25 @@
 <template name="singleitem">
-<ul>
-  <li> Item Name: {{itemname}}</li>
-  <li> Category: {{category}}</li>
-  <li> Price: {{price}}</li>
-  <li> Condition: {{condition}}</li>
-  <li> Description: {{description}}</li>
-</ul>
+<div class="singleitempage">
+  <div class="ui items">
+    <div class="item">
+      <div class="image">
+        <img src="https://images-na.ssl-images-amazon.com/images/I/51mP8PKeAVL._SX258_BO1,204,203,200_.jpg">
+      </div>
+      <div class="content">
+          <a class="header">{{itemname}}</a>
+        <div class="meta">
+          <span class="price">${{price}}</span>
+        </div>
+      <div class="description">
+        {{category}}<br>
+        Condition: {{condition}}<br>
+        Description: {{description}}
+      </div>
+      <div class="extra">
+        Additional Details
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
 </template>

@@ -18,3 +18,16 @@ tr#productrow.unsolditem{
 tr#productrow.solditem{
   color: rgb(172, 173, 175);
 }
+
+.productform{
+  padding:5em;
+}
+.displayproduct{
+  padding:5em;
+}
+.productaccess{
+  padding:5em;
+}
+.productform .voice_search {
+  text-align: center;
+}

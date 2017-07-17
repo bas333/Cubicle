@@ -2,19 +2,18 @@ Template.home.helpers ({
   productlist() {return Product.find()},
 })
 
+Template.home.onRendered(function(){
+  $('#category').select2();
+})
+
 
 Template.home.events ({
   'click #shopnow' (elt,instance){
     var selectedcategory = instance.$('#category :selected').text();
-    var searchstring = instance.$('#input').val();
     console.log(Product.find());
     if (selectedcategory == "All Categories") {
-      if(searchstring != "") {
-        Router.go("allproducts", {}, {query:'keywords='+searchstring});
-      } else {
-        console.log("Are you here!");
-        Router.go("allproducts");
-      }
+      console.log("Are You here " + selectedcategory);
+      Router.go("allproducts");
     } else {
       Router.go("shop", {}, {query:'type='+selectedcategory});
     }
@@ -81,7 +80,8 @@ Template.home.events ({
   				data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
   				success: function(data) {
   					setResponse(JSON.stringify(data, undefined, 2));
-            $("#input").val(data.result.parameters.Category);
+            console.log(data.result.parameters.Category);
+            $("#category").val(data.result.parameters.Category).trigger("change");
   				},
   				error: function() {
   					setResponse("Internal Server Error");
@@ -93,7 +93,7 @@ Template.home.events ({
   			$("#response").text(val);
   		}
   },
-  'keypress #input' (elt,instance){
+  'keypress #category' (elt,instance){
     if (event.which == 13) {
       event.preventDefault();
       send();

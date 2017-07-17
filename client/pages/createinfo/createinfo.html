@@ -1,4 +1,5 @@
 <template name="createinfo">
+  <h2>Create a New Product</h2>
   {{> addproduct}}
   <hr>
   {{> showproduct}}
@@ -6,11 +7,15 @@
 </template>
 
 <template name="addproduct">
-  <div class="form-style-5">
-  <form action="/my-handling-form-page" method="post">
+  <div>
+  <form method="post">
+    <div>
+        <label for="itemname">Product Name:</label>
+        <input type="text" id="itemname">
+    </div>
     <div>
       <label for="category">Category:</label>
-        <select name="select" id="category">
+        <select name="select" id="category" class="ui search dropdown">
             <option value="Textbooks/Books">Textbooks/Books</option>
             <option value="Electronics">Electronics</option>
             <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
@@ -19,26 +24,27 @@
             <option value="Others">Others</option>
           </select>
     </div>
-      <div>
+      <!-- <div>
           <label for="itemname">Product Name:</label>
           <input type="text" id="itemname">
-      </div>
+      </div> -->
       <div>
           <label for="price">Price:</label>
           <input type="number" id="price">$
       </div>
       <div>
         <label for="condition">Condition:</label>
-          <select name="select" id="condition">
+          <select name="select" id="condition" class="ui search dropdown">
             <option value="likenew">like new</option>
             <option value="very good" selected>very good</option>
             <option value="good">good</option>
             <option value="acceptable">acceptable</option>
           </select>
       </div>
+    </div>
       <div>
         <label for="description">Please enter more detailed product description here</label>
-        <input type="text" id="description">
+        <textarea rows="2" id="description"></textarea>
       </div>
     </form>
 
