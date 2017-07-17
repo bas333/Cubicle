@@ -10,7 +10,6 @@ Template.singleitem.events({
     }else{
       alert('Please log in first.')
     }
-    alert('Item added to cart')
   }
 })
 Template.singleitem.helpers({
