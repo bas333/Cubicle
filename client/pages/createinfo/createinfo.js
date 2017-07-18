@@ -94,7 +94,7 @@ Template.addproduct.events({
                 $('#itemname').val("");
                 $('#price').val("");
                 $('#condition').val()==null;
-                $('#category_info').val()==null;
+                $('#category').val()==null;
                 $('#description').val("");
 
                 console.log("hihihi");
@@ -134,12 +134,12 @@ Template.addproduct.events({
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
                 instance.$('#condition').val()==null;
-                instance.$('#category_info').val()==null;
+                instance.$('#category').val()==null;
                 instance.$('#description').val("");
                 console.log("you stop we stop");
                 recognition.stop();
                 stopRecognition();
-              }else if(instance.$('#itemname').val()!=""&&instance.$('#price').val()!=""&&instance.$('#condition').val()!=""&&instance.$('#category_info').val()!=""&&instance.$('#description').val()!=""){
+              } else if((instance.$('#itemname').val()!="")&&(instance.$('#price').val()!="")&&(instance.$('#condition').val()!="")&&(instance.$('#category').val()!="")&&(instance.$('#description').val()!="Please say description now")&&(instance.$('#description').val()!="")){
                 console.log("user has filled all the fields")
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
@@ -173,7 +173,7 @@ Template.addproduct.events({
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
                 instance.$('#condition').val()==null;
-                instance.$('#category_info').val()==null;
+                instance.$('#category').val()==null;
                 instance.$('#description').val("");
                 console.log("mmm");
                 stopRecognition();
@@ -221,29 +221,34 @@ Template.addproduct.events({
   				data: JSON.stringify({ query: text, lang: "en", sessionId: "66666666" }),
   				success: function(data) {
   					setResponse(JSON.stringify(data, undefined, 2));
+            var substring1="stop";
+            var substring2="submit";
+            if(text.includes(substring1)||text.includes(substring2)){
+              console.log("into stop or submit condition");
+            }else{
             console.log("---");
             console.log(data);
             console.log($("#category_info").val());
             var isAdded=false;
-            if($("#category_info").val()==null){
+            if($("#category").val()==null){
               console.log("into category");
-              console.log($("#category_info").val());
+              console.log($("#category").val());
               console.log(data.result.parameters.Category);
               if(data.result.parameters.Category!=""){
                 console.log(data.result.parameters.Category);
-                $("#category_info").val(data.result.parameters.Category).trigger("change");
-                $("#category_info").val();
+                $("#category").val(data.result.parameters.Category).trigger("change");
+                $("#category").val();
                 responsiveVoice.speak("Category added");
                 responsiveVoice.speak("What is the price of this product?","UK English Female");
 
               }else if(data.result.parameters.Category==""){
-                if(data.result.parameters.Category==""&&instance.$("#category_info").val()==null){
+                if(data.result.parameters.Category==""&&instance.$("#category").val()==null){
                   responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.8});
                   console.log("enter first condition for category!!!");
-                  //instance.$("#category_info").val("Please say category now");
-                }else if(data.result.parameters.Category==""&&instance.$("#category_info").val()!=""){
+                  //instance.$("#category").val("Please say category now");
+                }else if(data.result.parameters.Category==""&&instance.$("#category").val()!=""){
                   console.log("enter second category condition!!!!");
-                  instance.$("#category_info").val(text);
+                  instance.$("#category").val(text);
                   responsiveVoice.speak("Category added");
                   responsiveVoice.speak("What is the price of this product?","UK English Female");
                 }
@@ -337,7 +342,7 @@ Template.addproduct.events({
               }
               return;
   				    }
-            },
+            }},
   				error: function() {
   					setResponse("Internal Server Error");
   				}
