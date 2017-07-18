@@ -11,7 +11,7 @@
 </template>
 
 <template name="addproduct">
-  <div class="voice_search">
+  <div class="voice_search_productpage">
       <h2 class="ui dividing header">Create a New Product</h2>
       <div class="ui form">
         <div class="field">
@@ -27,10 +27,10 @@
         <label for="itemname">Product Name:</label>
         <input type="text" id="itemname">
       </div>
-
       <div class="three fields">
         <div class="field">
           <label for="category">Category:</label>
+<<<<<<< HEAD
             <select name="select" class="ui fluid dropdown" id="category">
               <option value="textbooks/books">Textbooks/Books</option>
               <option value="electronics">Electronics</option>
@@ -38,6 +38,15 @@
               <option value="furniture/home">Furniture/Home</option>
               <option value="art/handcrafts">Art/Handcrafts</option>
               <option value="others">Others</option>
+=======
+            <select name="select" class="ui fluid dropdown" id="category_info">
+              <option value="Textbooks/Books">Textbooks/Books</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
+              <option value="Furniture/Home">Furniture/Home</option>
+              <option value="Art/Handcrafts">Art/Handcrafts</option>
+              <option value="Others">Others</option>
+>>>>>>> 47ef2135af5f6a63ee28f033afc12ba2e76bdd8f
             </select>
           </div>
         <div class="field">
@@ -84,9 +93,7 @@
   <tbody>
     {{#each p in productlist}}
       {{#if isOwner p}}
-
           {{> ownerproduct p=p}}
-
       {{/if}}
     {{/each}}
   </tbody>
@@ -102,7 +109,7 @@
 
 <template name="productrow">
     <td>
-      <h2 class="ui center aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
+      <h2 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
     </td>
     <td>{{p.price}}</td>
     <td>{{p.condition}}</td>
@@ -131,8 +138,12 @@
             <h4 class="modal-title" id="myModalLabel">Edit Product</h4>
           </div>
           <div class="modal-body">
-            <form action="/my-handling-form-page" method="post">
-              <div>
+            <form method="post" class="ui form">
+              <div class="field">
+                  <label for="itemname">Product Name:</label>
+                  <input type="text" id="newitemname_{{p._id}}" value="{{p.itemname}}">
+              </div>
+              <div class="field">
                 <label for="category">Category:</label>
                   <select name="select" id="newcategory" value={{p.category}}>
                       <option value="Textbooks/Books">Textbooks/Books</option>
@@ -143,15 +154,12 @@
                       <option value="Others">Others</option>
                     </select>
               </div>
-                <div>
-                    <label for="itemname">Product Name:</label>
-                    <input type="text" id="newitemname_{{p._id}}" value="{{p.itemname}}">
+
+                <div class="field">
+                    <label for="price">Price: $</label>
+                    <input type="number" id="newprice" value={{p.price}}>
                 </div>
-                <div>
-                    <label for="price">Price:</label>
-                    <input type="number" id="newprice" value={{p.price}}>$
-                </div>
-                <div>
+                <div class="field">
                   <label for="condition">Condition:</label>
                     <select name="select" id="newcondition" select={{p.condition}}>
                       <option value="likenew">like new</option>
@@ -160,15 +168,15 @@
                       <option value="acceptable">acceptable</option>
                     </select>
                 </div>
-                <div>
+                <div class="field">
                   <label for="description">Please enter more detailed product description here</label>
                   <input type="text" id="newdescription" value={{p.description}}>
                 </div>
               </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="updateitem">Save changes</button>
+            <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+            <button type="button" class="ui button small primary" id="updateitem">Save changes</button>
           </div>
         </div>
       </div>

@@ -1,11 +1,10 @@
 /*html{overflow-y:scroll; overflow-x:hidden;}*/
-/*body{
+body{
   margin:0;
   padding:0;
-  font-size:20px;
+  font-size:30px;
   line-height:1.6;
-  background-image: url("images/background-FloralWhite.jpg");
-}*/
+}
 /*body .whole-home {
   background-image: url("images/Cubicle-background.png");
   background-position: center;
@@ -25,6 +24,9 @@
   position:relative;
   text-align: center;
 }*/
+.home-buttons {
+  text-align: center;
+}
 .home-header{
   padding:25px;
 }
