@@ -48,8 +48,16 @@ Template.addproduct.events({
       createdAt:new Date(),
       buyer:buyer,
       owner:Meteor.userId()
-    }
-    Meteor.call('product.insert',productinfo);
+    };
+    Meteor.call('product.insert',productinfo,
+      (err, res) => {
+        if (err) {
+          alert("Failed to add your item");
+        } else {
+          alert("Successfully added your item. You can view it by scrolling down the page.")
+        }
+      }
+    );
 
     console.log('adding'+itemname);
     instance.$('#itemname').val("");
@@ -58,6 +66,7 @@ Template.addproduct.events({
     instance.$('#category').val("");
     instance.$('#description').val("");
   },
+
   'click #additemrec':function(elt,instance){
       var recognition;
       var accessToken = "1b1610a6d61d46959c56b8d0bf607881";

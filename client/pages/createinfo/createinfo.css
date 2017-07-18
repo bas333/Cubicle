@@ -21,9 +21,12 @@ tr#productrow.solditem{
 
 .productform{
   padding:5em;
+  padding-bottom:0;
+  padding-top:0;
 }
 .displayproduct{
   padding:5em;
+  text-align: center;
 }
 .productaccess{
   padding:5em;
