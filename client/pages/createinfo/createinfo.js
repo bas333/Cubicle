@@ -26,7 +26,7 @@ Template.showproduct.helpers({
 })
 Template.addproduct.onRendered(function(){
   $("#condition").val("");
-  $("#category").val("");
+  $("#category_info").val("");
 })
 
 Template.addproduct.events({
@@ -85,7 +85,7 @@ Template.addproduct.events({
                 $('#itemname').val("");
                 $('#price').val("");
                 $('#condition').val()==null;
-                $('#category').val()==null;
+                $('#category_info').val()==null;
                 $('#description').val("");
 
                 console.log("hihihi");
@@ -95,24 +95,24 @@ Template.addproduct.events({
                 console.log("user want to submit");
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
-                const category=instance.$('#category :selected').val();
+                const category=instance.$('#category_info :selected').val();
                 const description= instance.$('#description').val();
                 const price= instance.$('#price').val();
                 var status=instance.$('#sold').val();
                 const buyer=instance.$('#buyer').val();
-                console.log("youyouyou");
+                console.log("getting fields");
                 var productinfo =
                 {
                   itemname:itemname,
                   price:price,
                   condition:condition,
-                  category:category,
+                  category:category_info,
                   description:description,
                   createdAt:new Date(),
                   buyer:buyer,
                   owner:Meteor.userId()
                 }
-                console.log("mememe");
+                console.log("print fields");
                 console.log(itemname);
                 console.log(price);
                 console.log(category);
@@ -120,21 +120,21 @@ Template.addproduct.events({
                 console.log(condition);
                 Meteor.call('product.insert',productinfo);
 
-                console.log("weweewe");
+                console.log("insert");
                 recognition.stop();
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
                 instance.$('#condition').val()==null;
-                instance.$('#category').val()==null;
+                instance.$('#category_info').val()==null;
                 instance.$('#description').val("");
                 console.log("you stop we stop");
                 stopRecognition();
-              }else if(instance.$('#itemname').val()!=""&&instance.$('#price').val()!=""&&instance.$('#condition').val()!=""&&instance.$('#category').val()!=""&&instance.$('#description').val()!=""){
+              }else if(instance.$('#itemname').val()!=""&&instance.$('#price').val()!=""&&instance.$('#condition').val()!=""&&instance.$('#category_info').val()!=""&&instance.$('#description').val()!=""){
                 console.log("user has filled all the fields")
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
-                const category=instance.$('#category :selected').val();
+                const category=instance.$('#category_info :selected').val();
                 const description= instance.$('#description').val();
                 const price= instance.$('#price').val();
                 var status=instance.$('#sold').val();
@@ -145,7 +145,7 @@ Template.addproduct.events({
                   itemname:itemname,
                   price:price,
                   condition:condition,
-                  category:category,
+                  category:category_info,
                   description:description,
                   createdAt:new Date(),
                   buyer:buyer,
@@ -164,7 +164,7 @@ Template.addproduct.events({
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
                 instance.$('#condition').val()==null;
-                instance.$('#category').val()==null;
+                instance.$('#category_info').val()==null;
                 instance.$('#description').val("");
                 console.log("mmm");
                 stopRecognition();
@@ -214,47 +214,60 @@ Template.addproduct.events({
   					setResponse(JSON.stringify(data, undefined, 2));
             console.log("---");
             console.log(data);
-            console.log($("#category").val());
+            console.log($("#category_info").val());
             var isAdded=false;
-            if($("#category").val()==null){
+            if($("#category_info").val()==null){
               console.log("into category");
-              console.log($("#category").val());
+              console.log($("#category_info").val());
+              console.log(data.result.parameters.Category);
               if(data.result.parameters.Category!=""){
                 console.log(data.result.parameters.Category);
-                $("#category").val(data.result.parameters.Category).trigger("change");
-                $("#category").val();
+                $("#category_info").val(data.result.parameters.Category).trigger("change");
+                $("#category_info").val();
               }else if(data.result.parameters.Category==""){
                 responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.8});
               }
             }
-            console.log($("#price").val());
-            if($("#price").val()==""){
+
+
+
+            console.log(instance.$("#price").val());
+            if(instance.$("#price").val()==""||instance.$("#price").val()=="0"){
               console.log("into price");
               if(data.result.parameters.Price!=""){
+                console.log("existed price");
                 $("#price").val(data.result.parameters.Price);
               }else if(data.result.parameters.Price==""){
-                responsiveVoice.speak("What is the price of this product?","UK English Female");
-                if(data.result.metadata.intentName!="AddItem"){
-                  $("#price").val(text);
-                }
+                    console.log(data.result.parameters.Price=="");
+                    console.log(($("#price").val())=="");
+                  if(data.result.parameters.Price==""&&instance.$("#price").val()==""){
+                    responsiveVoice.speak("What is the price of this product?","UK English Female");
+                    console.log("enter first condition");
+                    console.log("user said "+text);
+                    instance.$("#price").val()=="0";
+                  }else if(data.result.parameters.Price==""&&instance.$("#price").val()!=""){
+                  console.log("enter second condition");
+                  instance.$("#price").val(text);
+                  responsiveVoice.speak("Price added");
+                  }
                 return;
               }
             }
-            console.log($("#itemname").val());
-            if($("#itemname").val()==""){
+            console.log(instance.$("#itemname").val());
+            if(instance.$("#itemname").val()==""||instance.$("#itemname").val()=="Please say name now"){
               console.log("into itemname");
               if(data.result.parameters.Name!=""){
                 $("#itemname").val(data.result.parameters.Name);
-              }else if(data.result.parameters.Name==""||("#itemname").val()==""){
-                responsiveVoice.speak("What is the name of this product?","UK English Female");
-                console.log(data.result.parameters.Name=="");
-                console.log(data.result.parameters.Detaildescription=="");
-                console.log(data.result.parameters.Price=="");
-                console.log(data.result.parameters.Condition=="");
-                console.log(data.result.parameters.Category=="");
-                console.log(data.result.parameters.Name==""&&data.result.parameters.Detaildescription=="");
-                if(data.result.parameters.Name==""&&data.result.parameters.Detaildescription==""&&data.result.parameters.Category==""&&data.result.parameters.Condition==""){
-                  $("#itemname").val(text);
+              }else if(data.result.parameters.Name==""){
+                if(data.result.parameters.Name==""&&instance.$("#itemname").val()==""){
+                  responsiveVoice.speak("What is the name of this product?","UK English Female");
+                  console.log("enter first condition!!!");
+                  instance.$("#itemname").val("Please say name now");
+                }else if(data.result.parameters.Name==""&&instance.$("#itemname").val()!=""){
+                  console.log("enter second condition!!!!");
+                  instance.$("#itemname").val(text);
+                //  data.result.parameters.Name==text;
+                  responsiveVoice.speak("Name added");
                 }
                 return;
               }
