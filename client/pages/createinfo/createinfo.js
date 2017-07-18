@@ -33,7 +33,7 @@ Template.addproduct.events({
   'click #addproduct'(elt,instance){
     const itemname = instance.$('#itemname').val();
     const condition=instance.$('#condition :selected').val();
-    const category=instance.$('#category:selected').val();
+    const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
     const price= instance.$('#price').val();
     var status=instance.$('#sold').val();
