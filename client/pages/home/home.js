@@ -4,7 +4,7 @@ Template.home.helpers ({
 
 Template.home.onRendered(function(){
   this.$('#category').dropdown({on: 'hover'});
-  $('#category').select2();
+//  $('#category').select2();
 })
 
 Template.home.events ({
@@ -38,18 +38,16 @@ Template.home.events ({
   			    for (var i = event.resultIndex; i < event.results.length; ++i) {
   			    	text += event.results[i][0].transcript;
   			    }
-            if(event.results[i][0].transcript.includes('search')){
-              var selectedcategory = instance.$('#category :selected').text();
-              var searchstring = instance.$('#input').val();
-              console.log(Product.find());
-              if (selectedcategory == "All Categories") {
-                console.log("Are You here " + selectedcategory);
-                Router.go("allproducts");
-              } else {
-                Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
-              }
-            }
   			    setInput(text);
+            var selectedcategory = instance.$('#category :selected').text();
+            var searchstring = instance.$('#input').val();
+            console.log(Product.find());
+            if (selectedcategory == "All Categories") {
+              console.log("Are You here " + selectedcategory);
+              Router.go("allproducts");
+            } else {
+              Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
+            }
   				stopRecognition();
   			};
   			recognition.onend = function() {
@@ -94,7 +92,21 @@ Template.home.events ({
   				success: function(data) {
   					setResponse(JSON.stringify(data, undefined, 2));
             console.log(data.result.parameters.Category);
-            $("#category").val(data.result.parameters.Category).trigger("change");
+            console.log(data.result.parameters.Keywords);
+            if(data.result.parameters.Category==""&&data.result.parameters.Keywords==""){
+              responsiveVoice.speak("Sorry I don't understand, please say that again","UK English Female");
+            }else if(data.result.parameters.Category!=""&&data.result.parameters.Keywords==""){
+              instance.$("#category").val(data.result.parameters.Category).trigger("change");
+              responsiveVoice.speak("searching by category now!","UK English Female");
+            }else if(data.result.parameters.Category==""&&data.result.parameters.Keywords!=""){
+              instance.$('#input').val(data.result.parameters.Keywords);
+              responsiveVoice.speak("searching by keywords now!","UK English Female");
+            }else if(data.result.parameters.Category!=""&&data.result.parameters.Keywords!=""){
+              instance.$("#category").val(data.result.parameters.Category).trigger("change");
+              instance.$('#input').val(data.result.parameters.Keywords);
+              responsiveVoice.speak("searching by category and keywords now!","UK English Female");
+            }
+          //  $("#category").val(data.result.parameters.Category).trigger("change");
   				},
   				error: function() {
   					setResponse("Internal Server Error");

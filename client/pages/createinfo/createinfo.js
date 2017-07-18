@@ -26,7 +26,7 @@ Template.showproduct.helpers({
 })
 Template.addproduct.onRendered(function(){
   $("#condition").val("");
-  $("#category_info").val("");
+  $("#category").val("");
 })
 
 Template.addproduct.events({
@@ -100,11 +100,12 @@ Template.addproduct.events({
                 console.log("hihihi");
                 recognition.stop();
                 stopRecognition();
+                instance.$("#usersay").val("");
               }else if(event.results[i][0].transcript.includes('submit')){
                 console.log("user want to submit");
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
-                const category=instance.$('#category_info :selected').val();
+                const category=instance.$('#category :selected').val();
                 const description= instance.$('#description').val();
                 const price= instance.$('#price').val();
                 var status=instance.$('#sold').val();
@@ -115,7 +116,7 @@ Template.addproduct.events({
                   itemname:itemname,
                   price:price,
                   condition:condition,
-                  category:category_info,
+                  category:category,
                   description:description,
                   createdAt:new Date(),
                   buyer:buyer,
@@ -139,11 +140,12 @@ Template.addproduct.events({
                 console.log("you stop we stop");
                 recognition.stop();
                 stopRecognition();
+                instance.$("#usersay").val("");
               } else if((instance.$('#itemname').val()!="")&&(instance.$('#price').val()!="")&&(instance.$('#condition').val()!="")&&(instance.$('#category').val()!="")&&(instance.$('#description').val()!="Please say description now")&&(instance.$('#description').val()!="")){
                 console.log("user has filled all the fields")
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
-                const category=instance.$('#category_info :selected').val();
+                const category=instance.$('#category :selected').val();
                 const description= instance.$('#description').val();
                 const price= instance.$('#price').val();
                 var status=instance.$('#sold').val();
@@ -154,7 +156,7 @@ Template.addproduct.events({
                   itemname:itemname,
                   price:price,
                   condition:condition,
-                  category:category_info,
+                  category:category,
                   description:description,
                   createdAt:new Date(),
                   buyer:buyer,
@@ -228,7 +230,7 @@ Template.addproduct.events({
             }else{
             console.log("---");
             console.log(data);
-            console.log($("#category_info").val());
+            console.log($("#category").val());
             var isAdded=false;
             if($("#category").val()==null){
               console.log("into category");
@@ -268,7 +270,7 @@ Template.addproduct.events({
                     console.log(data.result.parameters.Price=="");
                     console.log(($("#price").val())=="");
                   if(data.result.parameters.Price==""&&instance.$("#price").val()==""){
-                    responsiveVoice.speak("What is the price of this product?","UK English Female");
+                    //responsiveVoice.speak("What is the price of this product?","UK English Female");
                     console.log("enter first condition");
                     console.log("user said "+text);
                     instance.$("#price").val()=="0";
@@ -290,7 +292,7 @@ Template.addproduct.events({
                 responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
               }else if(data.result.parameters.Name==""){
                 if(data.result.parameters.Name==""&&instance.$("#itemname").val()==""){
-                  responsiveVoice.speak("What is the name of this product?","UK English Female");
+                  //responsiveVoice.speak("What is the name of this product?","UK English Female");
                   console.log("enter first condition!!!");
                   instance.$("#itemname").val("Please say name now");
                 }else if(data.result.parameters.Name==""&&instance.$("#itemname").val()!=""){
@@ -313,7 +315,7 @@ Template.addproduct.events({
               }else if(data.result.parameters.Quality==""){
               //  responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
                 if(data.result.parameters.Quality==""&&instance.$("#condition").val()==""){
-                  responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
+                  //responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
                   console.log("enter first quality condition!!!");
 
                 }else if(data.result.parameters.Name==""&&instance.$("#condition").val()!=""){
@@ -328,18 +330,10 @@ Template.addproduct.events({
             console.log($("#description").val());
             if(instance.$("#description").val()==""){
               console.log("into description");
-              if(data.result.parameters.Detaildescription==!""){
-                instance.$("#description").val(data.result.parameters.Detaildescription);
-                responsiveVoice.speak("Description added");
-              }else if(data.result.parameters.Detaildescription==""){
-                if(data.result.parameters.Detaildescription==""&&instance.$("#description").val()==""){
-                  responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
-                  instance.$("#description").val("Please say description now");
-                }else if(data.result.parameters.Detaildescription==""&&instance.$("#description").val()!=""){
-                  instance.$("#description").val(text);
-                  responsiveVoice.speak("Description added");
-                }
-              }
+              console.log(data.result.parameters);
+              console.log("description: "+data.result.parameters.Detaildescription);
+              
+              instance.$("#description").val(text);
               return;
   				    }
             }},
