@@ -121,7 +121,6 @@ Template.addproduct.events({
                 Meteor.call('product.insert',productinfo);
 
                 console.log("insert");
-                recognition.stop();
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
@@ -129,6 +128,7 @@ Template.addproduct.events({
                 instance.$('#category_info').val()==null;
                 instance.$('#description').val("");
                 console.log("you stop we stop");
+                recognition.stop();
                 stopRecognition();
               }else if(instance.$('#itemname').val()!=""&&instance.$('#price').val()!=""&&instance.$('#condition').val()!=""&&instance.$('#category_info').val()!=""&&instance.$('#description').val()!=""){
                 console.log("user has filled all the fields")
@@ -225,11 +225,18 @@ Template.addproduct.events({
                 $("#category_info").val(data.result.parameters.Category).trigger("change");
                 $("#category_info").val();
               }else if(data.result.parameters.Category==""){
-                responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.8});
+                if(data.result.parameters.Category==""&&instance.$("#category_info").val()==""){
+                  responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.8});
+                  console.log("enter first condition for category!!!");
+                  //instance.$("#category_info").val("Please say category now");
+                }else if(data.result.parameters.Category==""&&instance.$("#category_info").val()!=""){
+                  console.log("enter second category condition!!!!");
+                  instance.$("#category_info").val(text);
+                  responsiveVoice.speak("Category added");
+                }
+                return;
               }
             }
-
-
 
             console.log(instance.$("#price").val());
             if(instance.$("#price").val()==""||instance.$("#price").val()=="0"){
@@ -266,7 +273,6 @@ Template.addproduct.events({
                 }else if(data.result.parameters.Name==""&&instance.$("#itemname").val()!=""){
                   console.log("enter second condition!!!!");
                   instance.$("#itemname").val(text);
-                //  data.result.parameters.Name==text;
                   responsiveVoice.speak("Name added");
                 }
                 return;
