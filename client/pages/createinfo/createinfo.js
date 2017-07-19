@@ -245,9 +245,8 @@ Template.addproduct.events({
 
               }else if(data.result.parameters.Category==""){
                 if(data.result.parameters.Category==""&&instance.$("#category").val()==null){
-                  responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.8});
+                  responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.9});
                   console.log("enter first condition for category!!!");
-                  //instance.$("#category").val("Please say category now");
                 }else if(data.result.parameters.Category==""&&instance.$("#category").val()!=""){
                   console.log("enter second category condition!!!!");
                   instance.$("#category").val(text);
@@ -270,7 +269,6 @@ Template.addproduct.events({
                     console.log(data.result.parameters.Price=="");
                     console.log(($("#price").val())=="");
                   if(data.result.parameters.Price==""&&instance.$("#price").val()==""){
-                    //responsiveVoice.speak("What is the price of this product?","UK English Female");
                     console.log("enter first condition");
                     console.log("user said "+text);
                     instance.$("#price").val()=="0";
@@ -289,17 +287,16 @@ Template.addproduct.events({
               if(data.result.parameters.Name!=""){
                 $("#itemname").val(data.result.parameters.Name);
                 responsiveVoice.speak("Name added");
-                responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
+                responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
               }else if(data.result.parameters.Name==""){
                 if(data.result.parameters.Name==""&&instance.$("#itemname").val()==""){
-                  //responsiveVoice.speak("What is the name of this product?","UK English Female");
                   console.log("enter first condition!!!");
                   instance.$("#itemname").val("Please say name now");
                 }else if(data.result.parameters.Name==""&&instance.$("#itemname").val()!=""){
                   console.log("enter second condition!!!!");
                   instance.$("#itemname").val(text);
                   responsiveVoice.speak("Name added");
-                  responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
+                  responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
                 }
                 return;
               }
@@ -313,9 +310,7 @@ Template.addproduct.events({
                 responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
                 return;
               }else if(data.result.parameters.Quality==""){
-              //  responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
                 if(data.result.parameters.Quality==""&&instance.$("#condition").val()==""){
-                  //responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.8});
                   console.log("enter first quality condition!!!");
 
                 }else if(data.result.parameters.Name==""&&instance.$("#condition").val()!=""){
@@ -332,7 +327,6 @@ Template.addproduct.events({
               console.log("into description");
               console.log(data.result.parameters);
               console.log("description: "+data.result.parameters.Detaildescription);
-              
               instance.$("#description").val(text);
               return;
   				    }

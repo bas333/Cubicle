@@ -1,3 +1,8 @@
+<head>
+  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+</head>
+
+
 <template name="createrent">
   {{> addrent}}
   <hr>
@@ -5,15 +10,24 @@
 </template>
 
 <template name="addrent">
+  <div class="voice_search_productpage">
+    <h2 class="ui dividing header">Create a New Rental Post</h2>
+      <div class="ui form">
+        <div class="field">
+          <input type="text" id="userrental">
+        </div>
+        <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="addrentalrec"><i class="announcement icon"></i>Speak</button>
+      </div>
+    </div>
   <div class="rentform">
     <form class="ui form">
-      <h4 class="ui dividing header">Create a Post for your Rental Information</h4>
+      <!--<h4 class="ui dividing header">Create a Post for your Rental Information</h4>-->
       <div class="inline fields">
         <div class="five wide field">
-          <label>Location:</label>
+          <label>City</label>
           <select class="ui fluid dropdown" id="location">
             {{#each location in locationdata}}
-            <option>{{location.name}}</option>
+            <option value="{{location.value}}">{{location.name}}</option>
             {{/each}}
           </select>
         </div>
@@ -47,7 +61,7 @@
       <div class="inline fields">
         <div class="five wide field">
           <label>Price / month:</label>
-          <input type="text" id="price">
+          <input type="text" id="price/month">
         </div>
       <div class="eleven wide field">
         <label>Contact information:</label>
