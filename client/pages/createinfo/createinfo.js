@@ -313,7 +313,7 @@ Template.addproduct.events({
                 if(data.result.parameters.Quality==""&&instance.$("#condition").val()==""){
                   console.log("enter first quality condition!!!");
 
-                }else if(data.result.parameters.Name==""&&instance.$("#condition").val()!=""){
+                }else if(data.result.parameters.Quality==""&&instance.$("#condition").val()!=""){
                   console.log("enter second quality condition!!!!");
                   instance.$("#condition").val(text);
                   responsiveVoice.speak("Condition added");
