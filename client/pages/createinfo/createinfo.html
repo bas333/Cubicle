@@ -112,35 +112,12 @@
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
     <td>{{p.description}}</td>
-
-    <!-- <td>
-      <ul>
-        <li>
-          <h2 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
-        </li>
-        <li>
-          Price: {{p.price}}
-        </li>
-        <li>
-          Condition:{{p.condition}}
-        </li>
-        <li>
-          Category:{{p.category}}
-        </li>
-        <li>
-          Description:{{p.description}}
-        </li>
-      </ul>
-    </td> -->
-
 </template>
 
 <template name="ownerproduct">
   <tr id="productrow" class={{displayitem}}>
     <td>
-
         <h3 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h3>
-
         <ul>
         <li>
           Price: ${{p.price}}

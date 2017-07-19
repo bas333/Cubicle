@@ -27,3 +27,6 @@ Meteor.publish('rent',function(){
 Meteor.publish('product',function(){
   return Product.find();
 })
+Meteor.publish('chat',function(){
+  return Chat.find();
+})
