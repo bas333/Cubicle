@@ -376,9 +376,9 @@ Template.addrent.events({
               if(data.result.parameters.roommates==""&&instance.$("#roommatedescription").val()==""){
                 console.log("enter first roommatedescription condition!!!");
                 instance.$("#roommatedescription").val(text);
-            //  }else if(data.result.parameters.roommates==""&&instance.$("#roommatedescription").val()!=""){
-              //  console.log("enter second roommatedescription condition!!!!");
-              //  instance.$("#roommatedescription").val(text);
+            //}else if(data.result.parameters.roommates==""&&instance.$("#roommatedescription").val()!=""){
+              //console.log("enter second roommatedescription condition!!!!");
+              //instance.$("#roommatedescription").val(text);
                 responsiveVoice.speak("roommatedescription added");
                 responsiveVoice.speak("Please add the price to this rent","UK English Female");
               }
@@ -390,6 +390,7 @@ Template.addrent.events({
           if(instance.$("#priceM").val()==""){
             console.log("into price");
             if(data.result.parameters.price!=""){
+              console.log("existed price");
               instance.$("#priceM").val(data.result.parameters.price);
               responsiveVoice.speak("price added","UK English Female");
               responsiveVoice.speak("Please add contact infomation of this rent","UK English Female");
