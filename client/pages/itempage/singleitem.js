@@ -5,6 +5,9 @@ if(Meteor.isClient){
     Template.singleitem.onCreated(function(){
       Meteor.subscribe('chat');
     })
+    Template.singleitem.onCreated(function(){
+      Meteor.subscribe('allusers');
+    })
 }
 Template.singleitem.events({
   'click #add'(elt,instance){
@@ -15,13 +18,16 @@ Template.singleitem.events({
     }
   },
   'click #chatnow'(elt,instance){
-    Meteor.call('chat.insert',Meteor.userId(),this._id);
+    console.log("product id"+this._id);
+    var product=Product.findOne(this._id);
+    Meteor.call('chat.insert',Meteor.userId(),product);
   },
   'click #enterMessage'(elt,instance){
     const privatetext=instance.$('#privatetext').val();
     var findchat=[];
     var buyerid = Meteor.userId();
     var sellerid = this.owner;
+    console.log(findchat);
     findchat.push(buyerid);
     findchat.push(sellerid);
     var chatid=Chat.findOne({users_id:findchat})._id;
@@ -38,6 +44,8 @@ Template.singleitem.helpers({
     var sellerid = this.owner;
     findchat.push(buyerid);
     findchat.push(sellerid);
+    console.log("chat find");
+    console.log(Chat.findOne({users_id:findchat}));
     return (Chat.findOne({users_id:findchat}).messages);
   }
 })
