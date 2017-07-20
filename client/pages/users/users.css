@@ -32,4 +32,11 @@
 }
 .profile-page{
   text-align: center;
+  padding:5em;
+  padding-left: 30em;
+  padding-right: 30em;
+  padding-bottom: 0em;
+}
+#signup-form{
+  text-align: center;
 }

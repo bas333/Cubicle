@@ -17,22 +17,124 @@ const schools=[
   {name:"Babson College"},
   {name:"Northeastern University"}
 ]
+
+Template.users.onRendered(function(){
+  $('.ui.checkbox').checkbox({on: 'checked'});
+  this.$('.ui.dropdown').dropdown({on: 'hover'});
+  this.$('#signup-form')
+    .form({
+      fields: {
+        name: {
+          identifier: 'name',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your name'
+            }
+          ]
+        },
+        username: {
+          identifier: 'username',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your name'
+            }
+          ]
+        },
+        email: {
+          identifier: 'email',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your name'
+            }
+          ]
+        },
+        password: {
+          identifier: 'password',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter a password'
+            },
+            {
+              type   : 'minLength[6]',
+              prompt : 'Your password must be at least {ruleValue} characters'
+            }
+          ]
+        },
+        phone: {
+          identifier: 'phone',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your phone'
+            }
+          ]
+        },
+        school: {
+          identifier: 'school',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please select a school'
+            }
+          ]
+        },
+        gender: {
+          identifier: 'gender',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please select a gender'
+            }
+          ]
+        },
+        age: {
+          identifier: 'age',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please select an age'
+            }
+          ]
+        },
+        paymentlist: {
+          identifier: 'paymentlist',
+          rules: [
+            {
+              type   : 'checked',
+              prompt : 'Please select at least one payment method'
+            }
+          ]
+        },
+        terms: {
+          identifier: 'terms',
+          rules: [
+            {
+              type   : 'checked',
+              prompt : 'You must agree to the terms and conditions'
+            }
+          ]
+        }
+      }
+    })
+  ;
+})
+
 Template.users.events({
   'click #submitnow':function(elt,instance) {
     event.preventDefault();
+    if(!$('#signup-form').form('is valid')){
+      return;
+    }
     const username=instance.$('#username').val();
     const school=instance.$('#school').val();
     const age=instance.$('#age').val();
     const email=instance.$('#email').val();
     const phone=instance.$('#phone').val();
-    var gender="";
-    if($('input[id="male"]').is(':checked')){
-      gender="male";
-    }else if($('input[id="female"]').is(':checked')){
-      gender="female";
-    }else{
-      gender="other";
-    };
+    var gender=instance.$('#gender :selected').text();
     paymethodinputs = instance.$("#paymentlist input");
     paymethod = [];
     paymethodinputs.each(function(a,b){
