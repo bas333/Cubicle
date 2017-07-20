@@ -142,6 +142,7 @@ Template.users.events({
     });
     cart=[];
     soldhistory=[];
+    chatlist=[];
     console.log('adding '+username);
     instance.$('#username').val("");
     instance.$('#school').val("");
@@ -160,6 +161,7 @@ Template.users.events({
       paymethod:paymethod,
       cart:cart,
       soldhistory:soldhistory,
+      chatlist:chatlist,
       owner:Meteor.userId(),
       createAt:new Date()
     };

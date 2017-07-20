@@ -32,6 +32,27 @@
 </div>
 <hr>
 <div>
-  <button class="ui button">Contact Seller</button>
+  <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
+      </div>
+      <div class="modal-body">
+        {{#each m in messagelist}}
+          {{m.username}}
+          {{m.text}}
+        {{/each}}
+      </div>
+      <div class="modal-footer">
+        <input type="text" id="privatetext">
+        <button type="button" class="ui button small primary" id="enterMessage">Send</button>
+        <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 </template>

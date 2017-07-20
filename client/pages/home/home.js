@@ -4,7 +4,7 @@ Template.home.helpers ({
 
 Template.home.onRendered(function(){
   this.$('#category').dropdown({on: 'hover'});
-  $('#category').select2();
+//  $('#category').select2();
 })
 
 Template.home.events ({
@@ -38,17 +38,6 @@ Template.home.events ({
   			    for (var i = event.resultIndex; i < event.results.length; ++i) {
   			    	text += event.results[i][0].transcript;
   			    }
-            if(event.results[i][0].transcript.includes('search')){
-              var selectedcategory = instance.$('#category :selected').text();
-              var searchstring = instance.$('#input').val();
-              console.log(Product.find());
-              if (selectedcategory == "All Categories") {
-                console.log("Are You here " + selectedcategory);
-                Router.go("allproducts");
-              } else {
-                Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
-              }
-            }
   			    setInput(text);
   				stopRecognition();
   			};
@@ -94,7 +83,53 @@ Template.home.events ({
   				success: function(data) {
   					setResponse(JSON.stringify(data, undefined, 2));
             console.log(data.result.parameters.Category);
-            $("#category").val(data.result.parameters.Category).trigger("change");
+            console.log(data.result.parameters.Keywords);
+            if(data.result.parameters.Category==""&&data.result.parameters.Keywords==""){
+              console.log("condition1");
+              responsiveVoice.speak("Sorry I don't understand, please say that again","UK English Female");
+            }else if(data.result.parameters.Category!=""&&data.result.parameters.Keywords==""){
+              console.log("condition2");
+              $("#category").val(data.result.parameters.Category).trigger("change");
+              $("#input").val("");
+              console.log("triggered condition2");
+              var selectedcategory = instance.$('#category :selected').text();
+              var searchstring = instance.$('#input').val();
+              console.log(Product.find());
+              if (selectedcategory == "All Categories") {
+                console.log("Are You here " + selectedcategory);
+                Router.go("allproducts", {}, {query:'keywords='+searchstring});
+              } else {
+                Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
+              }
+              responsiveVoice.speak("searching by category now! The category is "+selectedcategory,"UK English Female");
+            }else if(data.result.parameters.Category==""&&data.result.parameters.Keywords!=""){
+              console.log("condition3");
+              $('#input').val(data.result.parameters.Keywords);
+              var selectedcategory = instance.$('#category :selected').text();
+              var searchstring = instance.$('#input').val();
+              console.log(Product.find());
+              if (selectedcategory == "All Categories") {
+                console.log("Are You here " + selectedcategory);
+                Router.go("allproducts", {}, {query:'keywords='+searchstring});
+              } else {
+                Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
+              }
+              responsiveVoice.speak("searching by keywords now! The keywords are "+searchstring,"UK English Female");
+            }else if(data.result.parameters.Category!=""&&data.result.parameters.Keywords!=""){
+              console.log("condition4");
+              $("#category").val(data.result.parameters.Category).trigger("change");
+              instance.$('#input').val(data.result.parameters.Keywords);
+              var selectedcategory = instance.$('#category :selected').text();
+              var searchstring = instance.$('#input').val();
+              console.log(Product.find());
+              if (selectedcategory == "All Categories") {
+                console.log("Are You here " + selectedcategory);
+                Router.go("allproducts", {}, {query:'keywords='+searchstring});
+              } else {
+                Router.go("shop", {}, {query:'type='+selectedcategory+'&keywords='+searchstring});
+              }
+              responsiveVoice.speak("searching by category and keywords now! The category is "+selectedcategory+" The keywords are" +searchstring,"UK English Female");
+            }
   				},
   				error: function() {
   					setResponse("Internal Server Error");
