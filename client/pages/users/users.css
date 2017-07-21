@@ -16,6 +16,13 @@
 #newpayment{
   display:none;
 }
+#newpic{
+  display:none;
+}
+#editpicshow{
+  display:none;
+  max-width:300px
+}
 #picshow{
   display:none;
   max-width: 480px;
