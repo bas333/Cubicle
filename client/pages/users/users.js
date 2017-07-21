@@ -215,7 +215,7 @@ Template.users.events({
         //send to server
         imageConvertTo64Base(imagefile,function(imageBase64Form){
           //add a new field into newuser
-          newuser.pic=imageBase64Form;
+          newUser.pic=imageBase64Form;
           Meteor.call('users.insert',newUser, function(err, result){
             if(err){
               window.alert(err);
@@ -248,6 +248,9 @@ Template.showprofile.helpers({
     }
     return a;
   },
+  schoolData(){
+    return schools;
+  }
 })
 
 Template.showuser.helpers({
@@ -268,6 +271,9 @@ Template.showprofile.events({
    'click #editName':function(elt,instance){
       $("#newname").css("display", "block");
    },
+   'click #editSchool':function(elt,instance){
+     $("#newschool").css("display","block");
+   },
    'click #editAge':function(elt,instance){
       $("#newage").css("display", "block");
    },
@@ -280,19 +286,22 @@ Template.showprofile.events({
    'click #editPaymethod':function(elt,instance){
       $("#newpayment").css("display", "block");
    },
-   'click #canclePaymethod':function(elt,instance){
+   'click #cancelPaymethod':function(elt,instance){
       $("#newpayment").css("display", "none");
    },
-   'click #cancleEmail':function(elt,instance){
+   'click #cancelEmail':function(elt,instance){
       $("#newemail").css("display", "none");
    },
-   'click #cancleGender':function(elt,instance){
+   'click #cancelGender':function(elt,instance){
       $("#newgender").css("display", "none");
    },
-   'click #cancleAge':function(elt,instance){
+   'click #cancelAge':function(elt,instance){
       $("#newage").css("display", "none");
    },
-   'click #cancleName':function(elt,instance){
+   'click #cancelSchool':function(elt,instance){
+     $("#newschool").css("display","none");
+   },
+   'click #cancelName':function(elt,instance){
       $("#newname").css("display", "none");
    },
    'click #updateUsername1':function(elt,instance){
@@ -306,6 +315,12 @@ Template.showprofile.events({
      console.log(this.person);
      Meteor.call('users.remove',this.person);
    },
+   'click #updateSchool':function(elt,instance){
+     const school=instance.$('#school2').val();
+     console.log(school);
+     Meteor.call('users.updateSchool',Meteor.userId(),school);
+     $("#newschool").css("display","none");
+   },
    'click #updateAge':function(elt,instance){
      const age=instance.$('#age2').val();
      console.log(age);
@@ -313,15 +328,8 @@ Template.showprofile.events({
      $("#newage").css({display:"none"});
    },
    'click #updateGender':function(elt,instance){
-     const age=instance.$('#age2').val();
-     var gender="";
-     if($('input[id="male1"]').is(':checked')){
-       gender="male";
-     }else if($('input[id="female1"]').is(':checked')){
-       gender="female";
-     }else{
-       gender="other";
-     };
+     const gender=instance.$("#gender2").val();
+     console.log(gender);
      Meteor.call('users.updateGender',Meteor.userId(),gender);
      $("#newgender").css({display:"none"});
    },
