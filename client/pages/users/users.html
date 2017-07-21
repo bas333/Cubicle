@@ -1,71 +1,101 @@
 <template name="users">
-  {{#if hasPerson}}
+  <!-- {{#if hasPerson}}
   <h1>You already have a profile, please sign in</h1>
     {{> showuser}}
-  {{else}}
+  {{else}} -->
 <div class="profile-page">
   <h1 class="ui dividing header">Create your profile</h1>
-  <form class="ui form">
-    <div class="three fields">
-    <div class="field">
-      <strong>Username</strong>
-      <input type="text" class="form-control" id="username" placeholder="Username">
-    </div>
-    <div class="field">
-      <strong>Email</strong>
-      <input type="text" class="form-control" id="email" placeholder="EmailAddress">
-    </div>
-    <div class="field">
-      <strong>Phone Number</strong>
-      <input type="text" class="form-control" id="phone" placeholder="Phone Number">
-    </div>
-  </div>
+  <form class="ui form segment" id="signup-form">
     <div class="two fields">
       <div class="field">
-      <strong>Age</strong>
-      <select class="form-control" id="age">
-        {{#each number in numberList}}
-          <option>{{number}}</option>
-        {{/each}}
-      </select>
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Name" id="username">
+      </div>
+      <div class="field">
+        <label>Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Username">
+      </div>
     </div>
-    <div class="field">
-      <strong>School</strong>
-      <select class="form-control" id="school">
-        {{#each school in schoolData}}
-        <option>{{school.name}}</option>
-        {{/each}}
-      </select>
+    <div class="two fields">
+      <div class="field">
+        <label>Email</label>
+        <input type="text" class="form-control" id="email" placeholder="EmailAddress">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="password">
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field">
+        <label>School</label>
+        <select class="ui dropdown" id="school">
+          {{#each school in schoolData}}
+          <option>{{school.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="text" class="form-control" id="phone" placeholder="Phone Number">
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field">
+          <label>Age</label>
+          <select class="ui dropdown" id="age">
+            {{#each number in numberList}}
+              <option>{{number}}</option>
+              {{/each}}
+            </select>
+          </div>
+      <div class="field">
+        <label>Gender</label>
+        <select class="ui dropdown" id="gender">
+          <option value="male"> Male </option>
+          <option value="male"> Female </option>
+          <option value="male"> Other </option>
+        </select>
     </div>
   </div>
-  <div class="two field">
-    <div class="field">
-      <strong>Gender</strong><br>
-      <input type="radio" name="gender" id="male" checked> Male<br>
-      <input type="radio" name="gender" id="female"> Female<br>
-      <input type="radio" name="gender" id="other"> Other
-    </div>
+    <br>
     <div class="field" id="paymentlist">
-      <strong>Payment Method</strong><br>
-    <input type="checkbox" name="payment" value="Paypal">Paypal<br>
-    <input type="checkbox" name="payment" value="Venmo">Venmo<br>
-    <input type="checkbox" name="payment" value="Cash">Cash<br>
+      <strong>Payment Methods: </strong>
+      <div class="ui checkbox">
+        <input type="checkbox" name="payment" value="Paypal">
+        <label>Paypal</label>
+      </div>
+    <div class="ui checkbox">
+      <input type="checkbox" name="payment" value="Venmo">
+      <label>Venmo</label>
+    </div>
+    <div class="ui checkbox">
+      <input type="checkbox" name="payment" value:="Cash">
+      <label>Cash</label>
     </div>
   </div>
+    <br>
 
-  <div class="field" id="photo">
-    <span os-file-upload="" max-size="1024" pic-info="true" accept="image/jpg, image/png, image/jpeg, image/pjpeg, image/x-png" size-error-message="the picture size should smaller than 1M" type-error-message="please only upload JPG/PNG">
-      <button class="os button">upload picture</button>
-    </span>
+    <div class="field" id="photo">
+      <input type="file" id="uploadpic">
+
+      <img id="picshow" src="">
+    </div>
+
+    <div class="inline field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="terms">
+      <label>I agree to the terms and conditions</label>
+    </div>
   </div>
 
   <div class="profile-submit">
-    <button type="submit" class="ui basic button" id="submitnow">Submit</button>
+    <div class="ui basic submit button" id="submitnow">Submit</div>
+    <div class="ui error message"></div>
   </div>
   </form>
 </div>
-  {{/if}}
-
+  <!-- {{/if}} -->
 </template>
 
 <template name="showprofile">

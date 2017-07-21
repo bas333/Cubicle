@@ -22,6 +22,7 @@
 .rentpost{
   padding:5em;
 }
+
 #singlerent{
   background-image:url("images/post-background.jpg");
   background-size:cover;
@@ -33,4 +34,7 @@
   text-align: center;
   margin-bottom: 2.5em;
   padding-top: 50px;
+  margin: 10px;
+  float:left;
+  position:relative;
 }

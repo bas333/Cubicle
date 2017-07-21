@@ -29,7 +29,6 @@ Template.singleitem.events({
     console.log("herehere");
     var chat=Chat.findOne({users_id:[sellerid,buyerid]});
     Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext);
-
     instance.$('privatetext').val("");
   }
 })
@@ -41,6 +40,11 @@ Template.singleitem.helpers({
     var findchat=[];
     var buyerid = Meteor.userId();
     var sellerid = this.owner;
+    findchat.push(buyerid);
+    findchat.push(sellerid);
+    console.log("chat find");
+    console.log(Chat.findOne({users_id:findchat}));
+    return (Chat.findOne({users_id:findchat}).messages);
     var chat=Chat.findOne({users_id:[sellerid,buyerid]});
     console.log(chat);
     console.log("chat find!!!");

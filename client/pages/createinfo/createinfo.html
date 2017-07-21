@@ -4,16 +4,18 @@
 
 
 <template name="createinfo">
-  <div class="ui grid">
-    <div class="eight wide column">
+<div class="createinfo-grid">
+  <div class="ui divided grid">
+    <div class="eight wide column" id="add-product">
       {{> addproduct}}
     </div>
 
-    <div class="eight wide column">
+    <div class="eight wide column" id="show-product">
       {{> showproduct}}
     </div>
     <hr>
   </div>
+</div>
 </template>
 
 <template name="addproduct">

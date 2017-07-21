@@ -13,6 +13,10 @@
 #newpayment{
   display:none;
 }
+#picshow{
+  display:none;
+  max-width: 480px;
+}
 #newpayment{
   padding-left: calc(50% - 57.5px);
 }
@@ -31,5 +35,12 @@
   text-align: right;
 }
 .profile-page{
+  text-align: center;
+  padding:5em;
+  padding-left: 30em;
+  padding-right: 30em;
+  padding-bottom: 0em;
+}
+#signup-form{
   text-align: center;
 }

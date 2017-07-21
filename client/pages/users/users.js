@@ -17,22 +17,151 @@ const schools=[
   {name:"Babson College"},
   {name:"Northeastern University"}
 ]
+
+Template.users.onRendered(function(){
+  $('.ui.checkbox').checkbox({on: 'checked'});
+  this.$('.ui.dropdown').dropdown({on: 'hover'});
+  this.$('#signup-form')
+    .form({
+      fields: {
+        name: {
+          identifier: 'name',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your name'
+            }
+          ]
+        },
+        username: {
+          identifier: 'username',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your name'
+            }
+          ]
+        },
+        email: {
+          identifier: 'email',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your name'
+            }
+          ]
+        },
+        password: {
+          identifier: 'password',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter a password'
+            },
+            {
+              type   : 'minLength[6]',
+              prompt : 'Your password must be at least {ruleValue} characters'
+            }
+          ]
+        },
+        phone: {
+          identifier: 'phone',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please enter your phone'
+            }
+          ]
+        },
+        school: {
+          identifier: 'school',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please select a school'
+            }
+          ]
+        },
+        gender: {
+          identifier: 'gender',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please select a gender'
+            }
+          ]
+        },
+        age: {
+          identifier: 'age',
+          rules: [
+            {
+              type   : 'empty',
+              prompt : 'Please select an age'
+            }
+          ]
+        },
+        paymentlist: {
+          identifier: 'paymentlist',
+          rules: [
+            {
+              type   : 'checked',
+              prompt : 'Please select at least one payment method'
+            }
+          ]
+        },
+        terms: {
+          identifier: 'terms',
+          rules: [
+            {
+              type   : 'checked',
+              prompt : 'You must agree to the terms and conditions'
+            }
+          ]
+        }
+      }
+    })
+  ;
+})
+
 Template.users.events({
+  'change #uploadpic':function(event){
+    //if the pic has input
+    if($("#uploadpic").val()){
+      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+        if(event.currentTarget.files[0].size>1048576){//file size out of range
+          alert('The file size should be smaller than 1MB');
+        }else{
+          //an object to read file
+          var picreader = new FileReader();
+          //when loading the input file
+          picreader.onload = function(event){
+            var result=event.currentTarget.result;
+            console.log(result);
+            $('#picshow').attr('src',result);
+            $('#picshow').css('display','block');
+          }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }
+      }else{//not a image file
+        alert('You are only allowed to upload an image file');
+      }
+    }else{
+      $("#picshow").attr("src","");
+      $("#picshow").css("display","none");
+    }
+  },
   'click #submitnow':function(elt,instance) {
     event.preventDefault();
+    if(!$('#signup-form').form('is valid')){
+      return;
+    }
     const username=instance.$('#username').val();
     const school=instance.$('#school').val();
     const age=instance.$('#age').val();
     const email=instance.$('#email').val();
     const phone=instance.$('#phone').val();
-    var gender="";
-    if($('input[id="male"]').is(':checked')){
-      gender="male";
-    }else if($('input[id="female"]').is(':checked')){
-      gender="female";
-    }else{
-      gender="other";
-    };
+    var gender=instance.$('#gender :selected').text();
     paymethodinputs = instance.$("#paymentlist input");
     paymethod = [];
     paymethodinputs.each(function(a,b){
@@ -41,6 +170,7 @@ Template.users.events({
     cart=[];
     soldhistory=[];
     chatlist=[];
+    const pic=instance.$('#uploadpic')[0].files[0];
     console.log('adding '+username);
     instance.$('#username').val("");
     instance.$('#school').val("");
@@ -60,15 +190,54 @@ Template.users.events({
       cart:cart,
       soldhistory:soldhistory,
       chatlist:chatlist,
+      pic:pic,
       owner:Meteor.userId(),
       createAt:new Date()
     };
-    Meteor.call('users.insert',newUser, function(err, result){
-      if(err){
-        window.alert(err);
-        return;
+
+    var pic_base64;
+    if($('#uploadpic').val()){
+      if($('#uploadpic')[0].files&&$('#uploadpic')[0].files[0] && ($('#uploadpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+        if($('#uploadpic')[0].files[0].size>1048576){
+          alert('The file size should be smaller than 1MB');
+        }else{
+          var imagefile=$('#uploadpic')[0].files[0];
+          var imageConvertTo64Base=function(imagefile,callback){
+            var reader=new FileReader();
+            reader.onload=function(){
+              var dataURL = reader.result;
+              imageBase64Form=dataURL.split(',')[1];
+              callback(imageBase64Form);
+            };
+          reader.readAsDataURL(pic);
+        };
+
+        //send to server
+        imageConvertTo64Base(imagefile,function(imageBase64Form){
+          //add a new field into newuser
+          newuser.pic=imageBase64Form;
+          Meteor.call('users.insert',newUser, function(err, result){
+            if(err){
+              window.alert(err);
+              return;
+            }
+          });
+        });
+
+        }
+      }else{
+        $("#picshow").attr("src","");
+        $("#picshow").css("display","none");
+        alert("Please add a image file");
       }
-    });
+    }else{
+      Meteor.call('users.insert',newUser, function(err, result){
+        if(err){
+          window.alert(err);
+          return;
+        }
+      });
+    }
   }})
 
 Template.showprofile.helpers({

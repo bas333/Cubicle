@@ -5,7 +5,7 @@
 <template name="showrent">
 <div class=rentpost>
   <h4 class="ui dividing header">All Rental Posts</h4>
-      <div class="ui list">
+      <div class="ui list" id="allrentalposts">
         {{#each r in rentlist}}
           <div class="four wide column" id="singlerent">
           {{> rentrow rent=r}}
