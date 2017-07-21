@@ -54,9 +54,11 @@
   </div>
 
   <div class="field" id="photo">
-    <span os-file-upload="" max-size="1024" pic-info="true" accept="image/jpg, image/png, image/jpeg, image/pjpeg, image/x-png" size-error-message="the picture size should smaller than 1M" type-error-message="please only upload JPG/PNG">
-      <button class="os button">upload picture</button>
+    <span os-file-upload="" pic-info="true"  accept="image/*" data-type='image' size-error-message="the picture size should smaller than 1MB" type-error-message="please only upload JPG/PNG">
+      <button class="os button" id="uploadpic">upload picture</button>
     </span>
+
+    <img id="picshow">
   </div>
 
   <div class="profile-submit">
