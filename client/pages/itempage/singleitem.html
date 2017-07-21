@@ -28,11 +28,12 @@
 
   {{else}}
   <button class="ui button" id="add"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
+  <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button>
 {{/if}}
 </div>
 <hr>
 <div>
-  <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button>
+  <!-- <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button> -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -41,8 +42,8 @@
       </div>
       <div class="modal-body">
         {{#each m in messagelist}}
-          {{m.username}}
-          {{m.messagetext}}
+          <strong>{{m.username}}</strong><br>
+          {{m.messagetext}}<br>
         {{/each}}
       </div>
       <div class="modal-footer">
