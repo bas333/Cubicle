@@ -13,6 +13,9 @@
 #newpayment{
   display:none;
 }
+#picshow{
+  display:none;
+}
 #newpayment{
   padding-left: calc(50% - 57.5px);
 }

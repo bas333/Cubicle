@@ -1,7 +1,8 @@
 Template.chatroom.helpers({
   mychatlist(){
     var mychatlist=[];
-    var chatids=AllUsers.findOne({owner:Meteor.userId});
+    var chatids=AllUsers.findOne({owner:Meteor.userId}).chatlist;
+    console.log(chatids);
     for (var chat in chatids){
       for (var userid in chat.users_id){
         if (usersid!=Meteor.owner){
@@ -10,6 +11,7 @@ Template.chatroom.helpers({
         }
       }
     }
+    console.log(mychatlist);
     return mychatlist;
   }
 })

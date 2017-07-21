@@ -24,14 +24,12 @@ Template.singleitem.events({
   },
   'click #enterMessage'(elt,instance){
     const privatetext=instance.$('#privatetext').val();
-    var findchat=[];
-    var buyerid = Meteor.userId();
-    var sellerid = this.owner;
-    console.log(findchat);
-    findchat.push(buyerid);
-    findchat.push(sellerid);
-    var chatid=Chat.findOne({users_id:findchat})._id;
-    Meteor.call('message.insert',chatid,Meteor.userId());
+    const buyerid = Meteor.userId();
+    const sellerid = this.owner;
+    console.log("herehere");
+    var chat=Chat.findOne({users_id:[sellerid,buyerid]});
+    Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext);
+    instance.$('privatetext').val("");
   }
 })
 Template.singleitem.helpers({
@@ -47,5 +45,10 @@ Template.singleitem.helpers({
     console.log("chat find");
     console.log(Chat.findOne({users_id:findchat}));
     return (Chat.findOne({users_id:findchat}).messages);
+    var chat=Chat.findOne({users_id:[sellerid,buyerid]});
+    console.log(chat);
+    console.log("chat find!!!");
+    console.log(chat.messages);
+    return (chat.messages);
   }
 })
