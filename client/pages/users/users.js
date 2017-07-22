@@ -268,6 +268,78 @@ Template.users.helpers({
 })
 
 Template.showprofile.events({
+  'change #editpicfile':function(event){
+    //if the pic has input
+    if($("#editpicfile").val()){
+      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+        if(event.currentTarget.files[0].size>1048576){//file size out of range
+          alert('The file size should be smaller than 1MB');
+        }else{
+          //an object to read file
+          var picreader = new FileReader();
+          //when loading the input file
+          picreader.onload = function(event){
+            var result=event.currentTarget.result;
+            console.log(result);
+            $('#editpicshow').attr('src',result);
+            $('#editpicshow').css('display','block');
+          }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }
+      }else{//not a image file
+        alert('You are only allowed to upload an image file');
+      }
+    }else{
+      $("#editpicshow").attr("src","");
+      $("#editpicshow").css("display","none");
+    }
+  },
+  'click #editpic':function(elt,instance){
+    $("#newpic").css("display","block");
+  },
+  'click #updatePic':function(elt,instance){
+    event.preventDefault();
+    const pic=instance.$('#editpicfile')[0].files[0];
+
+    var pic_base64;
+    if($('#editpicfile').val()){
+      if(($('#editpicfile')[0].files&&$('#editpicfile')[0].files[0]) && ($('#editpicfile')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+        if($('#editpicfile')[0].files[0].size>1048576){
+          alert('The file size should be smaller than 1MB');
+        }else{
+          var imagefile=$('#editpicfile')[0].files[0];
+          var imageConvertTo64Base=function(imagefile,callback){
+            var reader=new FileReader();
+            reader.onload=function(){
+              var dataURL = reader.result;
+              imageBase64Form=dataURL.split(',')[1];
+              callback(imageBase64Form);
+            };
+          reader.readAsDataURL(pic);
+        };
+
+        //send to server
+        imageConvertTo64Base(imagefile,function(imageBase64Form){
+          //add a new field into newuser
+          var newpic=imageBase64Form;
+          Meteor.call('users.updatePic',Meteor.userId(),newpic);
+          $('#editpicfile').val("")
+        });
+        }
+        $("#newpic").css("display","none");
+      }else{
+        $("#editpicshow").attr("src","");
+        $("#editpicshow").css("display","none");
+        alert("Please add a image file");
+      }
+    }
+  },
+
+
+  'click #editPic':function(elt,instance){
+    $("#newpic").css("display","block");
+  },
    'click #editName':function(elt,instance){
       $("#newname").css("display", "block");
    },

@@ -110,7 +110,7 @@
 
     <p><strong> School: {{person.school}}</strong><i class="edit icon" id="editSchool"></i> </p>
     <div id="newschool">
-      <select class="ui fluid dropdown" id=school2 value={{person.school}}>
+      <select class="ui fluid dropdown" id=school2 option={{person.school}}>
         {{#each school in schoolData}}
         <option>{{school.name}}</option>
         {{/each}}
@@ -122,7 +122,7 @@
 
     <p><strong> Age: {{person.age}}</strong> <i class="edit icon" id="editAge"></i></p>
     <div id="newage">
-    <select class="ui fluid dropdown" id="age2" value={{person.age}}>
+    <select class="ui fluid dropdown" id="age2" option={{person.age}}>
       {{#each number in numberList}}
         <option>{{number}}</option>
       {{/each}}
@@ -133,7 +133,7 @@
 
     <p><strong> Gender: {{person.gender}} </strong><i class="edit icon" id="editGender"></i></p>
     <div id="newgender">
-      <select class="ui dropdown" id="gender2" value={{person.gender}}>
+      <select class="ui dropdown" id="gender2" option={{person.gender}}>
         <option value="Male"> Male </option>
         <option value="Female"> Female </option>
         <option value="Other"> Other </option>
@@ -148,6 +148,17 @@
      <p><i class="remove circle icon" id="cancelEmail">Cancel</i></p>
     </div>
      </div>
+
+     <p> <strong>Photo:</strong> <i class="edit icon" id="editPic"></i></p>
+       <img src="data:image/jpeg;base64, {{person.pic}}" style="display:block; max-height:300px;max-width:300px;">
+       <div class="ui form" id="newpic">
+         <input type="file" id="editpicfile" >
+
+       <img id="editpicshow">
+       <p><i class="checkmark icon" id="updatePic">Update</i></p>
+       <p><i class="remove circle icon" id="cancelPic">Cancel</i></p>
+     </div>
+     <br>
 
 
 
