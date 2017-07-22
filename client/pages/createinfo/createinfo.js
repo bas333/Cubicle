@@ -450,7 +450,7 @@ Template.ownerproduct.helpers({
         else {
           return "unsolditem";
         }
-   }
+    }
  })
 Template.ownerproduct.events({
   'click span'(elt,instance){
