@@ -68,6 +68,11 @@
         <input type="text" id="contact-information">
       </div>
     </div>
+    <div class="field">
+      <label>Picture</label>
+      <input type="file" id="rentalpic">
+    </div>
+    <img id="showrentalpic">
       <hr>
         <button class="ui button" type="submit" id="submitrent"> submit </button>
       </form>
@@ -90,6 +95,7 @@
       <th>Roomate Description</th>
       <th>Price/month</th>
       <th>Contact information</th>
+      <th>Picture</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
@@ -120,7 +126,11 @@
   <td>{{rent.roommate}}</td>
   <td>{{rent.price}}</td>
   <td>{{rent.contact}}</td>
-
+  {{#if hasPic rent}}
+  <td><img src="data:image/jpeg;base64, {{rent.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
+  {{else}}
+  <td></td>
+  {{/if}}
   <!-- Button trigger modal -->
   <td><button type="button" id="editRentPost" class="ui button" data-toggle="modal" data-target="#myModal_{{rent._id}}">Edit</button>
 
@@ -171,7 +181,7 @@
         </div>
         <div>
             <label for="price">Price:</label>
-            <input type="number" id="newprice" value={{rent.price}}>
+            <input type="text" id="newprice" value={{rent.price}}>
         </div>
         <div>
             <label for="contact">Contact:</label>
