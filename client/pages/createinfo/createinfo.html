@@ -192,7 +192,7 @@
                 <div class="field">
                   <label for="condition">Condition:</label>
                     <select name="select" id="newcondition" select={{p.condition}}>
-                      <option value="likenew">like new</option>
+                      <option value="like new">like new</option>
                       <option value="very good" selected>very good</option>
                       <option value="good">good</option>
                       <option value="acceptable">acceptable</option>
@@ -201,6 +201,12 @@
                 <div class="field">
                   <label for="description">Please enter more detailed product description here</label>
                   <input type="text" id="newdescription" value={{p.description}}>
+                </div>
+                <div class="field">
+                  <label for="picture">Picture</label>
+                  <img id="productloadpic" src="data:image/jpeg;base64, {{p.pic}}" style="max-height:300px;max-width:300px;">
+                  <input type="file" id="newproductpic">
+                  <img id="shownewproductpic">
                 </div>
               </form>
           </div>

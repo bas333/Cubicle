@@ -22,7 +22,10 @@ tr#productrow.solditem{
 #showproductpic{
   max-width: 300px;
 }
-
+#shownewproductpic{
+  max-height:300px;
+  max-width:300px;
+}
 
 .productform{
   padding:5em;
