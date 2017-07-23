@@ -65,7 +65,6 @@ Template.addproduct.events({
     var status=instance.$('#sold').val();
     const buyer=instance.$('#buyer').val();
     const pic=instance.$("#productpic")[0].files[0];
-    console.log(category);
     var productinfo =
     {
       itemname:itemname,
@@ -443,7 +442,15 @@ Template.addproduct.events({
 
 Template.productrow.helpers({
   isOwner(){
-    return (this.p.owner == Meteor.userId())}
+    return (this.p.owner == Meteor.userId())},
+    
+    hasPic(product){
+      if(product.pic!=undefined){
+        return true;
+      }else{
+        return false;
+      }
+    }
 })
 Template.ownerproduct.helpers({
    displayitem() {

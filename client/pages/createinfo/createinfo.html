@@ -119,6 +119,12 @@
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
     <td>{{p.description}}</td>
+    {{#if hasPic p}}
+    <td><img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
+    {{else}}
+    <td></td>
+    {{/if}}
+
 </template>
 
 <template name="ownerproduct">
