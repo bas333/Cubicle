@@ -65,6 +65,7 @@ Template.addproduct.events({
     var status=instance.$('#sold').val();
     const buyer=instance.$('#buyer').val();
     const pic=instance.$("#productpic")[0].files[0];
+    console.log(category);
     var productinfo =
     {
       itemname:itemname,
@@ -228,6 +229,7 @@ Template.addproduct.events({
                   buyer:buyer,
                   owner:Meteor.userId()
                 }
+
                 console.log("qqq");
                 console.log(itemname);
                 console.log(price);
