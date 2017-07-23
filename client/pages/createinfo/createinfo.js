@@ -450,6 +450,13 @@ Template.ownerproduct.helpers({
         else {
           return "unsolditem";
         }
+    },
+    hasPic(product){
+      if(product.pic!=undefined){
+        return true;
+      }else{
+        return false;
+      }
     }
  })
 Template.ownerproduct.events({

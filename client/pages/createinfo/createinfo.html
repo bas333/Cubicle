@@ -115,7 +115,6 @@
     <td>
       <h2 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
     </td>
-    <td><img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
     <td>{{p.price}}</td>
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
@@ -127,9 +126,11 @@
     <td>
         <h3 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h3>
         <ul>
+          {{#if hasPic p}}
           <li>
             <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;">
           </li>
+          {{/if}}
         <li>
           Price: ${{p.price}}
         </li>
