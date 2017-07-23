@@ -29,7 +29,6 @@ Template.singleitem.events({
     const privatetext=instance.$('#privatetext').val();
     const buyerid = Meteor.userId();
     const sellerid = this.owner;
-    console.log("herehere");
     var chat=Chat.findOne({users_id:[sellerid,buyerid]});
     Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext);
     instance.$('privatetext').val("");
