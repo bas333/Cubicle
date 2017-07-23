@@ -187,6 +187,13 @@
             <label for="contact">Contact:</label>
             <input type="text" id="newcontact" value={{rent.contact}}>
         </div>
+        <div>
+          <label for="picture">Picture:</label>
+          <img id="rentalloadpic" src="data:image/jpeg;base64, {{rent.pic}}" style="max-height:300px;max-width:300px;">
+          <input type="file" id="newrentalpic">
+          <img id="shownewrentalpic">
+        </div>
+
         </form>
       </div>
       <div class="modal-footer">
