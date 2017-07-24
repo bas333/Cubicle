@@ -29,7 +29,33 @@
     <p>{{p.createdAt}}<br>
     <i class="user icon"></i>{{p.name}}<br>
     <i class="comment icon"></i>{{p.text}}<br>
-    <button class="ui button" id="editforum">Edit</button>
+    <button id="editforum" class="ui button" data-toggle="modal" data-target="#myModal_{{p._id}}">Edit</button>
+
+    <div class="modal fade" id="myModal_{{p._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Edit Product</h4>
+          </div>
+          <div class="modal-body">
+            <form method="post" class="ui form">
+              <div class="field">
+                  <label for="itemname">Post:</label>
+                  <input type="text" id="editforumpost" value="{{p.text}}">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+            <button type="button" class="ui button small primary" id="updateforum">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
     <button class="ui button" id="deleteforum">Delete</button></p>
     <hr>
   </div>
