@@ -1,7 +1,60 @@
 <template name="chatroom">
-  <div>
+  <div class="ui grid">
     {{#each c in mychatlist}}
-      {{c.username}}<br>
+      {{> showchat c=c dict=dict}}
     {{/each}}
+
   </div>
+</template>
+<template name="showchat">
+  <div class="four wide column">
+    <button id="beginChat" class="postbutton">{{c.username}}</button>
+  </div>
+
+  <div style="position: absolute;top: calc(50% - 300px);left: calc(50% - 275px);">
+    {{#if showChatBox}}
+
+      <div class="modal-dialog" role="document" style="width: 550px;height: 600px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
+          </div>
+          <div class="modal-body" style="overflow: scroll;height: 400px;">
+            {{#each m in messagelist}}
+              <strong>{{m.username}}</strong><br>
+              {{m.messagetext}}<br>
+            {{/each}}
+          </div>
+          <div class="modal-footer">
+            <input type="text" id="privatetext">
+            <button type="button" class="ui button small primary" id="enterMessage">Send</button>
+            <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+
+  <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
+        </div>
+        <div class="modal-body">
+          {{#each m in messagelist}}
+            <strong>{{m.username}}</strong><br>
+            {{m.messagetext}}<br>
+          {{/each}}
+        </div>
+        <div class="modal-footer">
+          <input type="text" id="privatetext">
+          <button type="button" class="ui button small primary" id="enterMessage">Send</button>
+          <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <!-- {{/if}} -->
+  <br>
 </template>
