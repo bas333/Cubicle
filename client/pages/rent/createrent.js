@@ -619,10 +619,9 @@ Template.ownpostrow.events({
   'click #deleteRent':function(elt,instance){
     Meteor.call('rent.remove',this.rent);
   },
-  'change #newrentalpic':function(event){
-    $('#rentalloadpic').css('display','none');
-    //if the pic has input
-    if($("#newrentalpic").val()){
+  'change #newrentalpic':function(event,instance){
+    instance.$('#oldrentalpic').css('display','none');
+    if(instance.$("#newrentalpic").val()){
       //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
       if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
         if(event.currentTarget.files[0].size>1048576){//file size out of range
@@ -635,8 +634,8 @@ Template.ownpostrow.events({
             var result=event.currentTarget.result;
             console.log(result);
             console.log("enter show pic");
-            $('#shownewrentalpic').attr('src',result);
-            $('#shownewrentalpic').css('display','block');
+            instance.$('#shownewrentalpic').attr('src',result);
+            instance.$('#shownewrentalpic').css('display','block');
           }
           picreader.readAsDataURL(event.currentTarget.files[0]);
         }
@@ -644,8 +643,8 @@ Template.ownpostrow.events({
         alert('You are only allowed to upload an image file');
       }
     }else{
-      $("#shownewrentalpic").attr("src","");
-      $("#shownewrentalpic").css("display","none");
+      instance.$("#shownewrentalpic").attr("src","");
+      instance.$("#shownewrentalpic").css("display","none");
     }
   },
   'click #updateRent':function(elt,instance){
@@ -708,8 +707,8 @@ Template.ownpostrow.events({
         }
         //$("#newpic").css("display","none");
       }else{
-        $("#shownewrentalpic").attr("src","");
-        $("#shownewrentalpic").css("display","none");
+        instance.$("#shownewrentalpic").attr("src","");
+        instance.$("#shownewrentalpic").css("display","none");
         alert("Please add a image file");
       }
     }else{
