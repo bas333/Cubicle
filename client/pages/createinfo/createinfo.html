@@ -115,11 +115,16 @@
     <td>
       <h2 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
     </td>
-    <td><img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
     <td>{{p.price}}</td>
     <td>{{p.condition}}</td>
     <td>{{p.category}}</td>
     <td>{{p.description}}</td>
+    {{#if hasPic p}}
+    <td><img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
+    {{else}}
+    <td></td>
+    {{/if}}
+
 </template>
 
 <template name="ownerproduct">
@@ -127,9 +132,11 @@
     <td>
         <h3 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h3>
         <ul>
+          {{#if hasPic p}}
           <li>
             <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;">
           </li>
+          {{/if}}
         <li>
           Price: ${{p.price}}
         </li>
@@ -168,13 +175,13 @@
               </div>
               <div class="field">
                 <label for="category">Category:</label>
-                  <select name="select" id="newcategory" value={{p.category}}>
-                      <option value="Textbooks/Books">Textbooks/Books</option>
-                      <option value="Electronics">Electronics</option>
-                      <option value="Clothes,Shoes,and Accessories">Clothes,Shoes,and Accessories</option>
-                      <option value="Furniture/Home">Furniture/Home</option>
-                      <option value="Art/Handcrafts">Art/Handcrafts</option>
-                      <option value="Others">Others</option>
+                  <select name="select" id="newcategory" value="{{p.category}}">
+                      <option value="textbooks/books">Textbooks/Books</option>
+                      <option value="electronics">Electronics</option>
+                      <option value="clothes,shoes,and accessories">Clothes,Shoes,and Accessories</option>
+                      <option value="furniture/home">Furniture/Home</option>
+                      <option value="art/handcrafts">Art/Handcrafts</option>
+                      <option value="others">Others</option>
                     </select>
               </div>
 
@@ -185,7 +192,7 @@
                 <div class="field">
                   <label for="condition">Condition:</label>
                     <select name="select" id="newcondition" select={{p.condition}}>
-                      <option value="likenew">like new</option>
+                      <option value="like new">like new</option>
                       <option value="very good" selected>very good</option>
                       <option value="good">good</option>
                       <option value="acceptable">acceptable</option>
@@ -194,6 +201,12 @@
                 <div class="field">
                   <label for="description">Please enter more detailed product description here</label>
                   <input type="text" id="newdescription" value={{p.description}}>
+                </div>
+                <div class="field">
+                  <label for="picture">Picture</label>
+                  <img id="productloadpic" src="data:image/jpeg;base64, {{p.pic}}" style="max-height:300px;max-width:300px;">
+                  <input type="file" id="newproductpic">
+                  <img id="shownewproductpic">
                 </div>
               </form>
           </div>

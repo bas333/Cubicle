@@ -3,6 +3,13 @@
   height: 50px;
   border: solid black 2px;
 }*/
+#rentalloadpic{
+  display:block;
+}
+#showrentalpic{
+  display:none;
+  max-width: 350px;
+}
 #newOwner{
   display:none;
 }
@@ -12,7 +19,9 @@
 #newStreet{
   display:none;
 }
-
+#shownewrentalpic{
+  display:none;
+}
 .rentform{
   padding:5em;
 }

@@ -1,0 +1,62 @@
+<template name="forum">
+  <div class="requesting">
+  <h1>Forum</h1>
+  {{> makepost}}
+  <hr>
+  <h1>Your post</h1>
+  {{#each p in requests}}
+    {{#if isOwner p}}
+      <div class="four wide column">
+        {{> showownpost p=p}}
+      </div>
+    {{/if}}
+  {{/each}}
+  </div>
+</template>
+
+<template name="makepost">
+  <div class="ui form">
+    <div class="makepost">
+    <label>Add Forum</label>
+    <textarea id="forumpost" placeholder="Add request?"></textarea>
+  </div>
+  <button class="ui button" id="submitforum">Post</button>
+</div>
+</template>
+
+<template name="showownpost">
+  <div class="post">
+    <p>{{p.createdAt}}<br>
+    <i class="user icon"></i>{{p.name}}<br>
+    <i class="comment icon"></i>{{p.text}}<br>
+    <button id="editforum" class="ui button" data-toggle="modal" data-target="#myModal_{{p._id}}">Edit</button>
+
+    <div class="modal fade" id="myModal_{{p._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Edit Product</h4>
+          </div>
+          <div class="modal-body">
+            <form method="post" class="ui form">
+              <div class="field">
+                  <label for="itemname">Post:</label>
+                  <input type="text" id="editforumpost" value="{{p.text}}">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+            <button type="button" class="ui button small primary" id="updateforum">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <button class="ui button" id="deleteforum">Delete</button></p>
+    <hr>
+  </div>
+</template>

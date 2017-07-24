@@ -1,0 +1,15 @@
+<template name="postforum">
+  <h1>See any requests that you can offer</h1>
+  {{#each p in requests}}
+    {{> showpost p=p}}
+  {{/each}}
+</template>
+
+<template name="showpost">
+  <div class="post">
+    <p>{{p.createdAt}}<br>
+    <i class="user icon"></i>{{p.name}}<br>
+    <i class="comment icon"></i>{{p.text}}</p>
+    <hr>
+  </div>
+</template>

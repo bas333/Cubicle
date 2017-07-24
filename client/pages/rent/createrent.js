@@ -14,6 +14,7 @@ Template.addrent.events({
     const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#price').val();
     const contact = instance.$('#contact-information').val();
+    const pic=instance.$('#rentalpic')[0].files[0];
     console.log("adding " + location);
     instance.$('#location').val("");
     instance.$('#street-address').val("");
@@ -34,19 +35,88 @@ Template.addrent.events({
       roommate:roommate,
       price:price,
       contact:contact,
+      pic:pic,
       createdAt: new Date(),
       owner: Meteor.userId()
     };
 
-    Meteor.call('rent.insert',rentpost,
-        (err, res) => {
-          if (err) {
-            alert("Failed to add your rental post");
-          } else {
-            alert("Successfully added your rental post");
-          }
+    var pic_base64;
+    if($('#rentalpic').val()){
+      if($('#rentalpic')[0].files&&$('#rentalpic')[0].files[0] && ($('#rentalpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+        if($('#rentalpic')[0].files[0].size>1048576){
+          alert('The file size should be smaller than 1MB');
+        }else{
+          var imagefile=$('#rentalpic')[0].files[0];
+          var imageConvertTo64Base=function(imagefile,callback){
+            var reader=new FileReader();
+            reader.onload=function(){
+              var dataURL = reader.result;
+              imageBase64Form=dataURL.split(',')[1];
+              callback(imageBase64Form);
+            };
+          reader.readAsDataURL(pic);
+        };
+
+        //send to server
+        imageConvertTo64Base(imagefile,function(imageBase64Form){
+          //add a new field into newuser
+          rentpost.pic=imageBase64Form;
+          Meteor.call('rent.insert',rentpost,
+              (err, res) => {
+                if (err) {
+                  alert("Failed to add your rental post");
+                } else {
+                  alert("Successfully added your rental post");
+                }
+              }
+          );
+        });
+
         }
-    );
+      }else{
+        $("#showrentalpic").attr("src","");
+        $("#showrentalpic").css("display","none");
+        alert("Please add a image file");
+      }
+    }else{
+      Meteor.call('rent.insert',rentpost,
+          (err, res) => {
+            if (err) {
+              alert("Failed to add your rental post");
+            } else {
+              alert("Successfully added your rental post");
+            }
+          }
+      );
+    }
+
+  },
+  'change #rentalpic':function(event){
+    //if the pic has input
+    if($("#rentalpic").val()){
+      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+        if(event.currentTarget.files[0].size>1048576){//file size out of range
+          alert('The file size should be smaller than 1MB');
+        }else{
+          //an object to read file
+          var picreader = new FileReader();
+          //when loading the input file
+          picreader.onload = function(event){
+            var result=event.currentTarget.result;
+            console.log(result);
+            $('#showrentalpic').attr('src',result);
+            $('#showrentalpic').css('display','block');
+          }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }
+      }else{//not a image file
+        alert('You are only allowed to upload an image file');
+      }
+    }else{
+      $("#showrentalpic").attr("src","");
+      $("#showrentalpic").css("display","none");
+    }
   },
   'click #addrentalrec': function(elt,instance){
     var recognition;
@@ -536,13 +606,51 @@ Template.ownpostrow.helpers({
   locationdata(){
     return location;
   },
+  hasPic(rent){
+    if(rent.pic!=undefined){
+      return true;
+    }else{
+      return false;
+    }
+  }
 })
 
 Template.ownpostrow.events({
   'click #deleteRent':function(elt,instance){
     Meteor.call('rent.remove',this.rent);
   },
+  'change #newrentalpic':function(event){
+    $('#rentalloadpic').css('display','none');
+    //if the pic has input
+    if($("#newrentalpic").val()){
+      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+        if(event.currentTarget.files[0].size>1048576){//file size out of range
+          alert('The file size should be smaller than 1MB');
+        }else{
+          //an object to read file
+          var picreader = new FileReader();
+          //when loading the input file
+          picreader.onload = function(event){
+            var result=event.currentTarget.result;
+            console.log(result);
+            console.log("enter show pic");
+            $('#shownewrentalpic').attr('src',result);
+            $('#shownewrentalpic').css('display','block');
+          }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }
+      }else{//not a image file
+        alert('You are only allowed to upload an image file');
+      }
+    }else{
+      $("#shownewrentalpic").attr("src","");
+      $("#shownewrentalpic").css("display","none");
+    }
+  },
   'click #updateRent':function(elt,instance){
+    event.preventDefault();
+    console.log("enter update");
     const rent_id = this.rent._id;
     const newLocation=instance.$("#newlocation :selected").val();
     const newStreet=instance.$("#newstreet").val();
@@ -553,18 +661,60 @@ Template.ownpostrow.events({
     const newRoommate=instance.$("#newroommate").val();
     const newPrice=instance.$("#newprice").val();
     const newContact=instance.$("#newcontact").val();
+    const pic=instance.$('#newrentalpic')[0].files[0];
+    console.log(pic);
+
     var newRent={
       location:newLocation,
       street:newStreet,
       time:newTime,
       roomsize:newRoomSize,
       facilities:newFacilities,
-      detail:newDetail,
+      detailed:newDetail,
+      pic:pic,
       roommate:newRoommate,
       price:newPrice,
       contact:newContact,
     }
-    Meteor.call('rent.update',rent_id,newRent);
+    var pic_base64;
+    console.log(instance.$('#newrentalpic').val());
+    if(instance.$('#newrentalpic').val()){
+      console.log("enter first if statement");
+      if((instance.$('#newrentalpic')[0].files&&instance.$('#newrentalpic')[0].files[0]) && (instance.$('#newrentalpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+        console.log("eneter second if statement");
+        if(instance.$('#newrentalpic')[0].files[0].size>1048576){
+          alert('The file size should be smaller than 1MB');
+        }else{
+          console.log("enter third");
+          var imagefile=$('#newrentalpic')[0].files[0];
+          var imageConvertTo64Base=function(imagefile,callback){
+            var reader=new FileReader();
+            reader.onload=function(){
+              var dataURL = reader.result;
+              imageBase64Form=dataURL.split(',')[1];
+              callback(imageBase64Form);
+            };
+          reader.readAsDataURL(pic);
+        };
+
+        //send to server
+        imageConvertTo64Base(imagefile,function(imageBase64Form){
+          //add a new field into newuser
+          newRent.pic=imageBase64Form;
+          console.log(imageBase64Form);
+          Meteor.call('rent.update',rent_id,newRent);
+          //$('#newrentalpic').val("")
+        });
+        }
+        //$("#newpic").css("display","none");
+      }else{
+        $("#shownewrentalpic").attr("src","");
+        $("#shownewrentalpic").css("display","none");
+        alert("Please add a image file");
+      }
+    }else{
+      Meteor.call('rent.update',rent_id,newRent);
+    }
   }
 })
 
