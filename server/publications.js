@@ -10,6 +10,9 @@ Meteor.publish('shop_products', function(type, keywords){
     return Product.find({itemname:{$regex:key}});
   }
 })
+Meteor.publish('forum',function(){
+  return Forum.find();
+})
 
 Meteor.publish('info_allproducts', function(keywords){
   var re = new RegExp(keywords, "i");

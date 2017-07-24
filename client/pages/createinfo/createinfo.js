@@ -523,7 +523,7 @@ Template.ownerproduct.events({
         console.log(imageBase64Form);
         Meteor.call('product.update',product_id,newproductinfo);
         //Meteor.call('rent.update',rent_id,newRent);
-        //$('#newproductpic').val("")
+        $('#newproductpic').val("")
       });
       }
       //$("#newpic").css("display","none");
