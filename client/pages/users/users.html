@@ -1,8 +1,9 @@
 <template name="users">
-  <!-- {{#if hasPerson}}
+   {{#if hasPerson}}
   <h1>You already have a profile, please sign in</h1>
     {{> showuser}}
-  {{else}} -->
+  {{else}}
+
 <div class="profile-page">
   <h1 class="ui dividing header">Create your profile</h1>
   <form class="ui form segment" id="signup-form">
@@ -75,19 +76,18 @@
     </div>
   </div>
     <br>
+
+    <div class="field" id="photo">
+      <input type="file" id="uploadpic">
+
+      <img id="picshow" src="">
+    </div>
+
     <div class="inline field">
       <div class="ui checkbox">
         <input type="checkbox" name="terms">
       <label>I agree to the terms and conditions</label>
     </div>
-  </div>
-
-  <div class="field" id="photo">
-    <span os-file-upload="" pic-info="true"  accept="image/*" data-type='image' size-error-message="the picture size should smaller than 1MB" type-error-message="please only upload JPG/PNG">
-      <button class="os button" id="uploadpic">upload picture</button>
-    </span>
-
-    <img id="picshow">
   </div>
 
   <div class="profile-submit">
@@ -96,46 +96,69 @@
   </div>
   </form>
 </div>
-  <!-- {{/if}} -->
+  {{/if}}
 </template>
 
 <template name="showprofile">
   <div class="profileprint">
   <h1 class="ui dividing header"> Welcome {{person.username}} !</h1>
   <p><strong>Name: {{person.username}} </strong><i class="edit icon" id="editName"></i></p>
-     <div class="ui form"><div class="two wide field" id="newname">  <input type="text" id="usernameUpdate" value={{person.username}}>
+     <div class="ui form"><div class="two wide field" id="newname">
+      <input type="text" id="usernameUpdate" value={{person.username}}>
     <p><i class="checkmark icon" id="updateUsername1">Update</i></p>
-    <p><i class="remove circle icon" id="cancleName">Cancel</i></p></div></div>
+    <p><i class="remove circle icon" id="cancelName">Cancel</i></p></div></div>
 
-    <p><strong> School: {{person.school}}</strong> </p>
+    <p><strong> School: {{person.school}}</strong><i class="edit icon" id="editSchool"></i> </p>
+    <div id="newschool">
+      <select class="ui fluid dropdown" id=school2 option={{person.school}}>
+        {{#each school in schoolData}}
+        <option>{{school.name}}</option>
+        {{/each}}
+      </select>
+      <p><i class="checkmark icon" id="updateSchool">Update</i></p>
+      <p><i class="remove circle icon" id="cancelSchool">Cancel</i></p>
+    </div>
+
 
     <p><strong> Age: {{person.age}}</strong> <i class="edit icon" id="editAge"></i></p>
     <div id="newage">
-    <select class="ui fluid dropdown" id="age2">
+    <select class="ui fluid dropdown" id="age2" option={{person.age}}>
       {{#each number in numberList}}
         <option>{{number}}</option>
       {{/each}}
     </select>
     <p><i class="checkmark icon" id="updateAge">Update</i></p>
-    <p><i class="remove circle icon" id="cancleAge">Cancel</i></p>
+    <p><i class="remove circle icon" id="cancelAge">Cancel</i></p>
     </div>
 
     <p><strong> Gender: {{person.gender}} </strong><i class="edit icon" id="editGender"></i></p>
     <div id="newgender">
-      <strong>Gender</strong><br>
-      <input type="radio" name="gender" id="male1" checked> Male<br>
-      <input type="radio" name="gender" id="female1"> Female<br>
-      <input type="radio" name="gender" id="other1"> Other<br>
+      <select class="ui dropdown" id="gender2" option={{person.gender}}>
+        <option value="Male"> Male </option>
+        <option value="Female"> Female </option>
+        <option value="Other"> Other </option>
+      </select>
       <p><i class="checkmark icon" id="updateGender">Update</i></p>
-      <p><i class="remove circle icon" id="cancleGender">Cancel</i></p>
+      <p><i class="remove circle icon" id="cancelGender">Cancel</i></p>
     </div>
 
     <p><strong> Email: {{person.email}}</strong><i class="edit icon" id="editEmail"></i></p>
-     <div class="ui form" id="newemail"><div class="two wide field"><input type="text" id="emailUpdate">
+     <div class="ui form" id="newemail"><div class="two wide field"><input type="text" id="emailUpdate" value={{person.email}}>
      <p><i class="checkmark icon" id="updateEmail">Update</i></p>
-     <p><i class="remove circle icon" id="cancleEmail">Cancel</i></p>
+     <p><i class="remove circle icon" id="cancelEmail">Cancel</i></p>
     </div>
      </div>
+
+     <p> <strong>Photo:</strong> <i class="edit icon" id="editPic"></i></p>
+       <img src="data:image/jpeg;base64, {{person.pic}}" style="display:block; max-height:300px;max-width:300px;">
+       <div class="ui form" id="newpic">
+         <input type="file" id="editpicfile" >
+
+       <img id="editpicshow">
+       <p><i class="checkmark icon" id="updatePic">Update</i></p>
+       <p><i class="remove circle icon" id="cancelPic">Cancel</i></p>
+     </div>
+     <br>
 
 
 
@@ -147,7 +170,7 @@
     <input type="checkbox" name="payment" value="Venmo">Venmo<br>
     <input type="checkbox" name="payment" value="Cash">Cash<br>
     <p><i class="checkmark icon" id="updatePaymethod">Update</i></p>
-    <p><i class="remove circle icon" id="canclePaymethod">Cancel</i></p>
+    <p><i class="remove circle icon" id="cancelPaymethod">Cancel</i></p>
     </div>
     </div>
     <div class="deletebutton">

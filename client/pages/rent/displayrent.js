@@ -6,6 +6,13 @@ Template.rentrow.helpers({
   isOwner() {console.dir(this);
     return this.rent.owner == Meteor.userId();
   },
+  hasPic(product){
+    if(product.pic!=undefined){
+      return true;
+    }else{
+      return false;
+    }
+  }
 })
 
 Template.rentrow.events({

@@ -52,4 +52,10 @@
     <i class="volume control phone icon"></i>
       Contact info: {{rent.contact}}
   </div>
+  <div class="item">
+    {{#if hasPic rent}}
+    <i class="photo icon"></i>
+    Picture: <img src="data:image/jpeg;base64, {{rent.pic}}" style="display:block; max-height:300px;max-width:300px;">
+    {{/if}}
+  </div>
 </template>

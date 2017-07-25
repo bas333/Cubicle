@@ -126,11 +126,11 @@ Template.users.onRendered(function(){
 })
 
 Template.users.events({
-  'change #pic':function(event){
+  'change #uploadpic':function(event){
     //if the pic has input
-    if($("#pic").val()){
+    if($("#uploadpic").val()){
       //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
-      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].tpye.match(/(jpg|png|jpeg|gif)$/)){
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
         if(event.currentTarget.files[0].size>1048576){//file size out of range
           alert('The file size should be smaller than 1MB');
         }else{
@@ -143,6 +143,7 @@ Template.users.events({
             $('#picshow').attr('src',result);
             $('#picshow').css('display','block');
           }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
         }
       }else{//not a image file
         alert('You are only allowed to upload an image file');
@@ -174,6 +175,7 @@ Template.users.events({
     cart=[];
     soldhistory=[];
     chatlist=[];
+<<<<<<< HEAD
     // instance.$('#username').val("");
     // instance.$('#school').val("");
     // instance.$('#gender').val("");
@@ -181,6 +183,16 @@ Template.users.events({
     // instance.$('#email').val("");
     // instance.$('#phone').val("");
     // instance.$('#password').val("");
+=======
+    const pic=instance.$('#uploadpic')[0].files[0];
+    console.log('adding '+username);
+    instance.$('#username').val("");
+    instance.$('#school').val("");
+    instance.$('#gender').val("");
+    instance.$('#age').val("");
+    instance.$('#email').val("");
+    instance.$('#phone').val("");
+>>>>>>> 307c67e93696f57c2abe3d09473ee22f0b6fdeb2
 
     alert("new user id =");
     var newUser = {
@@ -194,6 +206,8 @@ Template.users.events({
       cart:cart,
       soldhistory:soldhistory,
       chatlist:chatlist,
+      pic:pic,
+      owner:Meteor.userId(),
       createAt:new Date()
     };
     var credentials = {email,password};
@@ -210,12 +224,12 @@ Template.users.events({
     //   alert("error="+error+"result="+result);
     // });
     var pic_base64;
-    if($('#pic').val()){
-      if($('#pic')[0].files&&$('#pic')[0].files[0] && ($('#pic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-        if($('#pic')[0].files[0].size>1048576){
+    if($('#uploadpic').val()){
+      if($('#uploadpic')[0].files&&$('#uploadpic')[0].files[0] && ($('#uploadpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+        if($('#uploadpic')[0].files[0].size>1048576){
           alert('The file size should be smaller than 1MB');
         }else{
-          var imagefile=$('#pic')[0].files[0];
+          var imagefile=$('#uploadpic')[0].files[0];
           var imageConvertTo64Base=function(imagefile,callback){
             var reader=new FileReader();
             reader.onload=function(){
@@ -229,7 +243,7 @@ Template.users.events({
         //send to server
         imageConvertTo64Base(imagefile,function(imageBase64Form){
           //add a new field into newuser
-          newuser.pic=imageBase64Form;
+          newUser.pic=imageBase64Form;
           Meteor.call('users.insert',newUser, function(err, result){
             if(err){
               window.alert(err);
@@ -263,6 +277,9 @@ Template.showprofile.helpers({
     }
     return a;
   },
+  schoolData(){
+    return schools;
+  }
 })
 
 Template.showuser.helpers({
@@ -280,8 +297,83 @@ Template.users.helpers({
 })
 
 Template.showprofile.events({
+  'change #editpicfile':function(event){
+    //if the pic has input
+    if($("#editpicfile").val()){
+      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+        if(event.currentTarget.files[0].size>1048576){//file size out of range
+          alert('The file size should be smaller than 1MB');
+        }else{
+          //an object to read file
+          var picreader = new FileReader();
+          //when loading the input file
+          picreader.onload = function(event){
+            var result=event.currentTarget.result;
+            console.log(result);
+            $('#editpicshow').attr('src',result);
+            $('#editpicshow').css('display','block');
+          }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }
+      }else{//not a image file
+        alert('You are only allowed to upload an image file');
+      }
+    }else{
+      $("#editpicshow").attr("src","");
+      $("#editpicshow").css("display","none");
+    }
+  },
+  'click #editpic':function(elt,instance){
+    $("#newpic").css("display","block");
+  },
+  'click #updatePic':function(elt,instance){
+    event.preventDefault();
+    const pic=instance.$('#editpicfile')[0].files[0];
+
+    var pic_base64;
+    if($('#editpicfile').val()){
+      if(($('#editpicfile')[0].files&&$('#editpicfile')[0].files[0]) && ($('#editpicfile')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+        if($('#editpicfile')[0].files[0].size>1048576){
+          alert('The file size should be smaller than 1MB');
+        }else{
+          var imagefile=$('#editpicfile')[0].files[0];
+          var imageConvertTo64Base=function(imagefile,callback){
+            var reader=new FileReader();
+            reader.onload=function(){
+              var dataURL = reader.result;
+              imageBase64Form=dataURL.split(',')[1];
+              callback(imageBase64Form);
+            };
+          reader.readAsDataURL(pic);
+        };
+
+        //send to server
+        imageConvertTo64Base(imagefile,function(imageBase64Form){
+          //add a new field into newuser
+          var newpic=imageBase64Form;
+          Meteor.call('users.updatePic',Meteor.userId(),newpic);
+          $('#editpicfile').val("")
+        });
+        }
+        $("#newpic").css("display","none");
+      }else{
+        $("#editpicshow").attr("src","");
+        $("#editpicshow").css("display","none");
+        alert("Please add a image file");
+      }
+    }
+  },
+
+
+  'click #editPic':function(elt,instance){
+    $("#newpic").css("display","block");
+  },
    'click #editName':function(elt,instance){
       $("#newname").css("display", "block");
+   },
+   'click #editSchool':function(elt,instance){
+     $("#newschool").css("display","block");
    },
    'click #editAge':function(elt,instance){
       $("#newage").css("display", "block");
@@ -295,19 +387,22 @@ Template.showprofile.events({
    'click #editPaymethod':function(elt,instance){
       $("#newpayment").css("display", "block");
    },
-   'click #canclePaymethod':function(elt,instance){
+   'click #cancelPaymethod':function(elt,instance){
       $("#newpayment").css("display", "none");
    },
-   'click #cancleEmail':function(elt,instance){
+   'click #cancelEmail':function(elt,instance){
       $("#newemail").css("display", "none");
    },
-   'click #cancleGender':function(elt,instance){
+   'click #cancelGender':function(elt,instance){
       $("#newgender").css("display", "none");
    },
-   'click #cancleAge':function(elt,instance){
+   'click #cancelAge':function(elt,instance){
       $("#newage").css("display", "none");
    },
-   'click #cancleName':function(elt,instance){
+   'click #cancelSchool':function(elt,instance){
+     $("#newschool").css("display","none");
+   },
+   'click #cancelName':function(elt,instance){
       $("#newname").css("display", "none");
    },
    'click #updateUsername1':function(elt,instance){
@@ -321,6 +416,12 @@ Template.showprofile.events({
      console.log(this.person);
      Meteor.call('users.remove',this.person);
    },
+   'click #updateSchool':function(elt,instance){
+     const school=instance.$('#school2').val();
+     console.log(school);
+     Meteor.call('users.updateSchool',Meteor.userId(),school);
+     $("#newschool").css("display","none");
+   },
    'click #updateAge':function(elt,instance){
      const age=instance.$('#age2').val();
      console.log(age);
@@ -328,15 +429,8 @@ Template.showprofile.events({
      $("#newage").css({display:"none"});
    },
    'click #updateGender':function(elt,instance){
-     const age=instance.$('#age2').val();
-     var gender="";
-     if($('input[id="male1"]').is(':checked')){
-       gender="male";
-     }else if($('input[id="female1"]').is(':checked')){
-       gender="female";
-     }else{
-       gender="other";
-     };
+     const gender=instance.$("#gender2").val();
+     console.log(gender);
      Meteor.call('users.updateGender',Meteor.userId(),gender);
      $("#newgender").css({display:"none"});
    },

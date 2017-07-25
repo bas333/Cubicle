@@ -8,7 +8,13 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
-
+#productloadpic{
+  display:block;
+}
+.shownewrentalpic{
+  max-width: 300px;
+  max-height: 300px
+}
 .modal-backdrop {
     z-index: 0;
 }
@@ -17,6 +23,14 @@ tr#productrow.unsolditem{
 }
 tr#productrow.solditem{
   color: rgb(172, 173, 175);
+}
+
+#showproductpic{
+  max-width: 300px;
+}
+#shownewproductpic{
+  max-height:300px;
+  max-width:300px;
 }
 
 .productform{

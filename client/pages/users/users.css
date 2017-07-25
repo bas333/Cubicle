@@ -1,6 +1,9 @@
 #newname{
   display:none;
 }
+#newschool{
+  display:none;
+}
 #newage{
   display:none;
 }
@@ -13,8 +16,16 @@
 #newpayment{
   display:none;
 }
+#newpic{
+  display:none;
+}
+#editpicshow{
+  display:none;
+  max-width:300px
+}
 #picshow{
   display:none;
+  max-width: 480px;
 }
 #newpayment{
   padding-left: calc(50% - 57.5px);
