@@ -66,7 +66,7 @@ Template.makepost.events({
     }
     function startRecognition() {
       recognition = new webkitSpeechRecognition();
-      recognition.continuous = true;
+      //recognition.continuous = true;
       recognition.onstart = function(event) {
         updateRec();
       };
@@ -75,43 +75,30 @@ Template.makepost.events({
         var text = "";
           for (var i = event.resultIndex; i < event.results.length; ++i) {
             text += event.results[i][0].transcript;
-            // if(event.results[i][0].transcript==('stop')){
-            //   console.log("stop recording");
-            //   instance.$("#forumpost").val("");
-            //   console.log("user says stop");
-            //   recognition.stop();
-            //   stopRecognition();
-            // }else{
-              var name = AllUsers.findOne({owner:Meteor.userId()}).username;
-              var now = new Date();
-              text = instance.$("#forumpost").val();
-              var post = {
-                owner:Meteor.userId(),
-                name:name,
-                createdAt: now,
-                text: text
-              };
-              Meteor.call('forum.insert',post);
-              console.log("autosubmit condition");
-            // }
-            setInput(text);
-            // recognition.stop();
-            stopRecognition();
-            instance.$("#forumpost").val("");
+          }
+          console.log(text);
+              setInput(text);
+              //recognition.stop();
+              stopRecognition();
+              //instance.$("#forumpost").val("");
+            //setInput(text);
         };
+
         recognition.onend = function() {
           stopRecognition();
         };
         recognition.lang = "en-US";
         recognition.start();
-      }
+    }
 
 
       function stopRecognition() {
         if (recognition) {
+          console.log("enter stop");
+          // instance.$('#forumpost').val("");
+          console.log("empty");
           recognition.stop();
           recognition = null;
-          instance.$('#forumpost').val("");
         }
         updateRec();
       }
@@ -121,9 +108,11 @@ Template.makepost.events({
         send();
       }
       function updateRec() {
-        $("#addforumrec").text(recognition ? "Stop" : "Speak");
+        console.log("enter updateRec");
+        $("#forumrec").text(recognition ? "Stop" : "Speak");
       }
 
+      function send(){
       var text = $("#forumpost").val();
       $.ajax({
         type: "POST",
@@ -136,13 +125,28 @@ Template.makepost.events({
         data: JSON.stringify({ query: text, lang: "en", sessionId: "66666666" }),
         success: function(data) {
           setResponse(JSON.stringify(data, undefined, 2));
-          var substring1="stop";
-          var substring2="submit";
+          console.log(data);
+          // var substring1="stop";
+          // var substring2="submit";
           // if(text==(substring1)||text.includes(substring2)){
           //   console.log("into stop or submit condition");
           // }else{
           //
           // }
+          var name = AllUsers.findOne({owner:Meteor.userId()}).username;
+          var now = new Date();
+          instance.$("#forumpost").val(text);
+
+          console.log(text);
+          var post = {
+            owner:Meteor.userId(),
+            name:name,
+            createdAt: now,
+            text: text
+          };
+          Meteor.call('forum.insert',post);
+          console.log("autosubmit condition");
+          instance.$('#forumpost').val("");
         },
       error: function() {
         setResponse("Internal Server Error");
