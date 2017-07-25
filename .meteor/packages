@@ -28,3 +28,5 @@ twbs:bootstrap
 accounts-facebook
 google-config-ui
 facebook-config-ui
+accounts-base
+aldeed:simple-schema

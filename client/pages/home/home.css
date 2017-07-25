@@ -5,6 +5,11 @@ body{
   font-size:30px;
   line-height:1.6;
 }
+.ui.modal {
+  top: calc(50% -180px);
+  height: 360px;
+  margin-top:0px;
+}
 /*body .whole-home {
   background-image: url("images/Cubicle-background.png");
   background-position: center;
@@ -24,6 +29,7 @@ body{
   position:relative;
   text-align: center;
 }*/
+
 .home-buttons {
   text-align: center;
 }
