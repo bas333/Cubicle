@@ -81,7 +81,7 @@
   {{#if currentUser}}
   <div class="displayproduct">
   <h2 class="ui dividing header"> View Products </h2>
-  <table class="ui celled padded table">
+  <table class="ui basic celled padded table">
   <thead>
     <tr>
       <th>Product Information</th>
@@ -152,10 +152,10 @@
       </ul>
     </td>
     <td>
-      <div>
-      <input type="checkbox" name="status" value="sold" id="jsstatus"><abbr title="Once an item is marked sold, it can not be marked unsold">sold</abbr><br>
+    <div data-tooltip="Once an item is marked sold, it can not be marked unsold" data-position="bottom center">
+      <input type="checkbox" name="status" value="sold" id="jsstatus">
+      Sold
     </div>
-
     </td>
     <td>
       <button type="button" id="enableedit" class="tiny ui button" data-toggle="modal" data-target="#myModal_{{p._id}}">

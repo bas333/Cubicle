@@ -4,13 +4,25 @@
 .modalstyle{
   position: absolute;
   top: calc(50% - 300px);
-  left: calc(50% - 275px);
+  left: calc(60% - 300px);
 }
 .modal-dialog{
-  width: 550px;
+  width: 600px;
   height: 600px;
 }
 .modal-body{
   overflow: scroll;
   height: 400px;
+  font-size:16px;
+  line-height:1.77em;
+}
+.modal-content{
+  box-shadow:none;
+}
+strong{
+  font-size:18px;
+}
+
+.inputfield{
+  width:400px;
 }

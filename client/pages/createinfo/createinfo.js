@@ -12,7 +12,7 @@ import { Template } from 'meteor/templating';
        Meteor.subscribe('allusers');
      })
  }
- Template.main.onRendered(function() {
+ Template.createinfo.onRendered(function() {
    this.$('#category').dropdown({on: 'hover'});
    // other SUI modules initialization
    this.$('#condition').dropdown({on: 'hover'});
@@ -58,6 +58,14 @@ Template.addproduct.events({
   },
   'click #addproduct'(elt,instance){
     const itemname = instance.$('#itemname').val();
+<<<<<<< HEAD
+    const condition = instance.$('#condition :selected').val();
+    const category = instance.$('#category :selected').val();
+    const description = instance.$('#description').val();
+    const price = instance.$('#price').val();
+    var status = instance.$('#sold').val();
+    const buyer = instance.$('#buyer').val();
+=======
     const condition=instance.$('#condition :selected').val();
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
@@ -65,6 +73,7 @@ Template.addproduct.events({
     var status=instance.$('#sold').val();
     const buyer=instance.$('#buyer').val();
     const pic=instance.$("#productpic")[0].files[0];
+>>>>>>> 307c67e93696f57c2abe3d09473ee22f0b6fdeb2
     var productinfo =
     {
       itemname:itemname,

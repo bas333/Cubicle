@@ -1,3 +1,5 @@
+import { Accounts } from 'meteor/accounts-base';
+
 Template.users.helpers({
   numberList(){
     const a= [];
@@ -151,17 +153,20 @@ Template.users.events({
       $("#picshow").css("display","none");
     }
   },
+
   'click #submitnow':function(elt,instance) {
     event.preventDefault();
     if(!$('#signup-form').form('is valid')){
       return;
     }
+    alert("Are Your here???");
     const username=instance.$('#username').val();
     const school=instance.$('#school').val();
     const age=instance.$('#age').val();
     const email=instance.$('#email').val();
     const phone=instance.$('#phone').val();
-    var gender=instance.$('#gender :selected').text();
+    const password=instance.$('#password').val();
+    const gender=instance.$('#gender :selected').text();
     paymethodinputs = instance.$("#paymentlist input");
     paymethod = [];
     paymethodinputs.each(function(a,b){
@@ -170,6 +175,15 @@ Template.users.events({
     cart=[];
     soldhistory=[];
     chatlist=[];
+<<<<<<< HEAD
+    // instance.$('#username').val("");
+    // instance.$('#school').val("");
+    // instance.$('#gender').val("");
+    // instance.$('#age').val("");
+    // instance.$('#email').val("");
+    // instance.$('#phone').val("");
+    // instance.$('#password').val("");
+=======
     const pic=instance.$('#uploadpic')[0].files[0];
     console.log('adding '+username);
     instance.$('#username').val("");
@@ -178,8 +192,10 @@ Template.users.events({
     instance.$('#age').val("");
     instance.$('#email').val("");
     instance.$('#phone').val("");
+>>>>>>> 307c67e93696f57c2abe3d09473ee22f0b6fdeb2
 
-    var newUser={
+    alert("new user id =");
+    var newUser = {
       username:username,
       age:age,
       school:school,
@@ -194,7 +210,19 @@ Template.users.events({
       owner:Meteor.userId(),
       createAt:new Date()
     };
-
+    var credentials = {email,password};
+    console.log("credentials are ");
+    console.dir(credentials);
+    Accounts.createUser(credentials,
+     function(error,result){
+        userid = Meteor.userId();
+        newUser.owner = userId;
+        AllUsers.insert(newUser);
+      });
+    // alert("Create new user"+JSON.stringify(newUser)+password);
+    // Meteor.call('users.createuser',email,password, newUser,function(error,result){
+    //   alert("error="+error+"result="+result);
+    // });
     var pic_base64;
     if($('#uploadpic').val()){
       if($('#uploadpic')[0].files&&$('#uploadpic')[0].files[0] && ($('#uploadpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
@@ -231,6 +259,7 @@ Template.users.events({
         alert("Please add a image file");
       }
     }else{
+      console.log('adding '+username);
       Meteor.call('users.insert',newUser, function(err, result){
         if(err){
           window.alert(err);

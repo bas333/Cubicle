@@ -49,12 +49,16 @@
 	     Contact Us
 	   </a>
 		 <div class="right menu">
+			 {{#if currentUser}}
+			 <button class="ui basic button" onclick="Meteor.logout()">Logout</button>
+			 {{else}}
 		 	<a class="item" href="{{pathFor 'login'}}">
 	     Sign In
 	   </a>
 		 <a class="item" href="{{pathFor 'users'}}">
 	     Sign Up
 	   </a>
+		 {{/if}}
 		 <a class="item" href="{{pathFor 'mycart'}}">
 			 <i class="shop icon"></i>
 			</a>

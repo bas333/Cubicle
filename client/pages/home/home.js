@@ -7,6 +7,23 @@ Template.home.onRendered(function(){
 //  $('#category').select2();
 })
 
+const location=[
+  {name:"Waltham",value:"waltham"},
+  {name:"Watertown",value:"watertown"},
+  {name:"Newton",value:"newton"},
+  {name:"Cambridge",value:"cambridge"},
+  {name:"Boston",value:"boston"},
+  {name:"Brookline",value:"brookline"},
+  {name:"Somerville",value:"somerville"},
+  {name:"Malden",value:"malden"},
+]
+
+Template.home.helpers({
+  locationdata(){
+    return location;
+  },
+})
+
 Template.home.events ({
   'click #shopnow' (elt,instance){
     var selectedcategory = instance.$('#category :selected').text();
@@ -21,6 +38,21 @@ Template.home.events ({
   },
 
 
+  'click #showrentalmodal'(elt,instance) {
+    $('.ui.modal').modal({inverted: true}).modal('show');
+    $('.ui.modal').modal({
+      onApprove : function() {
+        var rentcity = $('#searchlocation :selected').val();
+        console.log("hi"+rentcity);
+        var rentprice = $('#searchpriceM').val();
+        console.log(rentprice);
+        var rentmonthstart = $('#searchavailable-start :selected').text();
+        var rentmonthend = $('#searchavailable-end :selected').text();
+        var rentfacility = $('#searchfacilities').val();
+        Router.go("rentsearch", {}, {query:'location='+rentcity+'&price='+rentprice+'&start='+rentmonthstart+'&end='+rentmonthend+'&facilities='+rentfacility});
+      }
+    })
+  },
 
   'click #rec':function(elt,instance){
       var recognition;

@@ -41,6 +41,8 @@ Template.showchat.events({
   'click #beginChat'(event,template){
     $(".modal-dialog").css("display","none");
     template.$(".modal-dialog").css("display","block");
+    $("#chatbox").prop({scrollTop: $("#chatbox")[0].scrollHeight});
+
   },
   'click #enterMessage'(elt,instance){
     const privatetext=instance.$('#privatetext').val();
@@ -50,11 +52,19 @@ Template.showchat.events({
       if (chat.users_id.includes(this.c.owner)){
         console.log(chat);
         console.log("message insert");
-        Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext);
-        instance.$('privatetext').val("");
+        Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext,function(err,result){
+          if(err){
+            alert("Failed to send message");
+            return;
+          }
+          $("#chatbox").prop({scrollTop: $("#chatbox")[0].scrollHeight});
+          instance.$('#privatetext').val("");
+        });
+
         return;
       }
     }
+
   }
 })
 Template.showchat.helpers({

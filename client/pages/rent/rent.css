@@ -31,6 +31,9 @@
 .rentpost{
   padding:5em;
 }
+.rentpost_search{
+  padding:5em;
+}
 
 #singlerent{
   background-image:url("images/post-background.jpg");
