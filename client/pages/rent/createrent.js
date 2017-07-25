@@ -152,7 +152,7 @@ Template.addrent.events({
               instance.$('#priceM').val("");
               instance.$('#contact-information').val("");
 
-              console.log("hihihi");
+              console.log("user want stop");
               recognition.stop();
               stopRecognition();
               instance.$("#usersay").val("");

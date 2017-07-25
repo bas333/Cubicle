@@ -1,3 +1,8 @@
+<head>
+  <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+</head>
+
+
 <template name="forum">
   <div class="requesting">
   <h1>Forum</h1>
@@ -15,13 +20,26 @@
 </template>
 
 <template name="makepost">
-  <div class="ui form">
+  <div class="voice_add_forum">
+    <h2 class="ui dividing header">Create a New Forum Post</h2>
+      <div class="ui form">
+        <div class="field">
+          <input id="forumpost" placeholder="Add request?">
+
+        </div>
+        <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="forumrec"><i class="announcement icon"></i>Speak</button>
+        <button class="ui button" id="submitforum">Post</button>
+      </div>
+    </div>
+
+
+  <!--<div class="ui form">
     <div class="makepost">
     <label>Add Forum</label>
     <textarea id="forumpost" placeholder="Add request?"></textarea>
   </div>
   <button class="ui button" id="submitforum">Post</button>
-</div>
+</div>-->
 </template>
 
 <template name="showownpost">
