@@ -189,11 +189,12 @@
         </div>
         <div>
           <label for="picture">Picture:</label>
-          <img id="rentalloadpic" src="data:image/jpeg;base64, {{rent.pic}}" style="max-height:300px;max-width:300px;">
+          {{#if hasPic rent}}
+          <img id="oldrentalpic" src="data:image/jpeg;base64, {{rent.pic}}" style="max-height:300px;max-width:300px;">
+          {{/if}}
           <input type="file" id="newrentalpic">
           <img id="shownewrentalpic">
         </div>
-
         </form>
       </div>
       <div class="modal-footer">

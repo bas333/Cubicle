@@ -19,8 +19,8 @@
 #newStreet{
   display:none;
 }
-#shownewrentalpic{
-  display:none;
+#oldrentalpic{
+  display:block;
 }
 .rentform{
   padding:5em;

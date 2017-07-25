@@ -473,16 +473,20 @@ Template.ownerproduct.events({
     Meteor.call('product.remove',this.p);
 },
 
-'click #updateitem'(event, instance) {
+'click #updateitem':function(elt, instance) {
   const product_id = this.p._id;
-  const newitemname = $('#newitemname_'+product_id).val();;
-  const newcondition=$('#newcondition :selected').text();
-
-  const newcategory=instance.$('#newcategory :selected').val();
-  const newdescription=instance.$('#newdescription').val();
-  const newprice=instance.$('#newprice').val();
-  const pic=instance.$('#newproductpic')[0].files[0];
-  id = Meteor.userId();
+  const newitemname = $('#newitemname_'+product_id).val();
+  const newcondition = $('#newcondition_'+product_id+' :selected').text();
+  console.log(newcondition);
+  const newcategory=$('#newcategory_'+product_id+' :selected').val();
+  console.log(newcategory);
+  const newdescription=$('#newdescription_' +product_id).val();
+  console.log(newdescription);
+  const newprice=$('#newprice_'+product_id).val();
+  console.log(newprice);
+  console.log($('#newproductpic_'+product_id).val())
+  const pic=$('#newproductpic_'+product_id)[0].files[0];
+  const id = Meteor.userId();
   var newproductinfo =
   {
     itemname:newitemname,
@@ -496,16 +500,16 @@ Template.ownerproduct.events({
   }
 
   var pic_base64;
-  console.log(instance.$('#newproductpic').val());
-  if(instance.$('#newproductpic').val()){
+  console.log($('#newproductpic_'+product_id).val());
+  if($('#newproductpic_'+product_id).val()){
     console.log("enter first if statement");
-    if((instance.$('#newproductpic')[0].files&&instance.$('#newproductpic')[0].files[0]) && (instance.$('#newproductpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+    if(($('#newproductpic_'+product_id)[0].files&&$('#newproductpic_'+product_id)[0].files[0]) && ($('#newproductpic_'+product_id)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
       console.log("eneter second if statement");
-      if(instance.$('#newproductpic')[0].files[0].size>1048576){
+      if($('#newproductpic_'+product_id)[0].files[0].size>1048576){
         alert('The file size should be smaller than 1MB');
       }else{
         console.log("enter third");
-        var imagefile=$('#newproductpic')[0].files[0];
+        var imagefile=$('#newproductpic_'+product_id)[0].files[0];
         var imageConvertTo64Base=function(imagefile,callback){
           var reader=new FileReader();
           reader.onload=function(){
@@ -523,13 +527,13 @@ Template.ownerproduct.events({
         console.log(imageBase64Form);
         Meteor.call('product.update',product_id,newproductinfo);
         //Meteor.call('rent.update',rent_id,newRent);
-        $('#newproductpic').val("")
+        $('#newproductpic_'+product_id).val("")
       });
       }
       //$("#newpic").css("display","none");
     }else{
-      $("#shownewproductpicc").attr("src","");
-      $("#shownewproductpicc").css("display","none");
+      $("#shownewproductpic"+product_id).attr("src","");
+      $("#shownewproductpic"+product_id).css("display","none");
       alert("Please add a image file");
     }
   }else{
@@ -538,7 +542,6 @@ Template.ownerproduct.events({
   }
     console.log(this.p);
     console.dir(this);
-    Meteor.call('product.update',product_id,newproductinfo);
   },
   'click #enableedit'(event,instance){
     const newcategory=instance.$('#newcategory').val(this.p.category);
@@ -550,9 +553,10 @@ Template.ownerproduct.events({
     instance.$("")
     Meteor.call('product.sold',Meteor.userId(),this.p);
   },
-  'change #newproductpic'(event){
-    $('#rpoductloadpic').css('display','none');
-    if($("#newproductpic").val()){
+  'change .newproductpic':function(event){
+    const product_id=this.p._id;
+    $('#productloadpic_'+product_id).css('display','none');
+    if($("#newproductpic_"+product_id).val()){
       //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
       if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
         if(event.currentTarget.files[0].size>1048576){//file size out of range
@@ -563,10 +567,10 @@ Template.ownerproduct.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-            console.log(result);
             console.log("enter show pic");
-            $('#shownewproductpic').attr('src',result);
-            $('#shownewproductpic').css('display','block');
+            console.log($('#shownewproductpic_'+product_id));
+            $('#shownewproductpic_'+product_id).attr('src',result);
+            $('#shownewproductpic_'+product_id).css('display','block');
           }
           picreader.readAsDataURL(event.currentTarget.files[0]);
         }
@@ -574,8 +578,8 @@ Template.ownerproduct.events({
         alert('You are only allowed to upload an image file');
       }
     }else{
-      $("#shownewproductpic").attr("src","");
-      $("#shownewproductpic").css("display","none");
+      $("#shownewproductpic_"+product_id).attr("src","");
+      $("#shownewproductpic_"+product_id).css("display","none");
     }
   },
 })

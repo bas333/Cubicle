@@ -175,7 +175,7 @@
               </div>
               <div class="field">
                 <label for="category">Category:</label>
-                  <select name="select" id="newcategory" value="{{p.category}}">
+                  <select name="select" id="newcategory_{{p._id}}" value="{{p.category}}">
                       <option value="textbooks/books">Textbooks/Books</option>
                       <option value="electronics">Electronics</option>
                       <option value="clothes,shoes,and accessories">Clothes,Shoes,and Accessories</option>
@@ -187,11 +187,11 @@
 
                 <div class="field">
                     <label for="price">Price: $</label>
-                    <input type="number" id="newprice" value={{p.price}}>
+                    <input type="number" id="newprice_{{p._id}}" value={{p.price}}>
                 </div>
                 <div class="field">
                   <label for="condition">Condition:</label>
-                    <select name="select" id="newcondition" select={{p.condition}}>
+                    <select name="select" id="newcondition_{{p._id}}" value={{p.condition}}>
                       <option value="like new">like new</option>
                       <option value="very good" selected>very good</option>
                       <option value="good">good</option>
@@ -200,13 +200,13 @@
                 </div>
                 <div class="field">
                   <label for="description">Please enter more detailed product description here</label>
-                  <input type="text" id="newdescription" value={{p.description}}>
+                  <input type="text" id="newdescription_{{p._id}}" value={{p.description}}>
                 </div>
                 <div class="field">
                   <label for="picture">Picture</label>
-                  <img id="productloadpic" src="data:image/jpeg;base64, {{p.pic}}" style="max-height:300px;max-width:300px;">
-                  <input type="file" id="newproductpic">
-                  <img id="shownewproductpic">
+                  <img id="productloadpic_{{p._id}}" src="data:image/jpeg;base64, {{p.pic}}" style="max-height:300px;max-width:300px;">
+                  <input class="newproductpic" type="file" id="newproductpic_{{p._id}}">
+                  <img class="shownewrentalpic" id="shownewproductpic_{{p._id}}">
                 </div>
               </form>
           </div>
