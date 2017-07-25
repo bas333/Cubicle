@@ -7,27 +7,29 @@ Template.addrent.events({
   'click #submitrent'(elt,instance){
     const location = instance.$('#location :selected').val();
     const street = instance.$('#street-address').val();
-    const time = instance.$('#time').val();
+    const start = instance.$('#time-start :selected').text();
+    const end = instance.$('#time-end :selected').text();
     const roomsize = instance.$('#roomsize').val();
     const facilities = instance.$('#facilities').val();
     const detailed = instance.$('#detaileddescription').val();
     const roommate = instance.$('#roommatedescription').val();
-    const price = instance.$('#price').val();
+    const price = instance.$('#priceM').val();
     const contact = instance.$('#contact-information').val();
     console.log("adding " + location);
-    instance.$('#location').val("");
-    instance.$('#street-address').val("");
-    instance.$('#time').val("");
-    instance.$('#roomsize').val("");
-    instance.$('#facilities').val("");
-    instance.$('#detaileddescription').val("");
-    instance.$('#roommatedescription').val("");
-    instance.$('#priceM').val("");
-    instance.$('#contact-information').val("");
+    // instance.$('#location').val("");
+    // instance.$('#street-address').val("");
+    // instance.$('#time').val("");
+    // instance.$('#roomsize').val("");
+    // instance.$('#facilities').val("");
+    // instance.$('#detaileddescription').val("");
+    // instance.$('#roommatedescription').val("");
+    // instance.$('#priceM').val("");
+    // instance.$('#contact-information').val("");
     var rentpost =
     { location:location,
       street:street,
-      time:time,
+      start:start,
+      end:end,
       roomsize:roomsize,
       facilities:facilities,
       detailed:detailed,

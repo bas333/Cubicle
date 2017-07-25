@@ -11,6 +11,11 @@ Meteor.publish('shop_products', function(type, keywords){
   }
 })
 
+Meteor.publish('rent_search',function(location, price, start, end, facilities){
+  var faci = new RegExp(facilities, "i");
+  return Rent.find({location:location, price:{$lt:price}, start:start, end:end, facilities:{$regex:faci}});
+})
+
 Meteor.publish('info_allproducts', function(keywords){
   var re = new RegExp(keywords, "i");
   return Product.find({itemname:{$regex:re}});
