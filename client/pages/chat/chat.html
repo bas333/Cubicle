@@ -2,24 +2,24 @@
   <div class="ui grid">
     {{#each c in mychatlist}}
       {{> showchat c=c dict=dict}}
+      <br>
     {{/each}}
 
   </div>
 </template>
 <template name="showchat">
   <div class="four wide column">
+    <img src="data:image/jpeg;base64, {{c.pic}}" style="display:block; max-height:100px;max-width:100px;">
     <button id="beginChat" class="postbutton">{{c.username}}</button>
   </div>
 
-  <div style="position: absolute;top: calc(50% - 300px);left: calc(50% - 275px);">
-    {{#if showChatBox}}
-
-      <div class="modal-dialog" role="document" style="width: 550px;height: 600px;">
+  <div class="modalstyle" id="test">
+      <div class="modal-dialog" role="document" style="display:none;">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
           </div>
-          <div class="modal-body" style="overflow: scroll;height: 400px;">
+          <div class="modal-body">
             {{#each m in messagelist}}
               <strong>{{m.username}}</strong><br>
               {{m.messagetext}}<br>
@@ -32,7 +32,6 @@
           </div>
         </div>
       </div>
-    {{/if}}
   </div>
 
   <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
