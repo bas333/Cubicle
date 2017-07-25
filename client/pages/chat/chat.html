@@ -8,26 +8,31 @@
 
 </template>
 <template name="showchat">
-  <div style="padding-left:20px;">
-    <img src="data:image/jpeg;base64, {{c.pic}}" style="display:block; max-height:100px;max-width:100px;">
-    <button id="beginChat" class="right attached round ui button">{{c.username}}</button>
+  <div style="padding-left:50px; display:inline-block; width:100%; padding-bottom:20px;">
+    <img src="data:image/jpeg;base64, {{c.pic}}" style="display:block; max-height:100px;max-width:100px; float:left; padding-right:15px;">
+    <button id="beginChat" class="ui button" >{{c.username}}</button>
   </div>
 
-  <div class="modalstyle" id="test">
+  <div class="modalstyle">
       <div class="modal-dialog" role="document" style="display:none;">
         <div class="modal-content">
-          <div class="modal-header">
+          <!-- <div class="modal header">
             <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
-          </div>
-          <div class="modal-body" id="chatbox">
+          </div> -->
+          <div class="modal-body" id="chatbox_{{c._id}}">
             {{#each m in messagelist}}
+
               <strong>{{m.username}}</strong><br>
               {{m.messagetext}}<br>
+
             {{/each}}
-          </div>
+
+      </div>
           <div class="modal-footer">
-            <input type="text" id="privatetext" class="inputfield">
-            <button type="button" class="ui button small primary" id="enterMessage">Send</button>
+            <div class="ui fluid action input">
+              <input type="text" id="privatetext_{{c._id}}" class="inputfield">
+              <button type="button" class="ui button small primary" id="enterMessage">Send</button>
+            </div>
           </div>
         </div>
       </div>
