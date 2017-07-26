@@ -24,5 +24,19 @@ Template.addcart.events({
 Template.addcart.helpers({
   isOwner(product){
     console.log(product.owner);
-    return (product.owner == Meteor.userId())}
+    return (product.owner == Meteor.userId())
+  },
+  isInCart(product){
+    console.log(product);
+    var user=AllUsers.findOne({owner:Meteor.userId()});
+    console.log(user.cart);
+    var newcart=user.cart;
+    var found = false;
+    for(var i = 0; i < newcart.length; i++) {
+      if (newcart[i]._id==product._id) {
+        found = true;
+      }
+    }
+    return found;
+  },
 })
