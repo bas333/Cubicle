@@ -131,8 +131,46 @@
   <tr id="productrow" class={{displayitem}}>
     <td>
         <h3 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h3>
-        <ul>
+        <div class="ui list">
           {{#if hasPic p}}
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:200px;max-width:200px;">
+            </div>
+          </a>
+          {{/if}}
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Price</div>
+              <div class="description">${{p.price}}</div>
+            </div>
+          </a>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Condition</div>
+              <div class="description">{{p.condition}}</div>
+            </div>
+          </a>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Category</div>
+              <div class="description">{{p.category}}</div>
+            </div>
+          </a>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Description</div>
+              <div class="description">{{p.description}}</div>
+            </div>
+          </a>
+
+        </div>
+          <!-- {{#if hasPic p}}
           <li>
             <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;">
           </li>
@@ -149,7 +187,7 @@
         <li>
           Description: {{p.description}}
         </li>
-      </ul>
+      </ul> -->
     </td>
     <td>
     <div data-tooltip="Once an item is marked sold, it can not be marked unsold" data-position="bottom center">
