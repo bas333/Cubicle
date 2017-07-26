@@ -1,21 +1,31 @@
 <template name="mycart">
-  <table class="table">
+  <h1 style="padding:20px; padding-bottom:0px;">Shopping Cart</h1>
+  <table class="ui very basic table" style="padding:20px;">
     <tr>
-      <th>Product Name</th>
+      <th>Product</th>
       <th>Price</th>
       <th>Condition</th>
-      <th>Category</th>
-      <th>Description</th>
+      <!-- <th>Description</th> -->
       <th>Remove from Cart</th>
     </tr>
     {{#each p in cartlist}}
-      <tr>
+      <tr style="text-align:left; color:rgb(159, 159, 160);">
+          <!-- <div class="content" style="float:left; text-align:left; color:rgb(159, 159, 160);"> -->
         {{>removecart p=p}}
       </tr>
     {{/each}}
-  </table>
+</table>
 </template>
 <template name="removecart">
-  {{>productrow p=p}}
-  <td><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></td>
+  <td>
+    {{#if hasPic p}}
+      <img class="ui image" src="data:image/jpeg;base64, {{p.pic}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
+    {{/if}}
+    <h2><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
+    <h4>by {{sellername p}}</h4>
+  </td>
+  <td>{{p.price}}</td>
+  <td>{{p.condition}}</td>
+  <td><i class="remove icon" id="removethis"></i></td>
+
 </template>

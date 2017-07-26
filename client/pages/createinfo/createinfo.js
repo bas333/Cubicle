@@ -443,8 +443,8 @@ Template.productrow.helpers({
   isOwner(){
     return (this.p.owner == Meteor.userId())},
 
-    hasPic(product){
-      if(product.pic!=undefined){
+    hasPic(p){
+      if(p.pic!=undefined){
         return true;
       }else{
         return false;
