@@ -25,7 +25,7 @@
 </template>
 
 <template name="itemrow">
-  <td><h3 class="ui center aligned header">{{item.itemname}}</h3></td>
+  <td><h3 class="ui center aligned header"><a href="/singleitem/{{item.itemname}}">{{item.itemname}}</a></h3></td>
   <td>{{item.category}}</td>
   <td>{{item.price}}</td>
   <td>{{item.condition}}</td>
