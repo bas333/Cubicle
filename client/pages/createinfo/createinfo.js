@@ -42,7 +42,6 @@ Template.addproduct.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-            console.log(result);
             $('#showproductpic').attr('src',result);
             $('#showproductpic').css('display','block');
           }
@@ -194,20 +193,20 @@ Template.addproduct.events({
                 console.log(category);
                 console.log(description);
                 console.log(condition);
-                Meteor.call('product.insert',productinfo);
-
                 console.log("insert");
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
-                instance.$('#condition').val()==null;
-                instance.$('#category').val()==null;
+                instance.$('#condition').val("");
+                instance.$('#category').val("");
                 instance.$('#description').val("");
+                Meteor.call('product.insert',productinfo);
+
                 console.log("you stop we stop");
                 recognition.stop();
                 stopRecognition();
                 instance.$("#usersay").val("");
-              } else if((instance.$('#itemname').val()!="")&&(instance.$('#price').val()!="")&&(instance.$('#condition').val()!="")&&(instance.$('#category').val()!="")&&(instance.$('#description').val()!="Please say description now")&&(instance.$('#description').val()!="")){
+              } else if(($('#itemname').val()!="")&&($('#price').val()!="")&&($('#condition').val()!="")&&($('#category').val()!="")&&($('#description').val()!="Please say description now")&&($('#description').val()!="")){
                 console.log("user has filled all the fields")
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
@@ -500,11 +499,8 @@ Template.ownerproduct.events({
   }
 
   var pic_base64;
-  console.log($('#newproductpic_'+product_id).val());
   if($('#newproductpic_'+product_id).val()){
-    console.log("enter first if statement");
     if(($('#newproductpic_'+product_id)[0].files&&$('#newproductpic_'+product_id)[0].files[0]) && ($('#newproductpic_'+product_id)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-      console.log("eneter second if statement");
       if($('#newproductpic_'+product_id)[0].files[0].size>1048576){
         alert('The file size should be smaller than 1MB');
       }else{
@@ -524,7 +520,6 @@ Template.ownerproduct.events({
       imageConvertTo64Base(imagefile,function(imageBase64Form){
         //add a new field into newuser
         newproductinfo.pic=imageBase64Form;
-        console.log(imageBase64Form);
         Meteor.call('product.update',product_id,newproductinfo);
         //Meteor.call('rent.update',rent_id,newRent);
         $('#newproductpic_'+product_id).val("")
