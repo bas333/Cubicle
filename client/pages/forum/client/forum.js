@@ -28,6 +28,7 @@ Template.showownpost.events({
   },
   'click #deleteforum':function(elt,instance){
     Meteor.call("forum.remove",this.p);
+    alert("Posted deleted!");
   }
 })
 
@@ -45,6 +46,7 @@ Template.makepost.events({
     };
     console.log(post);
     Meteor.call('forum.insert',post);
+    alert("Post added!");
     instance.$("#forumpost").val("");
   },
 
@@ -75,6 +77,10 @@ Template.makepost.events({
         var text = "";
           for (var i = event.resultIndex; i < event.results.length; ++i) {
             text += event.results[i][0].transcript;
+            // if(event.results[i][0].transcript.includes('stop')){
+            //   console.log("stop recording");
+            //   $("#forumpost").val("");
+            // }
           }
           console.log(text);
               setInput(text);
@@ -126,27 +132,30 @@ Template.makepost.events({
         success: function(data) {
           setResponse(JSON.stringify(data, undefined, 2));
           console.log(data);
-          // var substring1="stop";
-          // var substring2="submit";
-          // if(text==(substring1)||text.includes(substring2)){
-          //   console.log("into stop or submit condition");
-          // }else{
-          //
-          // }
-          var name = AllUsers.findOne({owner:Meteor.userId()}).username;
-          var now = new Date();
-          instance.$("#forumpost").val(text);
+          var substring1="stop";
+          var substring2="submit the post";
+          if(text==(substring1)){
+            console.log("stop condition");
+            instance.$("#forumpost").val("");
+          }else if(text.includes(substring2)){
+            console.log("submit condition");
+          }else{
+            var name = AllUsers.findOne({owner:Meteor.userId()}).username;
+            var now = new Date();
+            instance.$("#forumpost").val(text);
 
-          console.log(text);
-          var post = {
-            owner:Meteor.userId(),
-            name:name,
-            createdAt: now,
-            text: text
-          };
-          Meteor.call('forum.insert',post);
-          console.log("autosubmit condition");
-          instance.$('#forumpost').val("");
+            console.log(text);
+            var post = {
+              owner:Meteor.userId(),
+              name:name,
+              createdAt: now,
+              text: text
+            };
+            Meteor.call('forum.insert',post);
+            responsiveVoice.speak("forum post added!","UK English Female");
+            console.log("autosubmit condition");
+            instance.$('#forumpost').val("");
+          }
         },
       error: function() {
         setResponse("Internal Server Error");

@@ -1,6 +1,7 @@
 Template.mycart.helpers({
   cartlist(){
     var user=AllUsers.findOne({owner:Meteor.userId()});
+    console.log(user);
     var cart=user.cart;
     console.log(cart);
     return cart;

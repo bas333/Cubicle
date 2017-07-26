@@ -65,10 +65,6 @@ Template.addproduct.events({
     var status=instance.$('#sold').val();
     const buyer=instance.$('#buyer').val();
     const pic=instance.$("#productpic")[0].files[0];
-<<<<<<< HEAD
-=======
-
->>>>>>> 0b57305366203f9c9e3d27e35c3489a475552267
     var productinfo =
     {
       itemname:itemname,
