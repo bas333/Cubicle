@@ -3,16 +3,16 @@
 }
 .modalstyle{
   position: absolute;
-  top: calc(50% - 300px);
-  left: calc(60% - 300px);
+  top: calc(50% - 350px);
+  left: calc(60% - 400px);
 }
 .modal-dialog{
-  width: 600px;
-  height: 600px;
+  width: 800px;
+  height: 500px;
 }
 .modal-body{
   overflow: scroll;
-  height: 400px;
+  height: 600px;
   font-size:16px;
   line-height:1.77em;
 }
@@ -24,5 +24,8 @@ strong{
 }
 
 .inputfield{
-  width:400px;
+  width:600px;
+  height:30px;
+  float:left;
+  -webkit-appearance: textfield;
 }
