@@ -85,10 +85,6 @@
   <thead>
     <tr>
       <th>Product Information</th>
-      <!-- <th>Price</th>
-      <th>Condition</th>
-      <th>Category</th>
-      <th>Description</th> -->
       <th>Status</th>
       <th>Update</th>
       <th>Remove</th>
@@ -109,22 +105,6 @@
     <hr>
   </div>
   {{/if}}
-</template>
-
-<template name="productrow">
-    <td>
-      <h2 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
-    </td>
-    <td>{{p.price}}</td>
-    <td>{{p.condition}}</td>
-    <td>{{p.category}}</td>
-    <td>{{p.description}}</td>
-    {{#if hasPic p}}
-    <td><img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
-    {{else}}
-    <td></td>
-    {{/if}}
-
 </template>
 
 <template name="ownerproduct">
@@ -168,26 +148,7 @@
               <div class="description">{{p.description}}</div>
             </div>
           </a>
-
         </div>
-          <!-- {{#if hasPic p}}
-          <li>
-            <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;">
-          </li>
-          {{/if}}
-        <li>
-          Price: ${{p.price}}
-        </li>
-        <li>
-          Condition: {{p.condition}}
-        </li>
-        <li>
-          Category: {{p.category}}
-        </li>
-        <li>
-          Description: {{p.description}}
-        </li>
-      </ul> -->
     </td>
     <td>
     <div data-tooltip="Once an item is marked sold, it can not be marked unsold" data-position="bottom center">
