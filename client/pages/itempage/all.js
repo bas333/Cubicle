@@ -9,12 +9,16 @@ Template.allproducts.events({
 })
 Template.addcart.events({
   'click #add'(elt,instance){
+    console.log(Meteor.userId());
+    console.log(AllUsers.findOne({owner:Meteor.userId()}));
+    console.log(AllUsers.findOne({owner:Meteor.userId()})!=undefined);
     if (AllUsers.findOne({owner:Meteor.userId()})!=undefined){
       Meteor.call('product.addcart',Meteor.userId(),this.p);
+      alert('Item added to cart')
     }else{
       alert('Please log in first.')
     }
-    alert('Item added to cart')
+    // alert('Item added to cart')
   }
 })
 Template.addcart.helpers({
