@@ -9,6 +9,7 @@
 #showrentalpic{
   display:none;
   max-width: 350px;
+  max-height: 350px;
 }
 #newOwner{
   display:none;

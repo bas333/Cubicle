@@ -8,6 +8,7 @@ th, td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
+
 #productloadpic{
   display:block;
 }
@@ -24,7 +25,9 @@ tr#productrow.unsolditem{
 tr#productrow.solditem{
   color: rgb(172, 173, 175);
 }
-
+#showproductpic2{
+  max-width: 300px;
+}
 #showproductpic{
   max-width: 300px;
 }
