@@ -40,3 +40,9 @@ Template.addcart.helpers({
     return found;
   },
 })
+Template.productrow.helpers({
+  sellername(product){
+    var user=AllUsers.findOne({owner:product.owner});
+    return user.username;
+  }
+})
