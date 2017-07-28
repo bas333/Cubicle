@@ -46,5 +46,9 @@ Template.singleitem.helpers({
     console.log("chat find!!!");
     console.log(chat.messages);
     return (chat.messages);
+  },
+  sellername(instance){
+    var user=AllUsers.findOne({owner:this.owner});
+    return user.username;
   }
 })
