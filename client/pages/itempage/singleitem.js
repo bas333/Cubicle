@@ -9,6 +9,8 @@ if(Meteor.isClient){
       Meteor.subscribe('allusers');
     })
 }
+
+
 Template.singleitem.events({
   'click #add'(elt,instance){
     if (AllUsers.findOne({owner:Meteor.userId()})!=undefined){
@@ -50,5 +52,22 @@ Template.singleitem.helpers({
   sellername(instance){
     var user=AllUsers.findOne({owner:this.owner});
     return user.username;
-  }
+  },
+  hasPic(){
+    if(pic!=undefined){
+      return true;
+    }
+  },
+  isInCart(){
+    var user=AllUsers.findOne({owner:Meteor.userId()});
+    console.log(user.cart);
+    var newcart=user.cart;
+    var found = false;
+    for(var i = 0; i < newcart.length; i++) {
+      if (newcart[i]._id==this._id) {
+        found = true;
+      }
+    }
+    return found;
+  },
 })
