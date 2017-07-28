@@ -105,11 +105,15 @@
     </div>
     <div class="field">
       <label>Picture</label>
-      <input type="file" id="rentalpic">
+      <input type="file" id="rentalpic1">
+      <input type="file" id="rentalpic2">
+      <input type="file" id="rentalpic3">
     </div>
-    <img id="showrentalpic">
+    <img id="showrentalpic1">
+    <img id="showrentalpic2">
+    <img id="showrentalpic3">
       <hr>
-        <button class="ui button" type="submit" id="submitrent"> submit </button>
+        <button class="ui button" id="submitrent"> submit </button>
       </form>
     </div>
 </template>
@@ -161,11 +165,22 @@
   <td>{{rent.roommate}}</td>
   <td>{{rent.price}}</td>
   <td>{{rent.contact}}</td>
-  {{#if hasPic rent}}
-  <td><img src="data:image/jpeg;base64, {{rent.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
-  {{else}}
-  <td></td>
-  {{/if}}
+  <td>
+        {{#if hasPic1 rent}}
+        <img src="data:image/jpeg;base64, {{rent.pic1}}" style="display:block; height:300px;width:300px;">
+
+        {{/if}}
+
+
+
+        {{#if hasPic2 rent}}
+        <img src="data:image/jpeg;base64, {{rent.pic2}}" style="display:block; height:300px;width:300px;">
+        {{/if}}
+
+        {{#if hasPic3 rent}}
+        <img src="data:image/jpeg;base64, {{rent.pic3}}" style="display:block; height:300px;width:300px;">
+        {{/if}}
+</td>
   <!-- Button trigger modal -->
   <td><button type="button" id="editRentPost" class="ui button" data-toggle="modal" data-target="#myModal_{{rent._id}}">Edit</button>
 
@@ -223,12 +238,24 @@
             <input type="text" id="newcontact" value={{rent.contact}}>
         </div>
         <div>
-          <label for="picture">Picture:</label>
-          {{#if hasPic rent}}
-          <img id="oldrentalpic" src="data:image/jpeg;base64, {{rent.pic}}" style="max-height:300px;max-width:300px;">
+          <label for="picture">Picture:</label><br>
+          {{#if hasPic1 rent}}
+          <img id="oldrentalpic1" src="data:image/jpeg;base64, {{rent.pic1}}" style="height:300px;width:300px;">
           {{/if}}
-          <input type="file" id="newrentalpic">
-          <img id="shownewrentalpic">
+          <input type="file" id="newrentalpic1">
+          <img id="shownewrentalpic1" style="height:300px;width:300px;">
+
+          {{#if hasPic2 rent}}
+          <img id="oldrentalpic2" src="data:image/jpeg;base64, {{rent.pic2}}" style="height:300px;width:300px;">
+          {{/if}}
+          <input type="file" id="newrentalpic2">
+          <img id="shownewrentalpic2" style="height:300px;width:300px;">
+
+          {{#if hasPic3 rent}}
+          <img id="oldrentalpic3" src="data:image/jpeg;base64, {{rent.pic3}}" style="height:300px;width:300px;">
+          {{/if}}
+          <input type="file" id="newrentalpic3">
+          <img id="shownewrentalpic3" style="height:300px;width:300px;">
         </div>
         </form>
       </div>

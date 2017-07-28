@@ -3,13 +3,18 @@
   height: 50px;
   border: solid black 2px;
 }*/
+
 #rentalloadpic{
   display:block;
 }
-#showrentalpic{
+#showrentalpic1{
   display:none;
-  max-width: 350px;
-  max-height: 350px;
+}
+#showrentalpic2{
+  display:none;
+}
+#showrentalpic3{
+  display:none;
 }
 #newOwner{
   display:none;
