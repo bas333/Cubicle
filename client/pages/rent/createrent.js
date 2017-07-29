@@ -24,7 +24,6 @@ Template.addrent.events({
     const pic2=instance.$('#rentalpic2')[0].files[0];
     const pic3=instance.$('#rentalpic3')[0].files[0];
     const pic_status = Template.instance().pic_status;
-    console.log(pic_status);
 
     console.log("adding " + location);
     var rentpost =

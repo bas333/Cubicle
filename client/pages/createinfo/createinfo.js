@@ -1,5 +1,9 @@
 import { Template } from 'meteor/templating';
- import { ReactiveVar } from 'meteor/reactive-var';
+import { ReactiveVar } from 'meteor/reactive-var';
+
+ Template.addproduct.onCreated(function(){
+   this.pic_status = new ReactiveVar([]);
+ })
 
  Template.ownerproduct.onCreated(function ownerproductOnCreated(){
    this.itemsold= new ReactiveVar(false);
@@ -55,56 +59,6 @@ Template.addproduct.events({
       $("#showproductpic").css("display","none");
     }
   },
-  'change #productpic2':function(event){
-    if($("#productpic2").val()){
-      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
-      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-        if(event.currentTarget.files[0].size>1048576){//file size out of range
-          alert('The file size should be smaller than 1MB');
-        }else{
-          //an object to read file
-          var picreader2 = new FileReader();
-          //when loading the input file
-          picreader2.onload = function(event){
-            var result2=event.currentTarget.result;
-            $('#showproductpic2').attr('src',result2);
-            $('#showproductpic2').css('display','block');
-          }
-          picreader2.readAsDataURL(event.currentTarget.files[0]);
-        }
-      }else{//not a image file
-        alert('You are only allowed to upload an image file');
-      }
-    }else{
-      $("#showproductpic2").attr("src","");
-      $("#showproductpic2").css("display","none");
-    }
-  },
-  'change #productpic3':function(event){
-    if($("#productpic3").val()){
-      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
-      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-        if(event.currentTarget.files[0].size>1048576){//file size out of range
-          alert('The file size should be smaller than 1MB');
-        }else{
-          //an object to read file
-          var picreader3 = new FileReader();
-          //when loading the input file
-          picreader3.onload = function(event){
-            var result3=event.currentTarget.result;
-            $('#showproductpic3').attr('src',result3);
-            $('#showproductpic3').css('display','block');
-          }
-          picreader3.readAsDataURL(event.currentTarget.files[0]);
-        }
-      }else{//not a image file
-        alert('You are only allowed to upload an image file');
-      }
-    }else{
-      $("#showproductpic3").attr("src","");
-      $("#showproductpic3").css("display","none");
-    }
-  },
   'click #addproduct'(elt,instance){
     elt.preventDefault();
     console.log("click");
@@ -116,11 +70,8 @@ Template.addproduct.events({
     var status=instance.$('#sold').val();
     const buyer=instance.$('#buyer').val();
     const pic=instance.$("#productpic")[0].files[0];
-    console.log(pic);
-    const pic2=instance.$("#productpic2")[0].files[0];
-    console.log(pic2);
-    const pic3=instance.$("#productpic3")[0].files[0];
-    console.log(pic3);
+    const pic_status=Template.instance().pic_status;
+    console.log(pic_status);
     var productinfo =
     {
       itemname:itemname,
@@ -128,91 +79,11 @@ Template.addproduct.events({
       condition:condition,
       category:category,
       description:description,
-      pic:"",
-      pic2:"",
-      pic3:"",
       createdAt:new Date(),
       buyer:buyer,
       owner:Meteor.userId()
     };
-
-    var pic3_base64;
-    if($('#productpic3').val()){
-      console.log("enter 3.1");
-      if($("#productpic3")[0].files&&$("#productpic3")[0].files[0]&&($('#productpic3')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-        console.log("enter 3.2");
-        if($("#productpic3")[0].files[0].size>1048576){
-          alert('The file size should ne smaller than 1 MB');
-        }else{
-          console.log("enter 3.3");
-          var imagefile3=$('#productpic3')[0].files[0];
-          var imageConvertTo64Base3=function(imagefile3,callback){
-            var reader3=new FileReader();
-            reader3.onload=function(){
-              var dataURL3=reader3.result;
-              imageBase64Form3=dataURL3.split(',')[1];
-              callback(imageBase64Form3);
-            };
-          reader3.readAsDataURL(imagefile3);
-          };
-
-          imageConvertTo64Base3(imagefile3,function(imageBase64Form3){
-            //console.log(imageBase64Form3);
-            productinfo.pic3=imageBase64Form3;
-          });
-        }
-      }else{
-        $("#showproductpic3").attr("src","");
-        $("#showproductpic3").css("display","none");
-        alert("Please add a image file");
-      }
-    }
-    // }else{
-    //   productinfo.pic3="";
-    // }
-
-
-
-
-    var pic2_base64;
-    if($('#productpic2').val()){
-      console.log("enter 2.1");
-      if($("#productpic2")[0].files&&$("#productpic2")[0].files[0]&&($('#productpic2')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-        console.log("enter 2.2");
-        if($("#productpic2")[0].files[0].size>1048576){
-          alert('The file size should ne smaller than 1 MB');
-        }else{
-          console.log("enter 2.3");
-          var imagefile2=$('#productpic2')[0].files[0];
-          var imageConvertTo64Base2=function(imagefile2,callback){
-            var reader2=new FileReader();
-            reader2.onload=function(){
-              var dataURL2=reader2.result;
-              imageBase64Form2=dataURL2.split(',')[1];
-              callback(imageBase64Form2);
-            };
-          reader2.readAsDataURL(imagefile2);
-          };
-          imageConvertTo64Base2(imagefile2,function(imageBase64Form2){
-            //console.log(imageBase64Form2);
-            productinfo.pic2=imageBase64Form2;
-          //  console.log(productinfo.pic2);
-            console.log("finish pic2");
-          });
-          }
-      }else{
-        $("#showproductpic2").attr("src","");
-        $("#showproductpic2").css("display","none");
-        alert("Please add a image file");
-      }
-    }
-    // }else{
-    //   productinfo.pic2="";
-    // }
-
-
-
-    var pic_base64;
+    const template=Template.instance();
     if($('#productpic').val()){
       console.log("enter 1.1");
       if($('#productpic')[0].files&&$('#productpic')[0].files[0]&&($('#productpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
@@ -222,43 +93,51 @@ Template.addproduct.events({
         }else{
           console.log("enter 1.3");
           var imagefile=$('#productpic')[0].files[0];
-          var imageConvertTo64Base=function(imagefile,callback){
             var reader=new FileReader();
             reader.onload=function(){
               var dataURL=reader.result;
               var imageBase64Form=dataURL.split(',')[1];
-              callback(imageBase64Form);
-            };
+              productinfo.pic=imageBase64Form;
+              const currentstatus=template.pic_status.get();
+              currentstatus[1]="finished";
+              template.pic_status.set(currentstatus);
+            }
           reader.readAsDataURL(imagefile);
-        };
-
-        imageConvertTo64Base(imagefile,function(imageBase64Form){
-          //console.log(imageBase64Form);
-          productinfo.pic=imageBase64Form;
-        });
         }
       }else{
         $("#showproductpic").attr("src","");
         $("#showproductpic").css("display","none");
         alert("Please add a image file");
       }
+    }else{
+      const currentstatus=template.pic_status.get();
+      currentstatus[1]="finished";
+      template.pic_status.set(currentstatus);
     }
-    // else{
-    //   productinfo.pic="";
-    // }
 
      console.log("insert");
      console.log(productinfo);
-    Meteor.call('product.insert',productinfo,
-         (err, res) => {
-           if (err) {
-             alert("Failed to add your item");
-           } else {
-             console.log(productinfo);
-             alert("Successfully added your item. You can view it by scrolling down the page.")
-           }
-         }
-    );
+
+     Tracker.autorun((computation)=>{
+       console.log("xixi");
+       console.log(pic_status);
+       if(pic_status.get()[1]){
+         console.log("hey");
+         Meteor.call('product.insert',productinfo,
+              (err, res) => {
+                if (err) {
+                  alert("Failed to add your item");
+                } else {
+                  console.log(productinfo);
+                  alert("Successfully added your item. You can view it by scrolling down the page.")
+                }
+              }
+         );
+         computation.stop();
+       }
+     })
+
+
 
 
     console.log('adding'+itemname);
