@@ -12,9 +12,10 @@ th, td {
 #productloadpic{
   display:block;
 }
-.shownewrentalpic{
-  max-width: 300px;
-  max-height: 300px
+.shownewproductpic{
+  width: 300px;
+  height: 300px;
+  display:none;
 }
 .modal-backdrop {
     z-index: 0;
