@@ -57,6 +57,7 @@ Template.addproduct.events({
   },
   'click #addproduct'(elt,instance){
     const itemname = instance.$('#itemname').val();
+    const delivery = instance.$('input[name="delivery"]:checked').val();
     const condition=instance.$('#condition :selected').val();
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
@@ -67,6 +68,7 @@ Template.addproduct.events({
     var productinfo =
     {
       itemname:itemname,
+      delivery:delivery,
       price:price,
       condition:condition,
       category:category,
@@ -76,6 +78,7 @@ Template.addproduct.events({
       buyer:buyer,
       owner:Meteor.userId()
     };
+    console.log("delivery!!!"+delivery);
     var pic_base64;
     if($('#productpic').val()){
       if($('#productpic')[0].files&&$('#productpic')[0].files[0]&&($('#productpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
@@ -441,8 +444,8 @@ Template.addproduct.events({
 
 Template.productrow.helpers({
   isOwner(){
-    return (this.p.owner == Meteor.userId())},
-
+    return (this.p.owner == Meteor.userId())
+  },
     hasPic(p){
       if(p.pic!=undefined){
         return true;
@@ -471,19 +474,17 @@ Template.ownerproduct.events({
   'click span'(elt,instance){
     Meteor.call('product.remove',this.p);
 },
-
 'click #updateitem':function(elt, instance) {
   const product_id = this.p._id;
   const newitemname = $('#newitemname_'+product_id).val();
   const newcondition = $('#newcondition_'+product_id+' :selected').text();
-  console.log(newcondition);
+  const newdelivery = instance.$('input[name="newdelivery"]:checked').val();
   const newcategory=$('#newcategory_'+product_id+' :selected').val();
-  console.log(newcategory);
+
   const newdescription=$('#newdescription_' +product_id).val();
-  console.log(newdescription);
+
   const newprice=$('#newprice_'+product_id).val();
-  console.log(newprice);
-  console.log($('#newproductpic_'+product_id).val())
+
   const pic=$('#newproductpic_'+product_id)[0].files[0];
   const id = Meteor.userId();
   var newproductinfo =
@@ -538,10 +539,16 @@ Template.ownerproduct.events({
     console.log(this.p);
     console.dir(this);
   },
-  'click #enableedit'(event,instance){
-    const newcategory=instance.$('#newcategory').val(this.p.category);
-    const newcondition=instance.$('#newcondition').val(this.p.condition);
-    console.log(newcategory);
+  'click #enableedit'(event, instance){
+    const productid=this.p._id;
+    const newcategory=instance.$('#newcategory_'+productid).val(this.p.category);
+    const newcondition=instance.$('#newcondition_'+productid).val(this.p.condition);
+
+    if (this.p.delivery==="Pick Up"){
+        $("#newcheckpickup_"+productid).prop("checked",true);
+      }else{
+        $("#newcheckdelivery_"+productid).prop("checked",true);
+      }
   },
  'change #jsstatus'(event, instance) {
     instance.itemsold.set(event.currentTarget.checked);
