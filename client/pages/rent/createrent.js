@@ -793,7 +793,6 @@ Template.ownpostrow.events({
     const pic2=instance.$('#newrentalpic2_'+rentid)[0].files[0];
     const pic3=instance.$('#newrentalpic3_'+rentid)[0].files[0];
     const pic_status=Template.instance().pic_status;
-    console.log(pic1);
 
     var newRent={
       location:newLocation,
@@ -823,7 +822,7 @@ Template.ownpostrow.events({
                 var dataURL = reader.result;
                 imageBase64Form=dataURL.split(',')[1];
                 newRent["pic"+i]=imageBase64Form;
-                console.log(newRent["pic"+i]);
+                // console.log(newRent["pic"+i]);
                 const now=template.pic_status.get();
                 now[i]="finished";
                 template.pic_status.set(now);
