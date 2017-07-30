@@ -175,7 +175,7 @@
               </div>
               <div class="field">
                 <label for="category">Category:</label>
-                  <select name="select" id="newcategory_{{p._id}}" value="{{p.category}}">
+                  <select name="select" id="newcategory_{{p._id}}" value={{p.category}}>
                       <option value="textbooks/books">Textbooks/Books</option>
                       <option value="electronics">Electronics</option>
                       <option value="clothes,shoes,and accessories">Clothes,Shoes,and Accessories</option>
@@ -204,7 +204,9 @@
                 </div>
                 <div class="field">
                   <label for="picture">Picture</label>
+                  {{#if hasPic p}}
                   <img id="productloadpic_{{p._id}}" src="data:image/jpeg;base64, {{p.pic}}" style="height:300px;width:300px;">
+                  {{/if}}
                   <input class="newproductpic" type="file" id="newproductpic_{{p._id}}">
                   <img class="shownewproductpic" id="shownewproductpic_{{p._id}}">
                 </div>
