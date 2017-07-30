@@ -1,10 +1,15 @@
+Template.addrent.onCreated(function(){
+  this.pic_status = new ReactiveVar([]);
+})
+
 Template.addrent.onRendered(function(){
   $("#location").val("");
 })
 
 
 Template.addrent.events({
-  'click #submitrent'(elt,instance){
+  'click #submitrent':function (elt,instance){
+    elt.preventDefault();
     const location = instance.$('#location :selected').val();
     const street = instance.$('#street-address').val();
     const start = instance.$('#time-start :selected').text();
@@ -15,17 +20,12 @@ Template.addrent.events({
     const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#priceM').val();
     const contact = instance.$('#contact-information').val();
-    const pic=instance.$('#rentalpic')[0].files[0];
+    const pic1=instance.$('#rentalpic1')[0].files[0];
+    const pic2=instance.$('#rentalpic2')[0].files[0];
+    const pic3=instance.$('#rentalpic3')[0].files[0];
+    const pic_status = Template.instance().pic_status;
+
     console.log("adding " + location);
-    // instance.$('#location').val("");
-    // instance.$('#street-address').val("");
-    // instance.$('#time').val("");
-    // instance.$('#roomsize').val("");
-    // instance.$('#facilities').val("");
-    // instance.$('#detaileddescription').val("");
-    // instance.$('#roommatedescription').val("");
-    // instance.$('#priceM').val("");
-    // instance.$('#contact-information').val("");
     var rentpost =
     { location:location,
       street:street,
@@ -37,65 +37,71 @@ Template.addrent.events({
       roommate:roommate,
       price:price,
       contact:contact,
-      pic:pic,
       createdAt: new Date(),
       owner: Meteor.userId()
     };
 
-    var pic_base64;
-    if($('#rentalpic').val()){
-      if($('#rentalpic')[0].files&&$('#rentalpic')[0].files[0] && ($('#rentalpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-        if($('#rentalpic')[0].files[0].size>1048576){
-          alert('The file size should be smaller than 1MB');
+    const template = Template.instance();
+    for(var i=1; i<=3; i++){
+      console.log("enter"+i);
+      console.log($('#rentalpic'+i).val());
+      if($('#rentalpic'+i).val()){
+        if($('#rentalpic'+i)[0].files&&$('#rentalpic'+i)[0].files[0] && ($('#rentalpic'+i)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+          if($('#rentalpic'+i)[0].files[0].size>1048576){
+            alert('The file size should be smaller than 1MB');
+          }else{
+            var imagefile=$('#rentalpic'+i)[0].files[0];
+            (function(i){
+              var reader=new FileReader();
+              reader.onload=function(){
+                console.log(i);
+                var dataURL = reader.result;
+                imageBase64Form=dataURL.split(',')[1];
+                console.log(i);
+                rentpost["pic"+i]=imageBase64Form;
+                console.log(i);
+                const current_status = template.pic_status.get();
+                current_status[i] = "done";
+                template.pic_status.set(current_status);
+              };
+
+              reader.readAsDataURL(imagefile);
+            })(i);
+
+          };
         }else{
-          var imagefile=$('#rentalpic')[0].files[0];
-          var imageConvertTo64Base=function(imagefile,callback){
-            var reader=new FileReader();
-            reader.onload=function(){
-              var dataURL = reader.result;
-              imageBase64Form=dataURL.split(',')[1];
-              callback(imageBase64Form);
-            };
-          reader.readAsDataURL(pic);
-        };
-
-        //send to server
-        imageConvertTo64Base(imagefile,function(imageBase64Form){
-          //add a new field into newuser
-          rentpost.pic=imageBase64Form;
-          Meteor.call('rent.insert',rentpost,
-              (err, res) => {
-                if (err) {
-                  alert("Failed to add your rental post");
-                } else {
-                  alert("Successfully added your rental post");
-                }
-              }
-          );
-        });
-
+          $("#showrentalpic"+i).attr("src","");
+          $("#showrentalpic"+i).css("display","none");
+          alert("Please add a image file"+i);
         }
-      }else{
-        $("#showrentalpic").attr("src","");
-        $("#showrentalpic").css("display","none");
-        alert("Please add a image file");
+      } else {
+        const current_status = template.pic_status.get();
+        current_status[i] = "done";
+        template.pic_status.set(current_status);
       }
-    }else{
-      Meteor.call('rent.insert',rentpost,
-          (err, res) => {
-            if (err) {
-              alert("Failed to add your rental post");
-            } else {
-              alert("Successfully added your rental post");
-            }
-          }
-      );
+      console.log(rentpost);
     }
 
+    Tracker.autorun((computation)=>{
+      console.log(pic_status);
+      if(pic_status.get()[1] && pic_status.get()[2] && pic_status.get()[3]){
+        console.log("hey");
+        Meteor.call('rent.insert',rentpost,
+            (err, res) => {
+              if (err) {
+                alert("Failed to add your rental post");
+              } else {
+                alert("Successfully added your rental post");
+              }
+            }
+        );
+        computation.stop();
+      }
+    })
   },
-  'change #rentalpic':function(event){
+  'change #rentalpic1':function(event){
     //if the pic has input
-    if($("#rentalpic").val()){
+    if($("#rentalpic1").val()){
       //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
       if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
         if(event.currentTarget.files[0].size>1048576){//file size out of range
@@ -106,9 +112,9 @@ Template.addrent.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-            console.log(result);
-            $('#showrentalpic').attr('src',result);
-            $('#showrentalpic').css('display','block');
+            //console.log(result);
+            $('#showrentalpic1').attr('src',result);
+            $('#showrentalpic1').css('display','block');
           }
           picreader.readAsDataURL(event.currentTarget.files[0]);
         }
@@ -116,8 +122,60 @@ Template.addrent.events({
         alert('You are only allowed to upload an image file');
       }
     }else{
-      $("#showrentalpic").attr("src","");
-      $("#showrentalpic").css("display","none");
+      $("#showrentalpic1").attr("src","");
+      $("#showrentalpic1").css("display","none");
+    }
+  },
+  'change #rentalpic2':function(event){
+    if($("#rentalpic2").val()){
+      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+        if(event.currentTarget.files[0].size>1048576){//file size out of range
+          alert('The file size should be smaller than 1MB');
+        }else{
+          //an object to read file
+          var picreader = new FileReader();
+          //when loading the input file
+          picreader.onload = function(event){
+            var result=event.currentTarget.result;
+        //    console.log(result);
+            $('#showrentalpic2').attr('src',result);
+            $('#showrentalpic2').css('display','block');
+          }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }
+      }else{//not a image file
+        alert('You are only allowed to upload an image file');
+      }
+    }else{
+      $("#showrentalpic2").attr("src","");
+      $("#showrentalpic2").css("display","none");
+    }
+  },
+  'change #rentalpic3':function(event){
+    if($("#rentalpic3").val()){
+      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
+      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+        if(event.currentTarget.files[0].size>1048576){//file size out of range
+          alert('The file size should be smaller than 1MB');
+        }else{
+          //an object to read file
+          var picreader = new FileReader();
+          //when loading the input file
+          picreader.onload = function(event){
+            var result=event.currentTarget.result;
+            //console.log(result);
+            $('#showrentalpic3').attr('src',result);
+            $('#showrentalpic3').css('display','block');
+          }
+          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }
+      }else{//not a image file
+        alert('You are only allowed to upload an image file');
+      }
+    }else{
+      $("#showrentalpic3").attr("src","");
+      $("#showrentalpic3").css("display","none");
     }
   },
   'click #addrentalrec': function(elt,instance){
@@ -599,6 +657,11 @@ Template.addrent.helpers({
     return location;
   },
 })
+
+Template.ownpostrow.onCreated(function(){
+  this.pic_status = new ReactiveVar([]);
+})
+
 Template.ownpostrow.helpers({
   isOwner(){
     console.dir(this);
@@ -608,8 +671,22 @@ Template.ownpostrow.helpers({
   locationdata(){
     return location;
   },
-  hasPic(rent){
-    if(rent.pic!=undefined){
+  hasPic1(rent){
+    if(rent.pic1!=undefined){
+      return true;
+    }else{
+      return false;
+    }
+  },
+  hasPic2(rent){
+    if(rent.pic2!=undefined){
+      return true;
+    }else{
+      return false;
+    }
+  },
+  hasPic3(rent){
+    if(rent.pic3!=undefined){
       return true;
     }else{
       return false;
@@ -621,49 +698,101 @@ Template.ownpostrow.events({
   'click #deleteRent':function(elt,instance){
     Meteor.call('rent.remove',this.rent);
   },
-  'change #newrentalpic':function(event,instance){
-    instance.$('#oldrentalpic').css('display','none');
-    if(instance.$("#newrentalpic").val()){
-      //if the input array is not empty, if the first element in the input array is not empty, check the input type is pics
-      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-        if(event.currentTarget.files[0].size>1048576){//file size out of range
-          alert('The file size should be smaller than 1MB');
-        }else{
-          //an object to read file
-          var picreader = new FileReader();
-          //when loading the input file
-          picreader.onload = function(event){
-            var result=event.currentTarget.result;
-            console.log(result);
-            console.log("enter show pic");
-            instance.$('#shownewrentalpic').attr('src',result);
-            instance.$('#shownewrentalpic').css('display','block');
+  'change .newrentalpic':function(event,instance){
+    console.log(event);
+    console.dir(event);
+    const rentid=this.rent._id;
+      if($("#newrentalpic1_"+rentid).val()){
+        if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+          if(event.currentTarget.files[0].size>1048576){
+            alert('The file size should be smaller than 1MB');
+          }else{
+            $('#oldrentalpic1_'+rentid).css('display','none');
+            var picreader = new FileReader();
+            picreader.onload = function(event){
+              var result=event.currentTarget.result;
+              // console.log(result);
+              console.log("enter show pic1");
+              $('#shownewrentalpic1_'+rentid).attr('src',result);
+              $('#shownewrentalpic1_'+rentid).css('display','block');
+            }
+            picreader.readAsDataURL(event.currentTarget.files[0]);
           }
-          picreader.readAsDataURL(event.currentTarget.files[0]);
+        }else{
+          alert('You are only allowed to upload an image file');
         }
-      }else{//not a image file
-        alert('You are only allowed to upload an image file');
+      }else{
+        $("#shownewrentalpic1_"+rentid).attr("src","");
+        $("#shownewrentalpic1_"+rentid).css("display","none");
       }
-    }else{
-      instance.$("#shownewrentalpic").attr("src","");
-      instance.$("#shownewrentalpic").css("display","none");
-    }
+
+      if($("#newrentalpic2_"+rentid).val()){
+        if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+          if(event.currentTarget.files[0].size>1048576){
+            alert('The file size should be smaller than 1MB');
+          }else{
+            $('#oldrentalpic2_'+rentid).css('display','none');
+            var picreader = new FileReader();
+            picreader.onload = function(event){
+              var result=event.currentTarget.result;
+              // console.log(result);
+              console.log("enter show pic2");
+              $('#shownewrentalpic2_'+rentid).attr('src',result);
+              $('#shownewrentalpic2_'+rentid).css('display','block');
+            }
+            picreader.readAsDataURL(event.currentTarget.files[0]);
+          }
+        }else{
+          alert('You are only allowed to upload an image file');
+        }
+      }else{
+        $("#shownewrentalpic2_"+rentid).attr("src","");
+        $("#shownewrentalpic2_"+rentid).css("display","none");
+      }
+
+
+      if($("#newrentalpic3_"+rentid).val()){
+        if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+          if(event.currentTarget.files[0].size>1048576){
+            alert('The file size should be smaller than 1MB');
+          }else{
+            $('#oldrentalpic3_'+rentid).css('display','none');
+            var picreader = new FileReader();
+            picreader.onload = function(event){
+              var result=event.currentTarget.result;
+              // console.log(result);
+              console.log("enter show pic3");
+              $('#shownewrentalpic3_'+rentid).attr('src',result);
+              $('#shownewrentalpic3_'+rentid).css('display','block');
+            }
+            picreader.readAsDataURL(event.currentTarget.files[0]);
+          }
+        }else{
+          alert('You are only allowed to upload an image file');
+        }
+      }else{
+        $("#shownewrentalpic3_"+rentid).attr("src","");
+        $("#shownewrentalpic3_"+rentid).css("display","none");
+      }
+
   },
   'click #updateRent':function(elt,instance){
     event.preventDefault();
     console.log("enter update");
-    const rent_id = this.rent._id;
-    const newLocation=instance.$("#newlocation :selected").val();
-    const newStreet=instance.$("#newstreet").val();
-    const newTime=instance.$("#newtime").val();
-    const newRoomSize=instance.$("#newsize").val();
-    const newFacilities=instance.$("#newfacilities").val();
-    const newDetail=instance.$("#newdetail").val();
-    const newRoommate=instance.$("#newroommate").val();
-    const newPrice=instance.$("#newprice").val();
-    const newContact=instance.$("#newcontact").val();
-    const pic=instance.$('#newrentalpic')[0].files[0];
-    console.log(pic);
+    const rentid = this.rent._id;
+    const newLocation=instance.$("#newlocation_"+rentid+" :selected").val();
+    const newStreet=instance.$("#newstreet_"+rentid).val();
+    const newTime=instance.$("#newtime_"+rentid).val();
+    const newRoomSize=instance.$("#newsize_"+rentid).val();
+    const newFacilities=instance.$("#newfacilities_"+rentid).val();
+    const newDetail=instance.$("#newdetail_"+rentid).val();
+    const newRoommate=instance.$("#newroommate_"+rentid).val();
+    const newPrice=instance.$("#newprice_"+rentid).val();
+    const newContact=instance.$("#newcontact_"+rentid).val();
+    const pic1=instance.$('#newrentalpic1_'+rentid)[0].files[0];
+    const pic2=instance.$('#newrentalpic2_'+rentid)[0].files[0];
+    const pic3=instance.$('#newrentalpic3_'+rentid)[0].files[0];
+    const pic_status=Template.instance().pic_status;
 
     var newRent={
       location:newLocation,
@@ -672,51 +801,61 @@ Template.ownpostrow.events({
       roomsize:newRoomSize,
       facilities:newFacilities,
       detailed:newDetail,
-      pic:pic,
       roommate:newRoommate,
       price:newPrice,
       contact:newContact,
     }
-    var pic_base64;
-    console.log(instance.$('#newrentalpic').val());
-    if(instance.$('#newrentalpic').val()){
-      console.log("enter first if statement");
-      if((instance.$('#newrentalpic')[0].files&&instance.$('#newrentalpic')[0].files[0]) && (instance.$('#newrentalpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-        console.log("eneter second if statement");
-        if(instance.$('#newrentalpic')[0].files[0].size>1048576){
-          alert('The file size should be smaller than 1MB');
+    const template=Template.instance();
+    for(var i=1;i<=3;i++){
+      if($('#newrentalpic'+i+"_"+rentid).val()){
+        console.log("enter 1."+i);
+        if(($('#newrentalpic'+i+"_"+rentid)[0].files&&$('#newrentalpic'+i+"_"+rentid)[0].files[0]) && ($('#newrentalpic'+i+"_"+rentid)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
+          console.log("eneter 2."+i);
+          if(instance.$('#newrentalpic'+i+"_"+rentid)[0].files[0].size>1048576){
+            alert('The file size should be smaller than 1MB');
+          }else{
+            console.log("enter 3."+i);
+            var imagefile=$('#newrentalpic'+i+"_"+rentid)[0].files[0];
+              (function(i){
+                var reader=new FileReader();
+                reader.onload=function(){
+                var dataURL = reader.result;
+                imageBase64Form=dataURL.split(',')[1];
+                newRent["pic"+i]=imageBase64Form;
+                // console.log(newRent["pic"+i]);
+                const now=template.pic_status.get();
+                now[i]="finished";
+                template.pic_status.set(now);
+                console.log(template.pic_status);
+              };
+              reader.readAsDataURL(imagefile);
+          })(i);
+          }
         }else{
-          console.log("enter third");
-          var imagefile=$('#newrentalpic')[0].files[0];
-          var imageConvertTo64Base=function(imagefile,callback){
-            var reader=new FileReader();
-            reader.onload=function(){
-              var dataURL = reader.result;
-              imageBase64Form=dataURL.split(',')[1];
-              callback(imageBase64Form);
-            };
-          reader.readAsDataURL(pic);
-        };
-
-        //send to server
-        imageConvertTo64Base(imagefile,function(imageBase64Form){
-          //add a new field into newuser
-          newRent.pic=imageBase64Form;
-          console.log(imageBase64Form);
-          Meteor.call('rent.update',rent_id,newRent);
-          //$('#newrentalpic').val("")
-        });
+          instance.$("#shownewrentalpic"+i+"_"+rentid).attr("src","");
+          instance.$("#shownewrentalpic"+i+"_"+rentid).css("display","none");
+          alert("Please add a image file");
         }
-        //$("#newpic").css("display","none");
-      }else{
-        instance.$("#shownewrentalpic").attr("src","");
-        instance.$("#shownewrentalpic").css("display","none");
-        alert("Please add a image file");
-      }
     }else{
-      Meteor.call('rent.update',rent_id,newRent);
+      const now=template.pic_status.get();
+      now[i]="finished";
+      template.pic_status.set(now);
+        console.log(template.pic_status);
     }
   }
+  Tracker.autorun((computation)=>{
+    console.log(pic_status);
+    if(pic_status.get()[1] && pic_status.get()[2] && pic_status.get()[3]){
+      console.log("rent update");
+      console.log(newRent)
+      console.log(rentid)
+      Meteor.call('rent.update',rentid,newRent);
+      console.log("updated");
+      computation.stop();
+    }
+  })
+}
+
 })
 
 
