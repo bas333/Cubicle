@@ -8,29 +8,50 @@ Template.addrent.onRendered(function(){
 
 
 Template.addrent.events({
+<<<<<<< HEAD
+  'click #submitrent'(elt,instance){
+    event.preventDefault();
+=======
   'click #submitrent':function (elt,instance){
     elt.preventDefault();
+>>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     const location = instance.$('#location :selected').val();
-    const street = instance.$('#street-address').val();
-    const start = instance.$('#time-start :selected').text();
-    const end = instance.$('#time-end :selected').text();
+    const street = instance.$('#streetaddress').val();
+    const startdate = instance.$('#createdatestart :selected').val();
+    console.log("startdate" + startdate);
+    const startmonth = instance.$('#timestart :selected').val();
+    console.log("startmonth" + startmonth);
+    const startyear = instance.$('#monthstartyear').val();
+    console.log("startyear" + startyear);
+    const enddate = instance.$('#createdateend :selected').val();
+    const endmonth = instance.$('#timeend :selected').val();
+    const endyear = instance.$('#monthendyear').val();
     const roomsize = instance.$('#roomsize').val();
     const facilities = instance.$('#facilities').val();
     const detailed = instance.$('#detaileddescription').val();
     const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#priceM').val();
+<<<<<<< HEAD
+    const contact = instance.$('#contactinformation').val();
+    const pic=instance.$('#rentalpic')[0].files[0];
+=======
     const contact = instance.$('#contact-information').val();
     const pic1=instance.$('#rentalpic1')[0].files[0];
     const pic2=instance.$('#rentalpic2')[0].files[0];
     const pic3=instance.$('#rentalpic3')[0].files[0];
     const pic_status = Template.instance().pic_status;
 
+>>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     console.log("adding " + location);
     var rentpost =
     { location:location,
       street:street,
-      start:start,
-      end:end,
+      startdate:startdate,
+      startmonth:startmonth,
+      startyear:startyear,
+      enddate:enddate,
+      endmonth:endmonth,
+      endyear:endyear,
       roomsize:roomsize,
       facilities:facilities,
       detailed:detailed,

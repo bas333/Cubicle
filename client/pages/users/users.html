@@ -1,9 +1,7 @@
 <template name="users">
-   {{#if hasPerson}}
-  <h1>You already have a profile, please sign in</h1>
+  {{#if hasProfile}}
     {{> showuser}}
   {{else}}
-
 <div class="profile-page">
   <h1 class="ui dividing header">Create your profile</h1>
   <form class="ui form segment" id="signup-form">

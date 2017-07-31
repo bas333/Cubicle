@@ -8,7 +8,6 @@
   <h1>Forum</h1>
   {{> makepost}}
   <hr>
-  <h1>Your post</h1>
   {{#each p in requests}}
     {{#if isOwner p}}
       <div class="four wide column">
@@ -20,6 +19,15 @@
 </template>
 
 <template name="makepost">
+<<<<<<< HEAD
+  <div class="ui form">
+    <div class="makepost">
+    <label>Add a post on Forum to request items that are not available</label>
+    <textarea id="forumpost" placeholder="I need a chair but is not currently available..."></textarea>
+  </div>
+  <button class="ui button" id="submitforum">Post</button>
+</div>
+=======
   <div class="voice_add_forum">
     <h2 class="ui dividing header">Create a New Requesting Post</h2>
       <div class="ui form">
@@ -31,6 +39,7 @@
       </div>
     </div>
 
+>>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
 </template>
 
 <template name="showownpost">
@@ -38,7 +47,7 @@
     <p>{{p.createdAt}}<br>
     <i class="user icon"></i>{{p.name}}<br>
     <i class="comment icon"></i>{{p.text}}<br>
-    <button id="editforum" class="ui button" data-toggle="modal" data-target="#myModal_{{p._id}}">Edit</button>
+<button id="editforum" class="ui button" data-toggle="modal" data-target="#myModal_{{p._id}}">Edit</button>
 
     <div class="modal fade" id="myModal_{{p._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
@@ -62,6 +71,5 @@
       </div>
     </div>
     <button class="ui button" id="deleteforum">Delete</button></p>
-    <hr>
   </div>
 </template>

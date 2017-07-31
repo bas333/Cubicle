@@ -10,8 +10,18 @@ Template.users.helpers({
   },
   schoolData(){
     return schools;
+  },
+
+  hasProfile(){
+    var user = Meteor.userId()&&AllUsers.findOne({owner:Meteor.userId()});
+    if(user) {
+      return true;
+    } else {
+      return false;
+    }
   }
 })
+
 const schools=[
   {name:"Brandeis University"},
   {name:"Boston University"},
@@ -175,6 +185,16 @@ Template.users.events({
     cart=[];
     soldhistory=[];
     chatlist=[];
+<<<<<<< HEAD
+    // instance.$('#username').val("");
+    // instance.$('#school').val("");
+    // instance.$('#gender').val("");
+    // instance.$('#age').val("");
+    // instance.$('#email').val("");
+    // instance.$('#phone').val("");
+    // instance.$('#password').val("");
+=======
+>>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     const pic=instance.$('#uploadpic')[0].files[0];
     console.log('adding '+username);
     instance.$('#username').val("");
