@@ -10,8 +10,18 @@ Template.users.helpers({
   },
   schoolData(){
     return schools;
+  },
+
+  hasProfile(){
+    var user = Meteor.userId()&&AllUsers.findOne({owner:Meteor.userId()});
+    if(user) {
+      return true;
+    } else {
+      return false;
+    }
   }
 })
+
 const schools=[
   {name:"Brandeis University"},
   {name:"Boston University"},
