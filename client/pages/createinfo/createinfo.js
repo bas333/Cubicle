@@ -83,12 +83,8 @@ Template.addproduct.events({
       buyer:buyer,
       owner:Meteor.userId()
     };
-<<<<<<< HEAD
     console.log("delivery!!!"+delivery);
-    var pic_base64;
-=======
     const template=Template.instance();
->>>>>>> 952eee9f053ce124ac398e136b3b0e48c3df8baf
     if($('#productpic').val()){
       console.log("enter 1.1");
       if($('#productpic')[0].files&&$('#productpic')[0].files[0]&&($('#productpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
@@ -455,19 +451,12 @@ Template.addproduct.events({
 
 Template.productrow.helpers({
   isOwner(){
-<<<<<<< HEAD
     return (this.p.owner == Meteor.userId())
   },
-    hasPic(p){
-      if(p.pic!=undefined){
-=======
-    return (this.p.owner == Meteor.userId())},
-
     hasPic(product){
       if(product.pic!=undefined&&product.pic!=""){
         console.log("true 1");
         console.log(product.pic);
->>>>>>> 952eee9f053ce124ac398e136b3b0e48c3df8baf
         return true;
       }else{
         console.log("false 1");
@@ -532,7 +521,6 @@ Template.ownerproduct.events({
 
   const pic=$('#newproductpic_'+product_id)[0].files[0];
   const id = Meteor.userId();
-  // const pic_status=Template.instance().pic_status;
   var newproductinfo =
   {
     itemname:newitemname,
@@ -544,7 +532,6 @@ Template.ownerproduct.events({
     createdAt:new Date(),
     owner:Meteor.userId()
   }
-  // const template=Template.instance();
   if($('#newproductpic_'+product_id).val()){
     if(($('#newproductpic_'+product_id)[0].files&&$('#newproductpic_'+product_id)[0].files[0]) && ($('#newproductpic_'+product_id)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
       if($('#newproductpic_'+product_id)[0].files[0].size>1048576){
@@ -558,27 +545,22 @@ Template.ownerproduct.events({
             imageBase64Form=dataURL.split(',')[1];
             newproductinfo.pic=imageBase64Form;
             console.log("finished third");
-            console.log(imageBase64Form);
             console.log(newproductinfo);
-            // const currentstatus=template.pic_status.get();
-            // currentstatus[1]="finished";
-            // template.pic_status.set(currentstatus);
             Meteor.call('product.update',product_id,newproductinfo);
+            $('#newproductpic_'+product_id).val("");
+            $("#shownewproductpic_"+product_id).css("display","none");
+            $('#productloadpic_'+product_id).css('display','block');
           }
         reader.readAsDataURL(imagefile);
       }
     }else{
-      $("#shownewproductpic"+product_id).attr("src","");
-      $("#shownewproductpic"+product_id).css("display","none");
+      $("#shownewproductpic_"+product_id).attr("src","");
+      $("#shownewproductpic_"+product_id).css("display","none");
       alert("Please add a image file");
     }
   }else{
-    // const currentstatus=template.pic_status.get();
-    // currentstatus[1]="finished";
-    // template.pic_status.set(currentstatus);
     Meteor.call('product.update',product_id,newproductinfo);
   }
-<<<<<<< HEAD
     console.log(this.p);
     console.dir(this);
   },
@@ -592,22 +574,7 @@ Template.ownerproduct.events({
       }else{
         $("#newcheckdelivery_"+productid).prop("checked",true);
       }
-=======
-  // Tracker.autorun((computation)=>{
-  //   console.log(pic_status);
-  //   if(pic_status.get()[1]){
-  //     console.log("hey");
-  //     Meteor.call('product.update',product_id,newproductinfo);
-  //     computation.stop();
-  //   }
-  // })
-},
-  'click #enableedit'(event,instance){
-    const newcategory=instance.$('#newcategory').val(this.p.category);
-    const newcondition=instance.$('#newcondition').val(this.p.condition);
-    console.log(newcategory);
->>>>>>> 952eee9f053ce124ac398e136b3b0e48c3df8baf
-  },
+    },
  'change #jsstatus'(event, instance) {
     instance.itemsold.set(event.currentTarget.checked);
     instance.$("")
@@ -633,6 +600,7 @@ Template.ownerproduct.events({
             $('#shownewproductpic_'+product_id).css('display','block');
           }
           picreader.readAsDataURL(event.currentTarget.files[0]);
+
         }
       }else{//not a image file
         alert('You are only allowed to upload an image file');

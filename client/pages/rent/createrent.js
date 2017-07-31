@@ -813,6 +813,7 @@ Template.ownpostrow.events({
           console.log("eneter 2."+i);
           if(instance.$('#newrentalpic'+i+"_"+rentid)[0].files[0].size>1048576){
             alert('The file size should be smaller than 1MB');
+            return;
           }else{
             console.log("enter 3."+i);
             var imagefile=$('#newrentalpic'+i+"_"+rentid)[0].files[0];
@@ -829,12 +830,16 @@ Template.ownpostrow.events({
                 console.log(template.pic_status);
               };
               reader.readAsDataURL(imagefile);
+              instance.$('#newrentalpic'+i+"_"+rentid).val("");
+              $('#shownewrentalpic'+i+'_'+rentid).css('display','none');
+              $('#oldrentalpic'+i+'_'+rentid).css('display','block');
           })(i);
           }
         }else{
           instance.$("#shownewrentalpic"+i+"_"+rentid).attr("src","");
           instance.$("#shownewrentalpic"+i+"_"+rentid).css("display","none");
           alert("Please add a image file");
+          return;
         }
     }else{
       const now=template.pic_status.get();
@@ -849,9 +854,16 @@ Template.ownpostrow.events({
       console.log("rent update");
       console.log(newRent)
       console.log(rentid)
-      Meteor.call('rent.update',rentid,newRent);
-      console.log("updated");
-      computation.stop();
+      Meteor.call('rent.update',rentid,newRent, function(err){
+        if(err){
+          window.alert(err);
+          return;
+        }
+
+        console.log("updated");
+        computation.stop();
+      });
+
     }
   })
 }
