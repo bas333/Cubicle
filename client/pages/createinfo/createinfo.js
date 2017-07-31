@@ -78,7 +78,8 @@ Template.addproduct.events({
       buyer:buyer,
       owner:Meteor.userId()
     };
-    var pic_base64;
+    console.log("delivery!!!"+delivery);
+    const template=Template.instance();
     if($('#productpic').val()){
       if($('#productpic')[0].files&&$('#productpic')[0].files[0]&&($('#productpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
         if($('#productpic')[0].files[0].size>1048576){
@@ -445,8 +446,31 @@ Template.productrow.helpers({
   isOwner(){
     return (this.p.owner == Meteor.userId())
   },
-    hasPic(p){
-      if(p.pic!=undefined){
+    hasPic(product){
+      if(product.pic!=undefined&&product.pic!=""){
+        console.log("true 1");
+        console.log(product.pic);
+        return true;
+      }else{
+        console.log("false 1");
+        return false;
+      }
+    },
+    hasPic2(product){
+      if(product.pic2!=undefined&&product.pic2!=""){
+        console.log("true 2");
+        console.log(product);
+        return true;
+      }else{
+        console.log("false 2");
+        return false;
+      }
+    },
+    hasPic3(product){
+      if(product.pic3!=undefined&&product.pic3!=""){
+        console.log("true 3");
+        console.log(product.pic3);
+
         return true;
       }else{
         return false;
@@ -503,8 +527,6 @@ Template.ownerproduct.events({
     createdAt:new Date(),
     owner:Meteor.userId()
   }
-
-  var pic_base64;
   if($('#newproductpic_'+product_id).val()){
     if(($('#newproductpic_'+product_id)[0].files&&$('#newproductpic_'+product_id)[0].files[0]) && ($('#newproductpic_'+product_id)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
       if($('#newproductpic_'+product_id)[0].files[0].size>1048576){
@@ -517,35 +539,30 @@ Template.ownerproduct.events({
           reader.onload=function(){
             var dataURL = reader.result;
             imageBase64Form=dataURL.split(',')[1];
-            callback(imageBase64Form);
-          };
-        reader.readAsDataURL(pic);
-        };
 
-      //send to server
-        imageConvertTo64Base(imagefile,function(imageBase64Form){
-        //add a new field into newuser
-        newproductinfo.pic=imageBase64Form;
-        Meteor.call('product.update',product_id,newproductinfo);
-        //Meteor.call('rent.update',rent_id,newRent);
-        $('#newproductpic_'+product_id).val("")
-        });
-      }
-      //$("#newpic").css("display","none");
-      }else{
-        $("#shownewproductpic"+product_id).attr("src","");
-        $("#shownewproductpic"+product_id).css("display","none");
-        alert("Please add a image file");
+            newproductinfo.pic=imageBase64Form;
+            console.log("finished third");
+            console.log(newproductinfo);
+            Meteor.call('product.update',product_id,newproductinfo);
+            $('#newproductpic_'+product_id).val("");
+            $("#shownewproductpic_"+product_id).css("display","none");
+            $('#productloadpic_'+product_id).css('display','block');
+          }
+        reader.readAsDataURL(imagefile);
       }
     }else{
-      Meteor.call('product.update',product_id,newproductinfo,function(err,result){
-        if (err){
-          alert("Unable to update product");
-          return;
-        }
-      $("#closenow_"+product_id).click();
-    });
-    //Meteor.call('rent.update',rent_id,newRent);
+      $("#shownewproductpic_"+product_id).attr("src","");
+      $("#shownewproductpic_"+product_id).css("display","none");
+      alert("Please add a image file");
+    }
+  }else{
+    Meteor.call('product.update',product_id,newproductinfo,function(err,result){
+      if (err){
+        alert("Unable to update product");
+        return;
+      }
+    $("#closenow_"+product_id).click();
+  });
   }
     console.log(this.p);
     console.dir(this);
@@ -560,7 +577,8 @@ Template.ownerproduct.events({
       }else{
         $("#newcheckdelivery_"+productid).prop("checked",true);
       }
-  },
+
+    },
  'change #jsstatus'(event, instance) {
     instance.itemsold.set(event.currentTarget.checked);
     instance.$("")
@@ -586,6 +604,7 @@ Template.ownerproduct.events({
             $('#shownewproductpic_'+product_id).css('display','block');
           }
           picreader.readAsDataURL(event.currentTarget.files[0]);
+
         }
       }else{//not a image file
         alert('You are only allowed to upload an image file');

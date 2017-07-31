@@ -813,28 +813,35 @@ Template.ownpostrow.events({
           console.log("eneter 2."+i);
           if(instance.$('#newrentalpic'+i+"_"+rentid)[0].files[0].size>1048576){
             alert('The file size should be smaller than 1MB');
+            return;
           }else{
             console.log("enter 3."+i);
             var imagefile=$('#newrentalpic'+i+"_"+rentid)[0].files[0];
-              (function(i){
+
+              (function(i, imagefile){
+                console.log(imagefile);
                 var reader=new FileReader();
                 reader.onload=function(){
                 var dataURL = reader.result;
+                // console.log(reader);
                 imageBase64Form=dataURL.split(',')[1];
                 newRent["pic"+i]=imageBase64Form;
-                // console.log(newRent["pic"+i]);
                 const now=template.pic_status.get();
                 now[i]="finished";
                 template.pic_status.set(now);
                 console.log(template.pic_status);
               };
               reader.readAsDataURL(imagefile);
-          })(i);
+              instance.$('#newrentalpic'+i+"_"+rentid).val("");
+              $('#shownewrentalpic'+i+'_'+rentid).css('display','none');
+              $('#oldrentalpic'+i+'_'+rentid).css('display','block');
+          })(i, imagefile);
           }
         }else{
           instance.$("#shownewrentalpic"+i+"_"+rentid).attr("src","");
           instance.$("#shownewrentalpic"+i+"_"+rentid).css("display","none");
           alert("Please add a image file");
+          return;
         }
     }else{
       const now=template.pic_status.get();
@@ -849,9 +856,16 @@ Template.ownpostrow.events({
       console.log("rent update");
       console.log(newRent)
       console.log(rentid)
-      Meteor.call('rent.update',rentid,newRent);
-      console.log("updated");
-      computation.stop();
+      Meteor.call('rent.update',rentid,newRent, function(err){
+        if(err){
+          window.alert(err);
+          return;
+        }
+        console.log("updated");
+        pic_status.set([]);
+        computation.stop();
+      });
+
     }
   })
 }
