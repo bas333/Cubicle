@@ -817,13 +817,15 @@ Template.ownpostrow.events({
           }else{
             console.log("enter 3."+i);
             var imagefile=$('#newrentalpic'+i+"_"+rentid)[0].files[0];
-              (function(i){
+
+              (function(i, imagefile){
+                console.log(imagefile);
                 var reader=new FileReader();
                 reader.onload=function(){
                 var dataURL = reader.result;
+                // console.log(reader);
                 imageBase64Form=dataURL.split(',')[1];
                 newRent["pic"+i]=imageBase64Form;
-                // console.log(newRent["pic"+i]);
                 const now=template.pic_status.get();
                 now[i]="finished";
                 template.pic_status.set(now);
@@ -833,7 +835,7 @@ Template.ownpostrow.events({
               instance.$('#newrentalpic'+i+"_"+rentid).val("");
               $('#shownewrentalpic'+i+'_'+rentid).css('display','none');
               $('#oldrentalpic'+i+'_'+rentid).css('display','block');
-          })(i);
+          })(i, imagefile);
           }
         }else{
           instance.$("#shownewrentalpic"+i+"_"+rentid).attr("src","");
@@ -859,8 +861,8 @@ Template.ownpostrow.events({
           window.alert(err);
           return;
         }
-
         console.log("updated");
+        pic_status.set([]);
         computation.stop();
       });
 
