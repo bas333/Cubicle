@@ -1,9 +1,5 @@
 import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
-
- Template.addproduct.onCreated(function(){
-   this.pic_status = new ReactiveVar([]);
- })
+ import { ReactiveVar } from 'meteor/reactive-var';
 
  Template.ownerproduct.onCreated(function ownerproductOnCreated(){
    this.itemsold= new ReactiveVar(false);
@@ -60,7 +56,6 @@ Template.addproduct.events({
     }
   },
   'click #addproduct'(elt,instance){
-    elt.preventDefault();
     const itemname = instance.$('#itemname').val();
     const delivery = instance.$('input[name="delivery"]:checked').val();
     const condition=instance.$('#condition :selected').val();
@@ -70,7 +65,6 @@ Template.addproduct.events({
     var status=instance.$('#sold').val();
     const buyer=instance.$('#buyer').val();
     const pic=instance.$("#productpic")[0].files[0];
-    const pic_status=Template.instance().pic_status;
     var productinfo =
     {
       itemname:itemname,
@@ -79,35 +73,40 @@ Template.addproduct.events({
       condition:condition,
       category:category,
       description:description,
+      pic:pic,
       createdAt:new Date(),
       buyer:buyer,
       owner:Meteor.userId()
     };
-<<<<<<< HEAD
-    console.log("delivery!!!"+delivery);
     var pic_base64;
-=======
-    const template=Template.instance();
->>>>>>> 952eee9f053ce124ac398e136b3b0e48c3df8baf
     if($('#productpic').val()){
-      console.log("enter 1.1");
       if($('#productpic')[0].files&&$('#productpic')[0].files[0]&&($('#productpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-        console.log("enter 1.2");
         if($('#productpic')[0].files[0].size>1048576){
           alert('The file size should ne smaller than 1 MB');
         }else{
-          console.log("enter 1.3");
           var imagefile=$('#productpic')[0].files[0];
+          var imageConvertTo64Base=function(imagefile,callback){
             var reader=new FileReader();
             reader.onload=function(){
               var dataURL=reader.result;
-              var imageBase64Form=dataURL.split(',')[1];
-              productinfo.pic=imageBase64Form;
-              const currentstatus=template.pic_status.get();
-              currentstatus[1]="finished";
-              template.pic_status.set(currentstatus);
+              imageBase64Form=dataURL.split(',')[1];
+              callback(imageBase64Form);
+            };
+          reader.readAsDataURL(pic);
+        };
+
+        imageConvertTo64Base(imagefile,function(imageBase64Form){
+          productinfo.pic=imageBase64Form;
+          Meteor.call('product.insert',productinfo,
+            (err, res) => {
+              if (err) {
+                alert("Failed to add your item");
+              } else {
+                alert("Successfully added your item. You can view it by scrolling down the page.")
+              }
             }
-          reader.readAsDataURL(imagefile);
+          );
+        });
         }
       }else{
         $("#showproductpic").attr("src","");
@@ -115,35 +114,24 @@ Template.addproduct.events({
         alert("Please add a image file");
       }
     }else{
-      const currentstatus=template.pic_status.get();
-      currentstatus[1]="finished";
-      template.pic_status.set(currentstatus);
+      Meteor.call('product.insert',productinfo,
+        (err, res) => {
+          if (err) {
+            alert("Failed to add your item");
+          } else {
+            alert("Successfully added your item. You can view it by scrolling down the page.")
+          }
+        }
+      );
     }
+
 
     console.log('adding'+itemname);
     instance.$('#itemname').val("");
     instance.$('#price').val("");
-    $('#condition').val()==null;
-    $('#category').val()==null;
+    instance.$('#condition').val("");
+    instance.$('#category').val("");
     instance.$('#description').val("");
-
-     Tracker.autorun((computation)=>{
-       if(pic_status.get()[1]){
-         Meteor.call('product.insert',productinfo,
-              (err, res) => {
-                if (err) {
-                  alert("Failed to add your item");
-                } else {
-                  alert("Successfully added your item. You can view it by scrolling down the page.")
-                }
-              }
-         );
-         computation.stop();
-       }
-     })
-
-
-
   },
 
   'click #additemrec':function(elt,instance){
@@ -455,42 +443,12 @@ Template.addproduct.events({
 
 Template.productrow.helpers({
   isOwner(){
-<<<<<<< HEAD
     return (this.p.owner == Meteor.userId())
   },
     hasPic(p){
       if(p.pic!=undefined){
-=======
-    return (this.p.owner == Meteor.userId())},
-
-    hasPic(product){
-      if(product.pic!=undefined&&product.pic!=""){
-        console.log("true 1");
-        console.log(product.pic);
->>>>>>> 952eee9f053ce124ac398e136b3b0e48c3df8baf
         return true;
       }else{
-        console.log("false 1");
-        return false;
-      }
-    },
-    hasPic2(product){
-      if(product.pic2!=undefined&&product.pic2!=""){
-        console.log("true 2");
-        console.log(product);
-        return true;
-      }else{
-        console.log("false 2");
-        return false;
-      }
-    },
-    hasPic3(product){
-      if(product.pic3!=undefined&&product.pic3!=""){
-        console.log("true 3");
-        console.log(product.pic3);
-        return true;
-      }else{
-        console.log("false 3");
         return false;
       }
     }
@@ -509,11 +467,12 @@ Template.ownerproduct.helpers({
       }else{
         return false;
       }
-    },
+    }
  })
-Template.ownerproduct.onCreated(function(){
-  this.pic_status = new ReactiveVar([]);
-})
+ Template.ownerproduct.onRendered(function() {
+   this.$('.ui.radio.checkbox').checkbox();
+
+ });
 
 Template.ownerproduct.events({
   'click span'(elt,instance){
@@ -523,7 +482,7 @@ Template.ownerproduct.events({
   const product_id = this.p._id;
   const newitemname = $('#newitemname_'+product_id).val();
   const newcondition = $('#newcondition_'+product_id+' :selected').text();
-  const newdelivery = instance.$('input[name="newdelivery"]:checked').val();
+  const newdelivery = $('input[name="newdelivery"]:checked').val();
   const newcategory=$('#newcategory_'+product_id+' :selected').val();
 
   const newdescription=$('#newdescription_' +product_id).val();
@@ -532,11 +491,11 @@ Template.ownerproduct.events({
 
   const pic=$('#newproductpic_'+product_id)[0].files[0];
   const id = Meteor.userId();
-  // const pic_status=Template.instance().pic_status;
   var newproductinfo =
   {
     itemname:newitemname,
     price:newprice,
+    delivery:newdelivery,
     condition:newcondition,
     category:newcategory,
     description:newdescription,
@@ -544,7 +503,8 @@ Template.ownerproduct.events({
     createdAt:new Date(),
     owner:Meteor.userId()
   }
-  // const template=Template.instance();
+
+  var pic_base64;
   if($('#newproductpic_'+product_id).val()){
     if(($('#newproductpic_'+product_id)[0].files&&$('#newproductpic_'+product_id)[0].files[0]) && ($('#newproductpic_'+product_id)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
       if($('#newproductpic_'+product_id)[0].files[0].size>1048576){
@@ -552,33 +512,41 @@ Template.ownerproduct.events({
       }else{
         console.log("enter third");
         var imagefile=$('#newproductpic_'+product_id)[0].files[0];
+        var imageConvertTo64Base=function(imagefile,callback){
           var reader=new FileReader();
           reader.onload=function(){
             var dataURL = reader.result;
             imageBase64Form=dataURL.split(',')[1];
-            newproductinfo.pic=imageBase64Form;
-            console.log("finished third");
-            console.log(imageBase64Form);
-            console.log(newproductinfo);
-            // const currentstatus=template.pic_status.get();
-            // currentstatus[1]="finished";
-            // template.pic_status.set(currentstatus);
-            Meteor.call('product.update',product_id,newproductinfo);
-          }
-        reader.readAsDataURL(imagefile);
+            callback(imageBase64Form);
+          };
+        reader.readAsDataURL(pic);
+        };
+
+      //send to server
+        imageConvertTo64Base(imagefile,function(imageBase64Form){
+        //add a new field into newuser
+        newproductinfo.pic=imageBase64Form;
+        Meteor.call('product.update',product_id,newproductinfo);
+        //Meteor.call('rent.update',rent_id,newRent);
+        $('#newproductpic_'+product_id).val("")
+        });
+      }
+      //$("#newpic").css("display","none");
+      }else{
+        $("#shownewproductpic"+product_id).attr("src","");
+        $("#shownewproductpic"+product_id).css("display","none");
+        alert("Please add a image file");
       }
     }else{
-      $("#shownewproductpic"+product_id).attr("src","");
-      $("#shownewproductpic"+product_id).css("display","none");
-      alert("Please add a image file");
-    }
-  }else{
-    // const currentstatus=template.pic_status.get();
-    // currentstatus[1]="finished";
-    // template.pic_status.set(currentstatus);
-    Meteor.call('product.update',product_id,newproductinfo);
+      Meteor.call('product.update',product_id,newproductinfo,function(err,result){
+        if (err){
+          alert("Unable to update product");
+          return;
+        }
+      $("#closenow_"+product_id).click();
+    });
+    //Meteor.call('rent.update',rent_id,newRent);
   }
-<<<<<<< HEAD
     console.log(this.p);
     console.dir(this);
   },
@@ -592,21 +560,6 @@ Template.ownerproduct.events({
       }else{
         $("#newcheckdelivery_"+productid).prop("checked",true);
       }
-=======
-  // Tracker.autorun((computation)=>{
-  //   console.log(pic_status);
-  //   if(pic_status.get()[1]){
-  //     console.log("hey");
-  //     Meteor.call('product.update',product_id,newproductinfo);
-  //     computation.stop();
-  //   }
-  // })
-},
-  'click #enableedit'(event,instance){
-    const newcategory=instance.$('#newcategory').val(this.p.category);
-    const newcondition=instance.$('#newcondition').val(this.p.condition);
-    console.log(newcategory);
->>>>>>> 952eee9f053ce124ac398e136b3b0e48c3df8baf
   },
  'change #jsstatus'(event, instance) {
     instance.itemsold.set(event.currentTarget.checked);

@@ -33,18 +33,18 @@
     <hr>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="height:700px;" >
       <div class="modal-dialog" role="document" style="width:500px; height:600px;">
-        <div class="modal-content">
+        <div class="modal-content" style="height:600px;">
           <div class="modal-header">
             <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" style="height:450px;" id="chatbox">
             {{#each m in messagelist}}
               <strong>{{m.username}}</strong><br>
               {{m.messagetext}}<br>
             {{/each}}
           </div>
           <div class="modal-footer">
-            <input type="text" id="privatetext">
+            <input type="text" id="privatetext" class="inputfield" style="width:300px; -webkit-appearance:textfield;">
             <button type="button" class="ui button small primary" id="enterMessage">Send</button>
             <button type="button" class="ui button small" data-dismiss="modal">Close</button>
           </div>
