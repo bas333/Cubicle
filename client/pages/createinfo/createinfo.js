@@ -495,8 +495,7 @@ Template.ownerproduct.helpers({
  })
  Template.ownerproduct.onRendered(function() {
    this.$('.ui.radio.checkbox').checkbox();
-
- });
+ })
 
 Template.ownerproduct.events({
   'click span'(elt,instance){
@@ -550,6 +549,7 @@ Template.ownerproduct.events({
           }
         reader.readAsDataURL(imagefile);
       }
+    }
     }else{
       $("#shownewproductpic_"+product_id).attr("src","");
       $("#shownewproductpic_"+product_id).css("display","none");
