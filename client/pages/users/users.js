@@ -175,7 +175,6 @@ Template.users.events({
     cart=[];
     soldhistory=[];
     chatlist=[];
-<<<<<<< HEAD
     // instance.$('#username').val("");
     // instance.$('#school').val("");
     // instance.$('#gender').val("");
@@ -183,7 +182,6 @@ Template.users.events({
     // instance.$('#email').val("");
     // instance.$('#phone').val("");
     // instance.$('#password').val("");
-=======
     const pic=instance.$('#uploadpic')[0].files[0];
     console.log('adding '+username);
     instance.$('#username').val("");
@@ -192,7 +190,6 @@ Template.users.events({
     instance.$('#age').val("");
     instance.$('#email').val("");
     instance.$('#phone').val("");
->>>>>>> 307c67e93696f57c2abe3d09473ee22f0b6fdeb2
 
     alert("new user id =");
     var newUser = {

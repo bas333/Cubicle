@@ -1,20 +1,23 @@
 Meteor.publish('shop_products', function(type, keywords){
   var key = new RegExp(keywords, "i");
   console.log("publish");
-  if(type){
+  if(type && keywords){
     console.log("Are you here?");
     console.log(key);
     return Product.find({category:type, itemname:{$regex:key}});
-  } else {
-    console.log("You are here right")
+  } else if (keywords){
+    console.log("You are here right");
     return Product.find({itemname:{$regex:key}});
+  } else {
+    console.log("?");
+    return Product.find({category:type});
   }
 })
 Meteor.publish('forum',function(){
   return Forum.find();
 })
 
-Meteor.publish('rent_search',function(location, price, start, end, facilities){
+Meteor.publish('rent_search',function(searchcriteria){
   var faci = new RegExp(facilities, "i");
   return Rent.find({location:location, price:{$lt:price}, start:start, end:end, facilities:{$regex:faci}});
 })

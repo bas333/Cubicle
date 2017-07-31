@@ -5,16 +5,24 @@ Template.addrent.onRendered(function(){
 
 Template.addrent.events({
   'click #submitrent'(elt,instance){
+    event.preventDefault();
     const location = instance.$('#location :selected').val();
-    const street = instance.$('#street-address').val();
-    const start = instance.$('#time-start :selected').text();
-    const end = instance.$('#time-end :selected').text();
+    const street = instance.$('#streetaddress').val();
+    const startdate = instance.$('#createdatestart :selected').val();
+    console.log("startdate" + startdate);
+    const startmonth = instance.$('#timestart :selected').val();
+    console.log("startmonth" + startmonth);
+    const startyear = instance.$('#monthstartyear').val();
+    console.log("startyear" + startyear);
+    const enddate = instance.$('#createdateend :selected').val();
+    const endmonth = instance.$('#timeend :selected').val();
+    const endyear = instance.$('#monthendyear').val();
     const roomsize = instance.$('#roomsize').val();
     const facilities = instance.$('#facilities').val();
     const detailed = instance.$('#detaileddescription').val();
     const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#priceM').val();
-    const contact = instance.$('#contact-information').val();
+    const contact = instance.$('#contactinformation').val();
     const pic=instance.$('#rentalpic')[0].files[0];
     console.log("adding " + location);
     // instance.$('#location').val("");
@@ -29,8 +37,12 @@ Template.addrent.events({
     var rentpost =
     { location:location,
       street:street,
-      start:start,
-      end:end,
+      startdate:startdate,
+      startmonth:startmonth,
+      startyear:startyear,
+      enddate:enddate,
+      endmonth:endmonth,
+      endyear:endyear,
       roomsize:roomsize,
       facilities:facilities,
       detailed:detailed,

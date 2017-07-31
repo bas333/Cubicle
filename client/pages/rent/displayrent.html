@@ -8,7 +8,7 @@
       <div class="ui list" id="allrentalposts">
         {{#each r in rentlist}}
           <div class="four wide column" id="singlerent">
-          {{> rentsearchrow rent=r}}
+          {{> rentrow rent=r}}
         </div>
           {{/each}}
         </div>
@@ -26,7 +26,8 @@
   </div>
   <div class="item">
     <i class="address to calendar icon"></i>
-     Available Time: {{rent.start}} - {{rent.end}}
+    <!-- <h1>{{rent.startmonth}}</h1> -->
+     Available Time: {{rent.startmonth}}/{{rent.startdate}}/{{rent.startyear}}  - {{rent.endmonth}}/{{rent.enddate}}/{{rent.endyear}}  
   </div>
   <div class="item">
     <i class="home icon"></i>

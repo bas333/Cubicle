@@ -1,15 +1,36 @@
 <template name="postforum">
-  <h1>See any requests that you can offer</h1>
-  {{#each p in requests}}
-    {{> showpost p=p}}
-  {{/each}}
+  <div class="postforum-div">
+    <h1>See any requests that you can offer</h1>
+    {{#each p in requests}}
+      {{> showpost p=p}}
+      {{/each}}
+    </div>
 </template>
 
 <template name="showpost">
-  <div class="post">
-    <p>{{p.createdAt}}<br>
-    <i class="user icon"></i>{{p.name}}<br>
-    <i class="comment icon"></i>{{p.text}}</p>
-    <hr>
-  </div>
+  <div class="ui comments">
+    <h3 class="ui dividing header"> Comments </h3>
+      <div class="comment">
+        <div class="content">
+          <a class="author"><p>{{p.name}}</p></a>
+        <div class="metadata">
+          <span class="date"><p>{{p.createdAt}}</p></span>
+        </div>
+        <div class="text">
+          {{p.text}}
+        </div>
+        <div class="actions">
+          <a class="reply">Reply</a>
+        </div>
+      </div>
+    </div>
+  <form class="ui reply form">
+    <div class="field">
+      <textarea></textarea>
+    </div>
+    <div class="ui blue labeled submit icon button">
+      <i class="icon edit"></i> Add Reply
+    </div>
+  </form>
+</div>
 </template>
