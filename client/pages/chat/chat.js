@@ -17,7 +17,7 @@ Template.chatroom.onCreated(function(){
 })
 Template.showchat.onCreated(function(){
   this.dictionary=new ReactiveDict();
-  this.dictionary.set("showChatBOx",false);
+  this.dictionary.set("showChatBox",false);
 })
 Template.chatroom.helpers({
   mychatlist(){
@@ -38,23 +38,61 @@ Template.chatroom.helpers({
   }
 })
 Template.showchat.events({
-  'click #beginChat'(event,template){
+  'click #beginChat'(event,template,instance){
     $(".modal-dialog").css("display","none");
     template.$(".modal-dialog").css("display","block");
+
+    $("#chatbox_"+this.c._id).prop({scrollTop: $("#chatbox_"+this.c._id)[0].scrollHeight});
+
+  },
+  'keypress input'(event,elt,instance){
+    if (event.which==13){
+      const _id = this.c._id;
+      const privatetext=$('#privatetext_' + _id).val();
+      var user=AllUsers.findOne({owner:Meteor.userId()});
+
+      for (var chatid of user.chatlist){
+        var chat=Chat.findOne(chatid);
+        if (chat.users_id.includes(this.c.owner)){
+          console.log(chat);
+          console.log("message insert");
+          Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext,function(err,result){
+            if(err){
+              alert("Failed to send message");
+              return;
+            }
+            $("#chatbox_" + _id).prop({scrollTop: $("#chatbox_" + _id)[0].scrollHeight});
+            $('#privatetext_' + _id).val("");
+          });
+          return false;
+
+        }
+      }
+    }
   },
   'click #enterMessage'(elt,instance){
-    const privatetext=instance.$('#privatetext').val();
+    const _id = this.c._id;
+    const privatetext=$('#privatetext_' + _id).val();
     var user=AllUsers.findOne({owner:Meteor.userId()});
+
     for (var chatid of user.chatlist){
       var chat=Chat.findOne(chatid);
       if (chat.users_id.includes(this.c.owner)){
         console.log(chat);
         console.log("message insert");
-        Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext);
-        instance.$('privatetext').val("");
+        Meteor.call('message.insert',chat._id,Meteor.userId(),privatetext,function(err,result){
+          if(err){
+            alert("Failed to send message");
+            return;
+          }
+          $('#chatbox_' + _id).prop({scrollTop: $('#chatbox_' + _id)[0].scrollHeight});
+          $('#privatetext_' + _id).val("");
+        });
+
         return;
       }
     }
+
   }
 })
 Template.showchat.helpers({

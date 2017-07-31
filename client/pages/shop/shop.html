@@ -1,6 +1,6 @@
 <template name="shop">
   <div class="shop-table">
-  <table class="ui celled padded table">
+  <!-- <table class="ui celled padded table">
     <thead>
       <tr>
         <th>Product Name</th>
@@ -11,12 +11,17 @@
         <th>Status</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody> -->
+      <h1>Search Results</h1>
+      <div class="ui middle aligned divided list">
     {{#each i in filteredlist}}
-      <tr>{{> itemrow item=i}}</tr>
+    <div class="item">
+      {{> productrow p=i}}
+    </div>
     {{/each}}
-  </tbody>
-</table>
+  </div>
+  <!-- </tbody> -->
+<!-- </table> -->
 
 <div class = "return-home">
   <button class="ui button" id="return"> Home </button>
@@ -25,7 +30,7 @@
 </template>
 
 <template name="itemrow">
-  <td><h3 class="ui center aligned header">{{item.itemname}}</h3></td>
+  <td><h3 class="ui center aligned header"><a href="/singleitem/{{item.itemname}}">{{item.itemname}}</a></h3></td>
   <td>{{item.category}}</td>
   <td>{{item.price}}</td>
   <td>{{item.condition}}</td>

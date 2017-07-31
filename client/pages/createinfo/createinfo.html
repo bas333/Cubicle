@@ -23,18 +23,30 @@
       <h2 class="ui dividing header">Create a New Product</h2>
       <div class="ui form">
         <div class="field">
-          <input type="text" id="usersay">
+          <input type="text" id="usersay" disabled>
         </div>
-        <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
+        <button class="ui secondary basic button" data-tooltip="Click here to use speech, say submit after finish" data-position="bottom center" id="additemrec"><i class="announcement icon"></i>Speak</button>
       </div>
     </div>
 
   <div class="productform">
   <form class="ui form" method="post">
-      <div class="field">
+    <div class="fields">
+      <div class="twelve wide field">
         <label for="itemname">Product Name:</label>
         <input type="text" id="itemname">
       </div>
+      <div class="four wide field">
+        <div class="ui radio checkbox">
+            <input type="radio" id="checkdelivery" name="delivery" value="Delivery">
+            <label for="checkdelivery" >Delivery</label>
+          </div>
+          <div class="ui radio checkbox">
+            <input type="radio" id="checkpickup" name="delivery" value="Pick Up">
+            <label for="checkpickup">Pick Up</label>
+          </div>
+      </div>
+    </div>
       <div class="fields">
         <div class="seven wide field">
           <label for="category">Category:</label>
@@ -49,8 +61,9 @@
           </div>
         <div class="four wide field">
           <label for="price">Price: $</label>
-          <input type="text" id="price" min="0">
+          <input type="number" id="price" min="0">
         </div>
+
         <div class="five wide field">
           <label for="condition">Condition:</label>
           <select name="select" class="ui fluid dropdown" id="condition">
@@ -70,7 +83,7 @@
         <input type="file" id="productpic">
       </div>
       <img id="showproductpic">
-      <button class="ui button" id="addproduct" type="submit">Submit</button>
+      <button class="ui button" id="addproduct">Submit</button>
     </form>
   </div>
 </template>
@@ -81,14 +94,10 @@
   {{#if currentUser}}
   <div class="displayproduct">
   <h2 class="ui dividing header"> View Products </h2>
-  <table class="ui celled padded table">
+  <table class="ui basic celled padded table">
   <thead>
     <tr>
       <th>Product Information</th>
-      <!-- <th>Price</th>
-      <th>Condition</th>
-      <th>Category</th>
-      <th>Description</th> -->
       <th>Status</th>
       <th>Update</th>
       <th>Remove</th>
@@ -111,51 +120,61 @@
   {{/if}}
 </template>
 
-<template name="productrow">
-    <td>
-      <h2 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
-    </td>
-    <td>{{p.price}}</td>
-    <td>{{p.condition}}</td>
-    <td>{{p.category}}</td>
-    <td>{{p.description}}</td>
-    {{#if hasPic p}}
-    <td><img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
-    {{else}}
-    <td></td>
-    {{/if}}
-
-</template>
 
 <template name="ownerproduct">
   <tr id="productrow" class={{displayitem}}>
     <td>
         <h3 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h3>
-        <ul>
+        <div class="ui list">
           {{#if hasPic p}}
-          <li>
-            <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:300px;max-width:300px;">
-          </li>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; height:200px;width:200px;">
+            </div>
+          </a>
           {{/if}}
-        <li>
-          Price: ${{p.price}}
-        </li>
-        <li>
-          Condition: {{p.condition}}
-        </li>
-        <li>
-          Category: {{p.category}}
-        </li>
-        <li>
-          Description: {{p.description}}
-        </li>
-      </ul>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Price</div>
+              <div class="description">${{p.price}}</div>
+            </div>
+          </a>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">{{p.delivery}}</div>
+            </div>
+          </a>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Condition</div>
+              <div class="description">{{p.condition}}</div>
+            </div>
+          </a>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Category</div>
+              <div class="description">{{p.category}}</div>
+            </div>
+          </a>
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <div class="header">Description</div>
+              <div class="description">{{p.description}}</div>
+            </div>
+          </a>
+        </div>
     </td>
     <td>
-      <div>
-      <input type="checkbox" name="status" value="sold" id="jsstatus"><abbr title="Once an item is marked sold, it can not be marked unsold">sold</abbr><br>
+    <div data-tooltip="Once an item is marked sold, it can not be marked unsold" data-position="bottom center">
+      <input type="checkbox" name="status" value="sold" id="jsstatus">
+      Sold
     </div>
-
     </td>
     <td>
       <button type="button" id="enableedit" class="tiny ui button" data-toggle="modal" data-target="#myModal_{{p._id}}">
@@ -174,17 +193,26 @@
                   <input type="text" id="newitemname_{{p._id}}" value="{{p.itemname}}">
               </div>
               <div class="field">
+              <div class="ui radio checkbox">
+                  <input type="radio" id="newcheckdelivery_{{p._id}}" name="newdelivery" value="Delivery">
+                  <label for="checkdelivery" >Delivery</label>
+                </div>
+                <div class="ui radio checkbox">
+                  <input type="radio" id="newcheckpickup_{{p._id}}" name="newdelivery" value="Pick Up">
+                  <label for="checkpickup">Pick Up</label>
+                </div>
+              </div>
+              <div class="field">
                 <label for="category">Category:</label>
-                  <select name="select" id="newcategory_{{p._id}}" value="{{p.category}}">
+                  <select name="select" id="newcategory_{{p._id}}" value={{p.category}}>
                       <option value="textbooks/books">Textbooks/Books</option>
                       <option value="electronics">Electronics</option>
-                      <option value="clothes,shoes,and accessories">Clothes,Shoes,and Accessories</option>
+                      <option value="clothes,shoes,and accessories">clothes,shoes,and accessories</option>
                       <option value="furniture/home">Furniture/Home</option>
                       <option value="art/handcrafts">Art/Handcrafts</option>
                       <option value="others">Others</option>
                     </select>
               </div>
-
                 <div class="field">
                     <label for="price">Price: $</label>
                     <input type="number" id="newprice_{{p._id}}" value={{p.price}}>
@@ -198,20 +226,23 @@
                       <option value="acceptable">acceptable</option>
                     </select>
                 </div>
+
                 <div class="field">
                   <label for="description">Please enter more detailed product description here</label>
                   <input type="text" id="newdescription_{{p._id}}" value={{p.description}}>
                 </div>
                 <div class="field">
                   <label for="picture">Picture</label>
-                  <img id="productloadpic_{{p._id}}" src="data:image/jpeg;base64, {{p.pic}}" style="max-height:300px;max-width:300px;">
+                  {{#if hasPic p}}
+                  <img id="productloadpic_{{p._id}}" src="data:image/jpeg;base64, {{p.pic}}" style="height:300px;width:300px;">
+                  {{/if}}
                   <input class="newproductpic" type="file" id="newproductpic_{{p._id}}">
-                  <img class="shownewrentalpic" id="shownewproductpic_{{p._id}}">
+                  <img class="shownewproductpic" id="shownewproductpic_{{p._id}}">
                 </div>
               </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+            <button type="button" class="ui button small" data-dismiss="modal" id="closenow_{{p._id}}">Close</button>
             <button type="button" class="ui button small primary" id="updateitem">Save changes</button>
           </div>
         </div>

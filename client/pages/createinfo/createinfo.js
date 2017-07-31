@@ -43,7 +43,6 @@ Template.addproduct.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-            console.log(result);
             $('#showproductpic').attr('src',result);
             $('#showproductpic').css('display','block');
           }
@@ -59,6 +58,10 @@ Template.addproduct.events({
   },
   'click #addproduct'(elt,instance){
     const itemname = instance.$('#itemname').val();
+<<<<<<< HEAD
+=======
+    const delivery = instance.$('input[name="delivery"]:checked').val();
+>>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     const condition=instance.$('#condition :selected').val();
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
@@ -69,6 +72,7 @@ Template.addproduct.events({
     var productinfo =
     {
       itemname:itemname,
+      delivery:delivery,
       price:price,
       condition:condition,
       category:category,
@@ -78,7 +82,8 @@ Template.addproduct.events({
       buyer:buyer,
       owner:Meteor.userId()
     };
-    var pic_base64;
+    console.log("delivery!!!"+delivery);
+    const template=Template.instance();
     if($('#productpic').val()){
       if($('#productpic')[0].files&&$('#productpic')[0].files[0]&&($('#productpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
         if($('#productpic')[0].files[0].size>1048576){
@@ -195,20 +200,20 @@ Template.addproduct.events({
                 console.log(category);
                 console.log(description);
                 console.log(condition);
-                Meteor.call('product.insert',productinfo);
-
                 console.log("insert");
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
-                instance.$('#condition').val()==null;
-                instance.$('#category').val()==null;
+                instance.$('#condition').val("");
+                instance.$('#category').val("");
                 instance.$('#description').val("");
+                Meteor.call('product.insert',productinfo);
+
                 console.log("you stop we stop");
                 recognition.stop();
                 stopRecognition();
                 instance.$("#usersay").val("");
-              } else if((instance.$('#itemname').val()!="")&&(instance.$('#price').val()!="")&&(instance.$('#condition').val()!="")&&(instance.$('#category').val()!="")&&(instance.$('#description').val()!="Please say description now")&&(instance.$('#description').val()!="")){
+              } else if(($('#itemname').val()!="")&&($('#price').val()!="")&&($('#condition').val()!="")&&($('#category').val()!="")&&($('#description').val()!="Please say description now")&&($('#description').val()!="")){
                 console.log("user has filled all the fields")
                 const itemname = instance.$('#itemname').val();
                 const condition=instance.$('#condition :selected').val();
@@ -443,10 +448,33 @@ Template.addproduct.events({
 
 Template.productrow.helpers({
   isOwner(){
-    return (this.p.owner == Meteor.userId())},
-
+    return (this.p.owner == Meteor.userId())
+  },
     hasPic(product){
-      if(product.pic!=undefined){
+      if(product.pic!=undefined&&product.pic!=""){
+        console.log("true 1");
+        console.log(product.pic);
+        return true;
+      }else{
+        console.log("false 1");
+        return false;
+      }
+    },
+    hasPic2(product){
+      if(product.pic2!=undefined&&product.pic2!=""){
+        console.log("true 2");
+        console.log(product);
+        return true;
+      }else{
+        console.log("false 2");
+        return false;
+      }
+    },
+    hasPic3(product){
+      if(product.pic3!=undefined&&product.pic3!=""){
+        console.log("true 3");
+        console.log(product.pic3);
+
         return true;
       }else{
         return false;
@@ -469,29 +497,32 @@ Template.ownerproduct.helpers({
       }
     }
  })
+ Template.ownerproduct.onRendered(function() {
+   this.$('.ui.radio.checkbox').checkbox();
+ })
+
 Template.ownerproduct.events({
   'click span'(elt,instance){
     Meteor.call('product.remove',this.p);
 },
-
 'click #updateitem':function(elt, instance) {
   const product_id = this.p._id;
   const newitemname = $('#newitemname_'+product_id).val();
   const newcondition = $('#newcondition_'+product_id+' :selected').text();
-  console.log(newcondition);
+  const newdelivery = $('input[name="newdelivery"]:checked').val();
   const newcategory=$('#newcategory_'+product_id+' :selected').val();
-  console.log(newcategory);
+
   const newdescription=$('#newdescription_' +product_id).val();
-  console.log(newdescription);
+
   const newprice=$('#newprice_'+product_id).val();
-  console.log(newprice);
-  console.log($('#newproductpic_'+product_id).val())
+
   const pic=$('#newproductpic_'+product_id)[0].files[0];
   const id = Meteor.userId();
   var newproductinfo =
   {
     itemname:newitemname,
     price:newprice,
+    delivery:newdelivery,
     condition:newcondition,
     category:newcategory,
     description:newdescription,
@@ -499,13 +530,8 @@ Template.ownerproduct.events({
     createdAt:new Date(),
     owner:Meteor.userId()
   }
-
-  var pic_base64;
-  console.log($('#newproductpic_'+product_id).val());
   if($('#newproductpic_'+product_id).val()){
-    console.log("enter first if statement");
     if(($('#newproductpic_'+product_id)[0].files&&$('#newproductpic_'+product_id)[0].files[0]) && ($('#newproductpic_'+product_id)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-      console.log("eneter second if statement");
       if($('#newproductpic_'+product_id)[0].files[0].size>1048576){
         alert('The file size should be smaller than 1MB');
       }else{
@@ -516,39 +542,47 @@ Template.ownerproduct.events({
           reader.onload=function(){
             var dataURL = reader.result;
             imageBase64Form=dataURL.split(',')[1];
-            callback(imageBase64Form);
-          };
-        reader.readAsDataURL(pic);
-      };
 
-      //send to server
-      imageConvertTo64Base(imagefile,function(imageBase64Form){
-        //add a new field into newuser
-        newproductinfo.pic=imageBase64Form;
-        console.log(imageBase64Form);
-        Meteor.call('product.update',product_id,newproductinfo);
-        //Meteor.call('rent.update',rent_id,newRent);
-        $('#newproductpic_'+product_id).val("")
-      });
+            newproductinfo.pic=imageBase64Form;
+            console.log("finished third");
+            console.log(newproductinfo);
+            Meteor.call('product.update',product_id,newproductinfo);
+            $('#newproductpic_'+product_id).val("");
+            $("#shownewproductpic_"+product_id).css("display","none");
+            $('#productloadpic_'+product_id).css('display','block');
+          }
+        reader.readAsDataURL(imagefile);
       }
-      //$("#newpic").css("display","none");
+    }
     }else{
-      $("#shownewproductpic"+product_id).attr("src","");
-      $("#shownewproductpic"+product_id).css("display","none");
+      $("#shownewproductpic_"+product_id).attr("src","");
+      $("#shownewproductpic_"+product_id).css("display","none");
       alert("Please add a image file");
     }
   }else{
-    Meteor.call('product.update',product_id,newproductinfo);
-    //Meteor.call('rent.update',rent_id,newRent);
+    Meteor.call('product.update',product_id,newproductinfo,function(err,result){
+      if (err){
+        alert("Unable to update product");
+        return;
+      }
+    $("#closenow_"+product_id).click();
+  });
   }
     console.log(this.p);
     console.dir(this);
   },
-  'click #enableedit'(event,instance){
-    const newcategory=instance.$('#newcategory').val(this.p.category);
-    const newcondition=instance.$('#newcondition').val(this.p.condition);
-    console.log(newcategory);
-  },
+  'click #enableedit'(event, instance){
+    const productid=this.p._id;
+    const newcategory=instance.$('#newcategory_'+productid).val(this.p.category);
+    const newcondition=instance.$('#newcondition_'+productid).val(this.p.condition);
+
+    if (this.p.delivery==="Pick Up"){
+        $("#newcheckpickup_"+productid).prop("checked",true);
+      }else{
+        $("#newcheckdelivery_"+productid).prop("checked",true);
+      }
+
+    },
  'change #jsstatus'(event, instance) {
     instance.itemsold.set(event.currentTarget.checked);
     instance.$("")
@@ -574,6 +608,7 @@ Template.ownerproduct.events({
             $('#shownewproductpic_'+product_id).css('display','block');
           }
           picreader.readAsDataURL(event.currentTarget.files[0]);
+
         }
       }else{//not a image file
         alert('You are only allowed to upload an image file');

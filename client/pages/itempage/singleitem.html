@@ -1,54 +1,54 @@
 <template name="singleitem">
-<div class="singleitempage">
-  <div class="ui items">
-    <div class="item">
-      <div class="image">
-        <img src="https://images-na.ssl-images-amazon.com/images/I/51mP8PKeAVL._SX258_BO1,204,203,200_.jpg">
+  <div class="main ui container" style="padding-top:20px; padding-left:0px;">
+    <div class="ui dividing" style="float:right; border-left-width:1px; border-left-style:solid; border-left-color:rgba(34, 36, 38, 0.15);">
+      <div class="ui sticky" style="left:765px; width:240px; height 350px; padding-top:40px; padding-left:20px;">
+      <!-- <div class="content"> -->
+        Price:<p style="font-size:22px;">${{price}}</p>
+      <div>
+        {{#if isOwner}}
+          <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>You are the owner</button>
+        {{else if isInCart}}
+          <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>This product is in cart</button>
+        {{else}}
+          <button class="ui button" id="add"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
+          <hr>
+          <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button>
+        {{/if}}
       </div>
-      <div class="content">
-          <a class="header">{{itemname}}</a>
-        <div class="meta">
-          <span class="price">${{price}}</span>
+    </div>
+    </div>
+    <div class="ui dividing">
+      <!-- <div class="content"> -->
+        <h1>{{itemname}}</h1>
+        <h4 style="margin-top:0rem; margin-bottom:3rem;">by {{sellername}}</h4>
+        <div class="image">
+          {{#if hasPic}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic}}" style="display:inline-block; max-height:500px;max-width:500px; padding-right:10px;">
+          {{/if}}
         </div>
-      <div class="description">
-        {{category}}<br>
-        Condition: {{condition}}<br>
-        Description: {{description}}
+        <h2>Description</h2>
+        <p>{{description}}</p>
       </div>
-      <div class="extra">
-        Additional Details
       </div>
-    </div>
-    </div>
-  </div>
-</div>
-<div>
-  {{#if isOwner}}
-    <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>You are the owner</button>
-  {{else}}
-    <button class="ui button" id="add"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
-    <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button>
-  {{/if}}
-</div>
-<hr>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
-      </div>
-      <div class="modal-body">
-        {{#each m in messagelist}}
-          <strong>{{m.username}}</strong><br>
-          {{m.messagetext}}<br>
-        {{/each}}
-      </div>
-      <div class="modal-footer">
-        <input type="text" id="privatetext">
-        <button type="button" class="ui button small primary" id="enterMessage">Send</button>
-        <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+    <hr>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="height:700px;" >
+      <div class="modal-dialog" role="document" style="width:500px; height:600px;">
+        <div class="modal-content" style="height:600px;">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">ChatRoom</h4>
+          </div>
+          <div class="modal-body" style="height:450px;" id="chatbox">
+            {{#each m in messagelist}}
+              <strong>{{m.username}}</strong><br>
+              {{m.messagetext}}<br>
+            {{/each}}
+          </div>
+          <div class="modal-footer">
+            <input type="text" id="privatetext" class="inputfield" style="width:300px; -webkit-appearance:textfield;">
+            <button type="button" class="ui button small primary" id="enterMessage">Send</button>
+            <button type="button" class="ui button small" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 </template>

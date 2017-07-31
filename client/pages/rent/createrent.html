@@ -14,7 +14,7 @@
     <h2 class="ui dividing header">Create a New Rental Post</h2>
       <div class="ui form">
         <div class="field">
-          <input type="text" id="userrental">
+          <input type="text" id="userrental" disabled>
         </div>
         <button class="ui secondary basic button" data-tooltip="Click here to use speech" data-position="bottom center" id="addrentalrec"><i class="announcement icon"></i>Speak</button>
       </div>
@@ -171,11 +171,15 @@
     </div>
     <div class="field">
       <label>Picture</label>
-      <input type="file" id="rentalpic">
+      <input type="file" id="rentalpic1">
+      <input type="file" id="rentalpic2">
+      <input type="file" id="rentalpic3">
     </div>
-    <img id="showrentalpic">
+    <img id="showrentalpic1">
+    <img id="showrentalpic2">
+    <img id="showrentalpic3">
       <hr>
-        <button class="ui button" type="submit" id="submitrent"> submit </button>
+        <button class="ui button" id="submitrent"> submit </button>
       </form>
     </div>
 </template>
@@ -227,11 +231,22 @@
   <td>{{rent.roommate}}</td>
   <td>{{rent.price}}</td>
   <td>{{rent.contact}}</td>
-  {{#if hasPic rent}}
-  <td><img src="data:image/jpeg;base64, {{rent.pic}}" style="display:block; max-height:300px;max-width:300px;"></td>
-  {{else}}
-  <td></td>
-  {{/if}}
+  <td>
+        {{#if hasPic1 rent}}
+        <img src="data:image/jpeg;base64, {{rent.pic1}}" style="display:block; height:300px;width:300px;">
+
+        {{/if}}
+
+
+
+        {{#if hasPic2 rent}}
+        <img src="data:image/jpeg;base64, {{rent.pic2}}" style="display:block; height:300px;width:300px;">
+        {{/if}}
+
+        {{#if hasPic3 rent}}
+        <img src="data:image/jpeg;base64, {{rent.pic3}}" style="display:block; height:300px;width:300px;">
+        {{/if}}
+</td>
   <!-- Button trigger modal -->
   <td><button type="button" id="editRentPost" class="ui button" data-toggle="modal" data-target="#myModal_{{rent._id}}">Edit</button>
 
@@ -249,7 +264,7 @@
         <form action="/my-handling-form-page" method="post">
           <div>
           <label for="location">Location:</label>
-          <select class="form-control" id="newlocation" value={{rent.location}}>
+          <select class="form-control" id="newlocation_{{rent._id}}" value={{rent.location}}>
             {{#each location in locationdata}}
             <option>{{location.name}}</option>
             {{/each}}
@@ -258,43 +273,55 @@
 
         <div>
             <label for="streetaddress">Street Address:</label>
-            <input type="text" id="newstreet" value="{{rent.street}}">
+            <input type="text" id="newstreet_{{rent._id}}" value="{{rent.street}}">
         </div>
         <div>
             <label for="time">Available Time:</label>
-            <input type="text" id="newtime" value={{rent.time}}>
+            <input type="text" id="newtime_{{rent._id}}" value={{rent.time}}>
         </div>
         <div>
             <label for="roomsize">Room Size:</label>
-            <input type="text" id="newsize" value={{rent.roomsize}}>
+            <input type="text" id="newsize_{{rent._id}}" value={{rent.roomsize}}>
         </div>
         <div>
             <label for="facilities">Facilities:</label>
-            <input type="text" id="newfacilities" value={{rent.facilities}}>
+            <input type="text" id="newfacilities_{{rent._id}}" value={{rent.facilities}}>
         </div>
         <div>
             <label for="detaileddescription">Detailed Description:</label>
-            <input type="text" id="newdetail" value={{rent.detailed}}>
+            <input type="text" id="newdetail_{{rent._id}}" value={{rent.detailed}}>
         </div>
         <div>
             <label for="roommate">Roommate</label>
-            <input type="text" id="newroommate" value={{rent.roommate}}>
+            <input type="text" id="newroommate_{{rent._id}}" value={{rent.roommate}}>
         </div>
         <div>
             <label for="price">Price:</label>
-            <input type="text" id="newprice" value={{rent.price}}>
+            <input type="text" id="newprice_{{rent._id}}" value={{rent.price}}>
         </div>
         <div>
             <label for="contact">Contact:</label>
-            <input type="text" id="newcontact" value={{rent.contact}}>
+            <input type="text" id="newcontact_{{rent._id}}" value={{rent.contact}}>
         </div>
         <div>
-          <label for="picture">Picture:</label>
-          {{#if hasPic rent}}
-          <img id="oldrentalpic" src="data:image/jpeg;base64, {{rent.pic}}" style="max-height:300px;max-width:300px;">
+          <label for="picture">Picture:</label><br>
+          {{#if hasPic1 rent}}
+          <img id="oldrentalpic1_{{rent._id}}" src="data:image/jpeg;base64, {{rent.pic1}}" style="height:300px;width:300px;">
           {{/if}}
-          <input type="file" id="newrentalpic">
-          <img id="shownewrentalpic">
+          <input class="newrentalpic" type="file" id="newrentalpic1_{{rent._id}}">
+          <img class="shownewrentalpic" id="shownewrentalpic1_{{rent._id}}" style="height:300px;width:300px;">
+
+          {{#if hasPic2 rent}}
+          <img id="oldrentalpic2_{{rent._id}}" src="data:image/jpeg;base64, {{rent.pic2}}" style="height:300px;width:300px;">
+          {{/if}}
+          <input class="newrentalpic" type="file" id="newrentalpic2_{{rent._id}}">
+          <img class="shownewrentalpic" id="shownewrentalpic2_{{rent._id}}" style="height:300px;width:300px;">
+
+          {{#if hasPic3 rent}}
+          <img id="oldrentalpic3_{{rent._id}}" src="data:image/jpeg;base64, {{rent.pic3}}" style="height:300px;width:300px;">
+          {{/if}}
+          <input class="newrentalpic" type="file" id="newrentalpic3_{{rent._id}}">
+          <img class="shownewrentalpic" id="shownewrentalpic3_{{rent._id}}" style="height:300px;width:300px;">
         </div>
         </form>
       </div>

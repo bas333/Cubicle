@@ -3,14 +3,29 @@
 }
 .modalstyle{
   position: absolute;
-  top: calc(50% - 300px);
-  left: calc(50% - 275px);
+  top: calc(50% - 350px);
+  left: calc(60% - 400px);
 }
 .modal-dialog{
-  width: 550px;
-  height: 600px;
+  width: 800px;
+  height: 500px;
 }
 .modal-body{
   overflow: scroll;
-  height: 400px;
+  height: 600px;
+  font-size:16px;
+  line-height:1.77em;
+}
+.modal-content{
+  box-shadow:none;
+}
+strong{
+  font-size:18px;
+}
+
+.inputfield{
+  width:600px;
+  height:30px;
+  float:left;
+  -webkit-appearance: textfield;
 }

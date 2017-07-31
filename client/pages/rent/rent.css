@@ -3,12 +3,12 @@
   height: 50px;
   border: solid black 2px;
 }*/
+
 #rentalloadpic{
   display:block;
 }
-#showrentalpic{
+.shownewrentalpic{
   display:none;
-  max-width: 350px;
 }
 #newOwner{
   display:none;

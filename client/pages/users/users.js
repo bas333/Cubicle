@@ -149,7 +149,7 @@ Template.users.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-            console.log(result);
+            // console.log(result);
             $('#picshow').attr('src',result);
             $('#picshow').css('display','block');
           }
@@ -169,8 +169,8 @@ Template.users.events({
     if(!$('#signup-form').form('is valid')){
       return;
     }
-    alert("Are Your here???");
-    const username=instance.$('#username').val();
+    const name=instance.$('#name').val();
+    const username=instance.$("#username").val();
     const school=instance.$('#school').val();
     const age=instance.$('#age').val();
     const email=instance.$('#email').val();
@@ -185,6 +185,7 @@ Template.users.events({
     cart=[];
     soldhistory=[];
     chatlist=[];
+<<<<<<< HEAD
     // instance.$('#username').val("");
     // instance.$('#school').val("");
     // instance.$('#gender').val("");
@@ -192,9 +193,12 @@ Template.users.events({
     // instance.$('#email').val("");
     // instance.$('#phone').val("");
     // instance.$('#password').val("");
+=======
+>>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     const pic=instance.$('#uploadpic')[0].files[0];
     console.log('adding '+username);
     instance.$('#username').val("");
+    instance.$('#name').val("");
     instance.$('#school').val("");
     instance.$('#gender').val("");
     instance.$('#age').val("");
@@ -203,6 +207,7 @@ Template.users.events({
 
     alert("new user id =");
     var newUser = {
+      name:name,
       username:username,
       age:age,
       school:school,
@@ -224,13 +229,18 @@ Template.users.events({
      function(error,result){
         userid = Meteor.userId();
         newUser.owner = userId;
-        AllUsers.insert(newUser);
+        // AllUsers.insert(newUser);
+        Meteor.call('users.insert',newUser, function(err, result){
+          if(err){
+            window.alert(err);
+            return;
+          }
+        });
       });
     // alert("Create new user"+JSON.stringify(newUser)+password);
     // Meteor.call('users.createuser',email,password, newUser,function(error,result){
     //   alert("error="+error+"result="+result);
     // });
-    var pic_base64;
     if($('#uploadpic').val()){
       if($('#uploadpic')[0].files&&$('#uploadpic')[0].files[0] && ($('#uploadpic')[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
         if($('#uploadpic')[0].files[0].size>1048576){
