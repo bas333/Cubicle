@@ -71,8 +71,18 @@ Template.singleitem.helpers({
     var user=AllUsers.findOne({owner:this.owner});
     return user.username;
   },
-  hasPic(){
-    if(pic!=undefined){
+  hasPic1(){
+    if(pic1!=undefined){
+      return true;
+    }
+  },
+  hasPic2(){
+    if(pic2!=undefined){
+      return true;
+    }
+  },
+  hasPic3(){
+    if(pic3!=undefined){
       return true;
     }
   },

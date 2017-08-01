@@ -1,11 +1,14 @@
 <template name="salehistory">
-  <table class="table">
-    <tr>
+  <table class="ui striped table">
+    <thead>
+      <tr>
       <th>Product Name</th>
       <th>Price</th>
       <th>Sold At</th>
       <th>Buyer Info</th>
     </tr>
+  </thead>
+  <tbody>
     {{#each p in soldlist}}
       <tr>
         <td>{{p.itemname}}</td>
@@ -14,5 +17,6 @@
         <td>{{p.buyer}}</td>
       </tr>
     {{/each}}
+  </tbody>
   </table>
 </template>

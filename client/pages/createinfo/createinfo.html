@@ -42,7 +42,7 @@
             <label for="checkdelivery" >Delivery</label>
           </div>
           <div class="ui radio checkbox">
-            <input type="radio" id="checkpickup" name="delivery" value="Pick Up">
+            <input type="radio" id="checkpickup" name="delivery" value="PickUp">
             <label for="checkpickup">Pick Up</label>
           </div>
       </div>
@@ -80,9 +80,13 @@
       </div>
       <div class="field">
         <label for="productpic">Please add the picture of the product here</label>
-        <input type="file" id="productpic">
+        <input type="file" id="productpic1">
+        <input type="file" id="productpic2">
+        <input type="file" id="productpic3">
       </div>
-      <img id="showproductpic">
+      <img id="showproductpic1">
+      <img id="showproductpic2">
+      <img id="showproductpic3">
       <button class="ui button" id="addproduct">Submit</button>
     </form>
   </div>
@@ -126,11 +130,27 @@
     <td>
         <h3 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h3>
         <div class="ui list">
-          {{#if hasPic p}}
+          {{#if hasPic1 p}}
           <a class="item">
             <i class="right triangle icon"></i>
             <div class="content">
-              <img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; height:200px;width:200px;">
+              <img src="data:image/jpeg;base64, {{p.pic1}}" style="display:block; height:200px;width:200px;">
+            </div>
+          </a>
+          {{/if}}
+          {{#if hasPic2 p}}
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <img src="data:image/jpeg;base64, {{p.pic2}}" style="display:block; height:200px;width:200px;">
+            </div>
+          </a>
+          {{/if}}
+          {{#if hasPic3 p}}
+          <a class="item">
+            <i class="right triangle icon"></i>
+            <div class="content">
+              <img src="data:image/jpeg;base64, {{p.pic3}}" style="display:block; height:200px;width:200px;">
             </div>
           </a>
           {{/if}}
@@ -198,7 +218,7 @@
                   <label for="checkdelivery" >Delivery</label>
                 </div>
                 <div class="ui radio checkbox">
-                  <input type="radio" id="newcheckpickup_{{p._id}}" name="newdelivery" value="Pick Up">
+                  <input type="radio" id="newcheckpickup_{{p._id}}" name="newdelivery" value="PickUp">
                   <label for="checkpickup">Pick Up</label>
                 </div>
               </div>
@@ -233,11 +253,24 @@
                 </div>
                 <div class="field">
                   <label for="picture">Picture</label>
-                  {{#if hasPic p}}
-                  <img id="productloadpic_{{p._id}}" src="data:image/jpeg;base64, {{p.pic}}" style="height:300px;width:300px;">
+                  {{#if hasPic1 p}}
+                  <img id="productloadpic1_{{p._id}}" src="data:image/jpeg;base64, {{p.pic1}}" style="height:300px;width:300px;">
                   {{/if}}
-                  <input class="newproductpic" type="file" id="newproductpic_{{p._id}}">
-                  <img class="shownewproductpic" id="shownewproductpic_{{p._id}}">
+                  <input class="newproductpic" type="file" id="newproductpic1_{{p._id}}">
+                  <img class="shownewproductpic" id="shownewproductpic1_{{p._id}}">
+
+                  {{#if hasPic2 p}}
+                  <img id="productloadpic2_{{p._id}}" src="data:image/jpeg;base64, {{p.pic2}}" style="height:300px;width:300px;">
+                  {{/if}}
+                  <input class="newproductpic" type="file" id="newproductpic2_{{p._id}}">
+                  <img class="shownewproductpic" id="shownewproductpic2_{{p._id}}">
+
+
+                  {{#if hasPic3 p}}
+                  <img id="productloadpic3_{{p._id}}" src="data:image/jpeg;base64, {{p.pic3}}" style="height:300px;width:300px;">
+                  {{/if}}
+                  <input class="newproductpic" type="file" id="newproductpic3_{{p._id}}">
+                  <img class="shownewproductpic" id="shownewproductpic3_{{p._id}}">
                 </div>
               </form>
           </div>
