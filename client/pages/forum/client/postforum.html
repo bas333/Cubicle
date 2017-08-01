@@ -13,12 +13,12 @@
       <div class="comment">
         <div class="content">
           <a class="author"><p>{{p.name}}</p></a>
-        <div class="metadata">
-          <span class="date"><p>{{p.createdAt}}</p></span>
-        </div>
-        <div class="text">
-          {{p.text}}
-        </div>
+          <div class="metadata">
+            <span class="date"><p>{{p.createdAt}}</p></span>
+          </div>
+          <div class="text">
+            {{p.text}}
+          </div>
         <div class="actions">
           <a class="reply">Reply</a>
         </div>
@@ -26,6 +26,16 @@
     </div>
     {{> showreply p=p}}
     {{#if isNotOwnPost p}}
+<<<<<<< HEAD
+    <form class="ui reply form">
+      <div class="field">
+        <textarea id="replypost" placeholder="Reply?"></textarea>
+      </div>
+    </form>
+    <button id="submitreply">Add Reply</button>
+    {{/if}}
+  </div>
+=======
   <form class="ui reply form">
     <div class="field">
       <textarea id="replypost" placeholder="Reply?"></textarea>
@@ -35,12 +45,35 @@
   <button id="submitreply">Add Reply</button>
   {{/if}}
 </div>
+<<<<<<< HEAD
+  <div class="post">
+    <p>{{p.createdAt}}<br>
+    <i class="user icon"></i>{{p.name}}<br>
+    <i class="comment icon"></i>{{p.text}}</p>
+    <hr>
+    <div class="ui form">
+      <div class="field">
+        <textarea id="replypost" placeholder="Reply?"></textarea>
+      </div>
+      <button class="ui button" id="submitreply">Reply</button>
+    </div>
+  </div>
+=======
+>>>>>>> 96c80169e86d9cd4c0753ae42cc254ffa1cd7868
 </template>
 
 <template name="showreply">
   {{#each p in replys}}
-    {{p.name}}<br>
-    {{p.createdAt}}<br>
-    {{p.text}}
+    <div class="field">
+      <p>{{p.name}}</p><br>
+      <div class="metadata">
+        <span class="date"><p>{{p.createdAt}}</p><br></span>
+      </div>
+      <p>{{p.text}}</p><hr>
+      {{#if isOwnReply p}}
+        <button id="deletereply">Delete</button>
+      {{/if}}
+    </div>
   {{/each}}
+>>>>>>> 429c78e1d76713e5c096e6d646272c039d4cee6f
 </template>
