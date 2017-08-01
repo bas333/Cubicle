@@ -126,6 +126,7 @@ Template.home.events ({
               responsiveVoice.speak("Sorry I don't understand, please say that again","UK English Female");
             }else if(data.result.parameters.Category!=""&&data.result.parameters.Keywords==""){
               console.log("condition2");
+              console.log(data.result.parameters.Category);
               $("#category").val(data.result.parameters.Category).trigger("change");
               $("#input").val("");
               console.log("triggered condition2");
@@ -141,6 +142,7 @@ Template.home.events ({
               responsiveVoice.speak("searching by category now! The category is "+selectedcategory,"UK English Female");
             }else if(data.result.parameters.Category==""&&data.result.parameters.Keywords!=""){
               console.log("condition3");
+              console.log(data.result.parameters.Keywords);
               $('#input').val(data.result.parameters.Keywords);
               var selectedcategory = instance.$('#category :selected').text();
               var searchstring = instance.$('#input').val();

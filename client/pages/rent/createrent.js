@@ -747,55 +747,6 @@ Template.ownpostrow.events({
         $("#shownewrentalpic"+num+"_"+rentid).css("display","none");
       }
 
-      // if($("#newrentalpic2_"+rentid).val()){
-      //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-      //     if(event.currentTarget.files[0].size>1048576){
-      //       alert('The file size should be smaller than 1MB');
-      //     }else{
-      //       $('#oldrentalpic2_'+rentid).css('display','none');
-      //       var picreader = new FileReader();
-      //       picreader.onload = function(event){
-      //         var result=event.currentTarget.result;
-      //         // console.log(result);
-      //         console.log("enter show pic2");
-      //         $('#shownewrentalpic2_'+rentid).attr('src',result);
-      //         $('#shownewrentalpic2_'+rentid).css('display','block');
-      //       }
-      //       picreader.readAsDataURL(event.currentTarget.files[0]);
-      //     }
-      //   }else{
-      //     alert('You are only allowed to upload an image file');
-      //   }
-      // }else{
-      //   $("#shownewrentalpic2_"+rentid).attr("src","");
-      //   $("#shownewrentalpic2_"+rentid).css("display","none");
-      // }
-      //
-      //
-      // if($("#newrentalpic3_"+rentid).val()){
-      //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-      //     if(event.currentTarget.files[0].size>1048576){
-      //       alert('The file size should be smaller than 1MB');
-      //     }else{
-      //       $('#oldrentalpic3_'+rentid).css('display','none');
-      //       var picreader = new FileReader();
-      //       picreader.onload = function(event){
-      //         var result=event.currentTarget.result;
-      //         // console.log(result);
-      //         console.log("enter show pic3");
-      //         $('#shownewrentalpic3_'+rentid).attr('src',result);
-      //         $('#shownewrentalpic3_'+rentid).css('display','block');
-      //       }
-      //       picreader.readAsDataURL(event.currentTarget.files[0]);
-      //     }
-      //   }else{
-      //     alert('You are only allowed to upload an image file');
-      //   }
-      // }else{
-      //   $("#shownewrentalpic3_"+rentid).attr("src","");
-      //   $("#shownewrentalpic3_"+rentid).css("display","none");
-      // }
-
   },
   'click #updateRent':function(elt,instance){
     event.preventDefault();
