@@ -27,9 +27,15 @@ tr#productrow.solditem{
   color: rgb(172, 173, 175);
 }
 #showproductpic2{
+  display:none;
   max-width: 300px;
 }
-#showproductpic{
+#showproductpic1{
+  display:none;
+  max-width: 300px;
+}
+#showproductpic3{
+  display:none;
   max-width: 300px;
 }
 #shownewproductpic{

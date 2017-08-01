@@ -8,7 +8,6 @@
 </template>
 
 <template name="showpost">
-<<<<<<< HEAD
   <div class="ui comments">
     <h3 class="ui dividing header"> Comments </h3>
       <div class="comment">
@@ -25,27 +24,23 @@
         </div>
       </div>
     </div>
+    {{> showreply p=p}}
+    {{#if isNotOwnPost p}}
   <form class="ui reply form">
     <div class="field">
-      <textarea></textarea>
+      <textarea id="replypost" placeholder="Reply?"></textarea>
     </div>
-    <div class="ui blue labeled submit icon button">
-      <i class="icon edit"></i> Add Reply
-    </div>
+
   </form>
+  <button id="submitreply">Add Reply</button>
+  {{/if}}
 </div>
-=======
-  <div class="post">
-    <p>{{p.createdAt}}<br>
-    <i class="user icon"></i>{{p.name}}<br>
-    <i class="comment icon"></i>{{p.text}}</p>
-    <hr>
-    <div class="ui form">
-      <div class="field">
-        <textarea id="replypost" placeholder="Reply?"></textarea>
-      </div>
-      <button class="ui button" id="submitreply">Reply</button>
-    </div>
-  </div>
->>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
+</template>
+
+<template name="showreply">
+  {{#each p in replys}}
+    {{p.name}}<br>
+    {{p.createdAt}}<br>
+    {{p.text}}
+  {{/each}}
 </template>
