@@ -169,6 +169,7 @@ Template.addproduct.events({
       }
       console.log(i);
     }
+
   Tracker.autorun((computation)=>{
     console.log(pic_status);
     if(pic_status.get()[1] && pic_status.get()[2] && pic_status.get()[3]){
@@ -185,6 +186,12 @@ Template.addproduct.events({
       computation.stop();
     }
   })
+  $('#productpic1').val("");
+  $('#productpic2').val("");
+  $('#productpic3').val("");
+  $("#showproductpic1").css("display","none");
+  $("#showproductpic2").css("display","none");
+  $("#showproductpic3").css("display","none");
     instance.$('#itemname').val("");
     instance.$('#price').val("");
     instance.$('#condition').val("");
@@ -650,7 +657,7 @@ Template.ownerproduct.events({
       });
     }
   })
-  // $("#closenow_"+product_id).click();
+   $("#closenow_"+product_id).click();
   },
   'click #enableedit'(event, instance){
     const productid=this.p._id;
@@ -700,73 +707,5 @@ Template.ownerproduct.events({
       $("#shownewproductpic"+num+"_"+product_id).attr("src","");
       $("#shownewproductpic"+num+"_"+product_id).css("display","none");
     }
-
-    // if(instance.$("#newproductpic1_"+product_id).val()){
-    //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-    //     if(event.currentTarget.files[0].size>1048576){
-    //       alert('The file size should be smaller than 1MB');
-    //     }else{
-    //       $('#productloadpic1_'+product_id).css('display','none');
-    //       var picreader = new FileReader();
-    //       picreader.onload = function(event){
-    //         var result=event.currentTarget.result;
-    //         instance.$('#shownewproductpic1_'+product_id).attr('src',result);
-    //         instance.$('#shownewproductpic1_'+product_id).css('display','block');
-    //       }
-    //       picreader.readAsDataURL(event.currentTarget.files[0]);
-    //     }
-    //   }else{
-    //     alert('You are only allowed to upload an image file');
-    //   }
-    // }else{
-    //   $("#shownewproductpic1_"+product_id).attr("src","");
-    //   $("#shownewproductpic1_"+product_id).css("display","none");
-    // }
-    //
-    // if(instance.$("#newproductpic2_"+product_id).val()){
-    //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-    //     if(event.currentTarget.files[0].size>1048576){
-    //       alert('The file size should be smaller than 1MB');
-    //     }else{
-    //       $('#productloadpic2_'+product_id).css('display','none');
-    //       var picreader = new FileReader();
-    //       picreader.onload = function(event){
-    //         var result=event.currentTarget.result;
-    //         instance.$('#shownewproductpic2_'+product_id).attr('src',result);
-    //         instance.$('#shownewproductpic2_'+product_id).css('display','block');
-    //       }
-    //       picreader.readAsDataURL(event.currentTarget.files[0]);
-    //
-    //     }
-    //   }else{
-    //     alert('You are only allowed to upload an image file');
-    //   }
-    // }else{
-    //   $("#shownewproductpic2_"+product_id).attr("src","");
-    //   $("#shownewproductpic2_"+product_id).css("display","none");
-    // }
-    //
-    // if(instance.$("#newproductpic3_"+product_id).val()){
-    //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-    //     if(event.currentTarget.files[0].size>1048576){
-    //       alert('The file size should be smaller than 1MB');
-    //     }else{
-    //       $('#productloadpic3_'+product_id).css('display','none');
-    //       var picreader = new FileReader();
-    //       picreader.onload = function(event){
-    //         var result=event.currentTarget.result;
-    //         instance.$('#shownewproductpic3_'+product_id).attr('src',result);
-    //         instance.$('#shownewproductpic3_'+product_id).css('display','block');
-    //       }
-    //       picreader.readAsDataURL(event.currentTarget.files[0]);
-    //
-    //     }
-    //   }else{
-    //     alert('You are only allowed to upload an image file');
-    //   }
-    // }else{
-    //   $("#shownewproductpic3_"+product_id).attr("src","");
-    //   $("#shownewproductpic3_"+product_id).css("display","none");
-    // }
   },
 })
