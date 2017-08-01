@@ -4,26 +4,6 @@
 <template name="showAll">
   <div class="showallproduct">
   <h4 class="ui dividing header">View All Products</h4>
-  <!-- <table class="ui celled padded table">
-    <thead>
-      <tr>
-      <th class="single line"> Product Name</th>
-      <th>Price</th>
-      <th>Condition</th>
-      <th>Category</th>
-      <th>Description</th>
-      <th>Picture</th>
-      <th>Add to Cart</th>
-      </tr>
-    </thead>
-    <tbody>
-    {{#each p in productlist}}
-      <tr>
-        {{>addcart p=p}}
-      </tr>
-    {{/each}}
-  </tbody>
-  </table> -->
   <div class="ui middle aligned divided list">
     {{#each p in productlist}}
       <div class="item">
@@ -36,15 +16,6 @@
 </template>
 <template name="addcart">
 {{>productrow p=p}}
-    <!-- {{#if isOwner p}}
-    <td><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></td>
-  {{else}}
-    {{#if isInCart p}}
-    <td><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></td>
-    {{else}}
-    <td><span id="add" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></td>
-    {{/if}}
-  {{/if}} -->
   <div style="float:right; padding-right:40px;">
     {{#if isOwner p}}
       <!-- <span class="ban icon" aria-hidden="true"></span> -->
