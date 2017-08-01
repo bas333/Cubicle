@@ -28,15 +28,18 @@ tr#productrow.solditem{
 }
 #showproductpic2{
   display:none;
-  max-width: 300px;
+  width: 300px;
+  height: 300px;
 }
 #showproductpic1{
   display:none;
-  max-width: 300px;
+  width: 300px;
+  height: 300px;
 }
 #showproductpic3{
   display:none;
-  max-width: 300px;
+  width: 300px;
+  height: 300px;
 }
 #shownewproductpic{
   max-height:300px;
