@@ -362,7 +362,6 @@ Template.addproduct.events({
             }else{
             console.log("---");
             console.log(data);
-            console.log($("#category").val());
             var isAdded=false;
             if($("#category").val()==null){
               console.log("into category");

@@ -60,21 +60,15 @@
 </template>
 
 <template name="productrow">
-    <!-- <td>
-      <h2 class="ui left aligned header"><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
-    </td>
-    <td>{{p.price}}</td>
-    <td>{{p.condition}}</td>
-    <td>{{p.category}}</td>
-    <td>{{p.description}}</td>
-    {{#if hasPic p}}
-    <td><img src="data:image/jpeg;base64, {{p.pic}}" style="display:block; max-height:240px;max-width:240px;"></td>
-    {{else}}
-    <td></td>
-    {{/if}} -->
 
-      {{#if hasPic p}}
-      <img class="ui image" src="data:image/jpeg;base64, {{p.pic}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
+      {{#if hasPic1 p}}
+      <img class="ui image" src="data:image/jpeg;base64, {{p.pic1}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
+      {{/if}}
+      {{#if hasPic2 p}}
+      <img class="ui image" src="data:image/jpeg;base64, {{p.pic2}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
+      {{/if}}
+      {{#if hasPic3 p}}
+      <img class="ui image" src="data:image/jpeg;base64, {{p.pic3}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
       {{/if}}
       <div class="content" style="float:left; text-align:left; color:rgb(159, 159, 160);">
         <h2><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
