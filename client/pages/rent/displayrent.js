@@ -6,8 +6,8 @@ Template.rentrow.helpers({
   isOwner() {console.dir(this);
     return this.rent.owner == Meteor.userId();
   },
-  hasPic(product){
-    if(product.pic!=undefined){
+  hasPic1(product){
+    if(product.pic1!=undefined){
       return true;
     }else{
       return false;
