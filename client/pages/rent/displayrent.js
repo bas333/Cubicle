@@ -12,6 +12,20 @@ Template.rentrow.helpers({
     }else{
       return false;
     }
+  },
+  hasPic2(product){
+    if(product.pic2!=undefined){
+      return true;
+    }else{
+      return false;
+    }
+  },
+  hasPic3(product){
+    if(product.pic3!=undefined){
+      return true;
+    }else{
+      return false;
+    }
   }
 })
 
