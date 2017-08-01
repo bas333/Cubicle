@@ -13,12 +13,12 @@
       <div class="comment">
         <div class="content">
           <a class="author"><p>{{p.name}}</p></a>
-        <div class="metadata">
-          <span class="date"><p>{{p.createdAt}}</p></span>
-        </div>
-        <div class="text">
-          {{p.text}}
-        </div>
+          <div class="metadata">
+            <span class="date"><p>{{p.createdAt}}</p></span>
+          </div>
+          <div class="text">
+            {{p.text}}
+          </div>
         <div class="actions">
           <a class="reply">Reply</a>
         </div>
@@ -26,21 +26,27 @@
     </div>
     {{> showreply p=p}}
     {{#if isNotOwnPost p}}
-  <form class="ui reply form">
-    <div class="field">
-      <textarea id="replypost" placeholder="Reply?"></textarea>
-    </div>
-
-  </form>
-  <button id="submitreply">Add Reply</button>
-  {{/if}}
-</div>
+    <form class="ui reply form">
+      <div class="field">
+        <textarea id="replypost" placeholder="Reply?"></textarea>
+      </div>
+    </form>
+    <button id="submitreply">Add Reply</button>
+    {{/if}}
+  </div>
 </template>
 
 <template name="showreply">
   {{#each p in replys}}
-    {{p.name}}<br>
-    {{p.createdAt}}<br>
-    {{p.text}}
+    <div class="field">
+      <p>{{p.name}}</p><br>
+      <div class="metadata">
+        <span class="date"><p>{{p.createdAt}}</p><br></span>
+      </div>
+      <p>{{p.text}}</p><hr>
+      {{#if isOwnReply p}}
+        <button id="deletereply">Delete</button>
+      {{/if}}
+    </div>
   {{/each}}
 </template>

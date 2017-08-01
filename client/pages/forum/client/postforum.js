@@ -6,6 +6,11 @@ Template.postforum.helpers({
 Template.showreply.helpers({
   replys(){
     return Reply.find({replyId:this.p._id});
+  },
+  isOwnReply(){
+    if(this.p.owner==Meteor.userId()){
+      return true;
+    }
   }
 })
 Template.showpost.helpers({
@@ -30,5 +35,11 @@ Template.showpost.events({
     };
     console.log(reply);
     Meteor.call('reply.insert',reply);
+  }
+})
+
+Template.showreply.events({
+  'click #deletereply':function(elt,instance){
+    Meteor.call('reply.delete',this.p);
   }
 })
