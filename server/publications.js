@@ -41,3 +41,6 @@ Meteor.publish('product',function(){
 Meteor.publish('chat',function(){
   return Chat.find();
 })
+Meteor.publish('reply',function(){
+  return Reply.find();
+})

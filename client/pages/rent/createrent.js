@@ -53,8 +53,6 @@ Template.addrent.events({
 
     const template = Template.instance();
     for(var i=1; i<=3; i++){
-      console.log("enter"+i);
-      console.log($('#rentalpic'+i).val());
       if($('#rentalpic'+i).val()){
         if($('#rentalpic'+i)[0].files&&$('#rentalpic'+i)[0].files[0] && ($('#rentalpic'+i)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
           if($('#rentalpic'+i)[0].files[0].size>1048576){
@@ -64,12 +62,9 @@ Template.addrent.events({
             (function(i){
               var reader=new FileReader();
               reader.onload=function(){
-                console.log(i);
                 var dataURL = reader.result;
                 imageBase64Form=dataURL.split(',')[1];
-                console.log(i);
                 rentpost["pic"+i]=imageBase64Form;
-                console.log(i);
                 const current_status = template.pic_status.get();
                 current_status[i] = "done";
                 template.pic_status.set(current_status);
@@ -89,13 +84,10 @@ Template.addrent.events({
         current_status[i] = "done";
         template.pic_status.set(current_status);
       }
-      console.log(rentpost);
     }
 
     Tracker.autorun((computation)=>{
-      console.log(pic_status);
       if(pic_status.get()[1] && pic_status.get()[2] && pic_status.get()[3]){
-        console.log("hey");
         Meteor.call('rent.insert',rentpost,
             (err, res) => {
               if (err) {
@@ -128,7 +120,6 @@ Template.addrent.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-            //console.log(result);
             $('#showrentalpic1').attr('src',result);
             $('#showrentalpic1').css('display','block');
           }
@@ -154,7 +145,6 @@ Template.addrent.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-        //    console.log(result);
             $('#showrentalpic2').attr('src',result);
             $('#showrentalpic2').css('display','block');
           }
@@ -180,7 +170,6 @@ Template.addrent.events({
           //when loading the input file
           picreader.onload = function(event){
             var result=event.currentTarget.result;
-            //console.log(result);
             $('#showrentalpic3').attr('src',result);
             $('#showrentalpic3').css('display','block');
           }
@@ -266,16 +255,6 @@ Template.addrent.events({
                     }
                   }
               );
-              console.log("print fields");
-              console.log(location);
-              console.log(street);
-              console.log(time);
-              console.log(roomsize);
-              console.log(facilities);
-              console.log(detailed);
-              console.log(roommate);
-              console.log(price);
-              console.log(contact);
 
               console.log("insert");
               instance.$('#location').val("")==null;
@@ -329,15 +308,6 @@ Template.addrent.events({
               console.log("qqq");
 
               console.log("print fields");
-              console.log(location);
-              console.log(street);
-              console.log(time);
-              console.log(roomsize);
-              console.log(facilities);
-              console.log(detailed);
-              console.log(roommate);
-              console.log(price);
-              console.log(contact);
 
               console.log("aaa");
               recognition.stop();
@@ -750,7 +720,6 @@ Template.ownpostrow.events({
   },
   'click #updateRent':function(elt,instance){
     event.preventDefault();
-    console.log("enter update");
     const rentid = this.rent._id;
     const newLocation=instance.$("#newlocation_"+rentid+" :selected").val();
     const newStreet=instance.$("#newstreet_"+rentid).val();
@@ -780,17 +749,13 @@ Template.ownpostrow.events({
     const template=Template.instance();
     for(var i=1;i<=3;i++){
       if($('#newrentalpic'+i+"_"+rentid).val()){
-        console.log("enter 1."+i);
         if(($('#newrentalpic'+i+"_"+rentid)[0].files&&$('#newrentalpic'+i+"_"+rentid)[0].files[0]) && ($('#newrentalpic'+i+"_"+rentid)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
-          console.log("eneter 2."+i);
           if(instance.$('#newrentalpic'+i+"_"+rentid)[0].files[0].size>1048576){
             alert('The file size should be smaller than 1MB');
             return;
           }else{
-            console.log("enter 3."+i);
             var imagefile=$('#newrentalpic'+i+"_"+rentid)[0].files[0];
               (function(i, imagefile){
-                console.log(imagefile);
                 var reader=new FileReader();
                 reader.onload=function(){
                 var dataURL = reader.result;
@@ -816,21 +781,15 @@ Template.ownpostrow.events({
       const now=template.pic_status.get();
       now[i]="finished";
       template.pic_status.set(now);
-        console.log(template.pic_status);
     }
   }
   Tracker.autorun((computation)=>{
-    console.log(pic_status);
     if(pic_status.get()[1] && pic_status.get()[2] && pic_status.get()[3]){
-      console.log("rent update");
-      console.log(newRent)
-      console.log(rentid)
       Meteor.call('rent.update',rentid,newRent, function(err){
         if(err){
           window.alert(err);
           return;
         }
-        console.log("updated");
         pic_status.set([]);
         computation.stop();
       });

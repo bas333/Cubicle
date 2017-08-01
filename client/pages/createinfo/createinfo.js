@@ -26,7 +26,6 @@ Template.showproduct.helpers({
   productlist() {
     return Product.find()},
   isOwner(product){
-    console.log(product.owner);
     return (product.owner == Meteor.userId())}
 })
 Template.addproduct.onRendered(function(){
@@ -167,13 +166,10 @@ Template.addproduct.events({
         current_status[i] = "finished";
         template.pic_status.set(current_status);
       }
-      console.log(i);
     }
 
   Tracker.autorun((computation)=>{
-    console.log(pic_status);
     if(pic_status.get()[1] && pic_status.get()[2] && pic_status.get()[3]){
-      console.log(productinfo);
       Meteor.call('product.insert',productinfo,
         (err, res) => {
           if (err) {
@@ -253,12 +249,6 @@ Template.addproduct.events({
                   buyer:buyer,
                   owner:Meteor.userId()
                 }
-                console.log("print fields");
-                console.log(itemname);
-                console.log(price);
-                console.log(category);
-                console.log(description);
-                console.log(condition);
                 console.log("insert");
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
@@ -510,29 +500,20 @@ Template.productrow.helpers({
   },
     hasPic1(product){
       if(product.pic!=undefined){
-        console.log("true 1");
-        console.log(product.pic);
         return true;
       }else{
-        console.log("false 1");
         return false;
       }
     },
     hasPic2(product){
       if(product.pic2!=undefined){
-        console.log("true 2");
-        console.log(product);
         return true;
       }else{
-        console.log("false 2");
         return false;
       }
     },
     hasPic3(product){
       if(product.pic3!=undefined){
-        console.log("true 3");
-        console.log(product.pic3);
-
         return true;
       }else{
         return false;
@@ -643,14 +624,12 @@ Template.ownerproduct.events({
     }
   }
   Tracker.autorun((computation)=>{
-    console.log(pic_status);
     if(pic_status.get()[1] && pic_status.get()[2] && pic_status.get()[3]){
       Meteor.call('product.update',product_id,newproductinfo,function(err){
         if (err){
           window.alert("Unable to update product");
           return;
         }
-        console.log("updated");
         pic_status.set([]);
         computation.stop();
       });
@@ -677,18 +656,15 @@ Template.ownerproduct.events({
   },
   'change .newproductpic':function(event,instance){
     const product_id=this.p._id;
-    console.log(event.currentTarget.id);
     const picid=event.currentTarget.id
     if($("#"+picid).val()){
       if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
         if(event.currentTarget.files[0].size>1048576){
           alert('The file size should be smaller than 1MB');
         }else{
-          console.log("enter change");
           var str=picid;
           var substr1=str.split("newproductpic")[1];
           var num=substr1.split("_"+product_id)[0];
-          console.log(num);
           $('#productloadpic'+num+'_'+product_id).css('display','none');
               var picreader = new FileReader();
               picreader.onload = function(event){
