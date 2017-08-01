@@ -671,74 +671,102 @@ Template.ownerproduct.events({
   },
   'change .newproductpic':function(event,instance){
     const product_id=this.p._id;
-
-    if(instance.$("#newproductpic1_"+product_id).val()){
+    console.log(event.currentTarget.id);
+    const picid=event.currentTarget.id
+    if($("#"+picid).val()){
       if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-        if(event.currentTarget.files[0].size>1048576){//file size out of range
+        if(event.currentTarget.files[0].size>1048576){
           alert('The file size should be smaller than 1MB');
         }else{
-          $('#productloadpic1_'+product_id).css('display','none');
-          var picreader = new FileReader();
-          picreader.onload = function(event){
-            var result=event.currentTarget.result;
-            instance.$('#shownewproductpic1_'+product_id).attr('src',result);
-            instance.$('#shownewproductpic1_'+product_id).css('display','block');
-          }
-          picreader.readAsDataURL(event.currentTarget.files[0]);
-
+          console.log("enter change");
+          var str=picid;
+          var substr1=str.split("newproductpic")[1];
+          var num=substr1.split("_"+product_id)[0];
+          console.log(num);
+          $('#productloadpic'+num+'_'+product_id).css('display','none');
+              var picreader = new FileReader();
+              picreader.onload = function(event){
+                 var result=event.currentTarget.result;
+                 $('#shownewproductpic'+num+'_'+product_id).attr('src',result);
+                 $('#shownewproductpic'+num+'_'+product_id).css('display','block');
+               }
+              picreader.readAsDataURL(event.currentTarget.files[0]);
         }
+
       }else{
         alert('You are only allowed to upload an image file');
       }
     }else{
-      $("#shownewproductpic1_"+product_id).attr("src","");
-      $("#shownewproductpic1_"+product_id).css("display","none");
+      $("#shownewproductpic"+num+"_"+product_id).attr("src","");
+      $("#shownewproductpic"+num+"_"+product_id).css("display","none");
     }
 
-    if(instance.$("#newproductpic2_"+product_id).val()){
-      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-        if(event.currentTarget.files[0].size>1048576){//file size out of range
-          alert('The file size should be smaller than 1MB');
-        }else{
-          $('#productloadpic2_'+product_id).css('display','none');
-          var picreader = new FileReader();
-          picreader.onload = function(event){
-            var result=event.currentTarget.result;
-            instance.$('#shownewproductpic2_'+product_id).attr('src',result);
-            instance.$('#shownewproductpic2_'+product_id).css('display','block');
-          }
-          picreader.readAsDataURL(event.currentTarget.files[0]);
-
-        }
-      }else{
-        alert('You are only allowed to upload an image file');
-      }
-    }else{
-      $("#shownewproductpic2_"+product_id).attr("src","");
-      $("#shownewproductpic2_"+product_id).css("display","none");
-    }
-
-    if(instance.$("#newproductpic3_"+product_id).val()){
-      if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
-        if(event.currentTarget.files[0].size>1048576){//file size out of range
-          alert('The file size should be smaller than 1MB');
-        }else{
-          $('#productloadpic3_'+product_id).css('display','none');
-          var picreader = new FileReader();
-          picreader.onload = function(event){
-            var result=event.currentTarget.result;
-            instance.$('#shownewproductpic3_'+product_id).attr('src',result);
-            instance.$('#shownewproductpic3_'+product_id).css('display','block');
-          }
-          picreader.readAsDataURL(event.currentTarget.files[0]);
-
-        }
-      }else{
-        alert('You are only allowed to upload an image file');
-      }
-    }else{
-      $("#shownewproductpic3_"+product_id).attr("src","");
-      $("#shownewproductpic3_"+product_id).css("display","none");
-    }
+    // if(instance.$("#newproductpic1_"+product_id).val()){
+    //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+    //     if(event.currentTarget.files[0].size>1048576){
+    //       alert('The file size should be smaller than 1MB');
+    //     }else{
+    //       $('#productloadpic1_'+product_id).css('display','none');
+    //       var picreader = new FileReader();
+    //       picreader.onload = function(event){
+    //         var result=event.currentTarget.result;
+    //         instance.$('#shownewproductpic1_'+product_id).attr('src',result);
+    //         instance.$('#shownewproductpic1_'+product_id).css('display','block');
+    //       }
+    //       picreader.readAsDataURL(event.currentTarget.files[0]);
+    //     }
+    //   }else{
+    //     alert('You are only allowed to upload an image file');
+    //   }
+    // }else{
+    //   $("#shownewproductpic1_"+product_id).attr("src","");
+    //   $("#shownewproductpic1_"+product_id).css("display","none");
+    // }
+    //
+    // if(instance.$("#newproductpic2_"+product_id).val()){
+    //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+    //     if(event.currentTarget.files[0].size>1048576){
+    //       alert('The file size should be smaller than 1MB');
+    //     }else{
+    //       $('#productloadpic2_'+product_id).css('display','none');
+    //       var picreader = new FileReader();
+    //       picreader.onload = function(event){
+    //         var result=event.currentTarget.result;
+    //         instance.$('#shownewproductpic2_'+product_id).attr('src',result);
+    //         instance.$('#shownewproductpic2_'+product_id).css('display','block');
+    //       }
+    //       picreader.readAsDataURL(event.currentTarget.files[0]);
+    //
+    //     }
+    //   }else{
+    //     alert('You are only allowed to upload an image file');
+    //   }
+    // }else{
+    //   $("#shownewproductpic2_"+product_id).attr("src","");
+    //   $("#shownewproductpic2_"+product_id).css("display","none");
+    // }
+    //
+    // if(instance.$("#newproductpic3_"+product_id).val()){
+    //   if(event.currentTarget.files&&event.currentTarget.files[0]&&event.currentTarget.files[0].type.match(/(jpg|png|jpeg|gif)$/)){
+    //     if(event.currentTarget.files[0].size>1048576){
+    //       alert('The file size should be smaller than 1MB');
+    //     }else{
+    //       $('#productloadpic3_'+product_id).css('display','none');
+    //       var picreader = new FileReader();
+    //       picreader.onload = function(event){
+    //         var result=event.currentTarget.result;
+    //         instance.$('#shownewproductpic3_'+product_id).attr('src',result);
+    //         instance.$('#shownewproductpic3_'+product_id).css('display','block');
+    //       }
+    //       picreader.readAsDataURL(event.currentTarget.files[0]);
+    //
+    //     }
+    //   }else{
+    //     alert('You are only allowed to upload an image file');
+    //   }
+    // }else{
+    //   $("#shownewproductpic3_"+product_id).attr("src","");
+    //   $("#shownewproductpic3_"+product_id).css("display","none");
+    // }
   },
 })
