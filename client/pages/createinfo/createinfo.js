@@ -58,10 +58,7 @@ Template.addproduct.events({
   },
   'click #addproduct'(elt,instance){
     const itemname = instance.$('#itemname').val();
-<<<<<<< HEAD
-=======
     const delivery = instance.$('input[name="delivery"]:checked').val();
->>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     const condition=instance.$('#condition :selected').val();
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();

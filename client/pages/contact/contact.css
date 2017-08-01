@@ -1,11 +1,16 @@
 .contactinfo{
-  padding:5em;
+  float:left;
 }
 
 .shareopinion {
-  padding-left: 5em;
-  padding-right: 5em;
+  float:right;
 }
 #submitopinion{
   margin-top: 1em;
+}
+
+.contact-container{
+  padding-top:5em;
+  padding-left: 10em;
+  padding-right:30em;
 }

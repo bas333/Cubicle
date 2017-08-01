@@ -8,13 +8,8 @@ Template.addrent.onRendered(function(){
 
 
 Template.addrent.events({
-<<<<<<< HEAD
-  'click #submitrent'(elt,instance){
-    event.preventDefault();
-=======
   'click #submitrent':function (elt,instance){
     elt.preventDefault();
->>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     const location = instance.$('#location :selected').val();
     const street = instance.$('#streetaddress').val();
     const startdate = instance.$('#createdatestart :selected').val();
@@ -31,17 +26,13 @@ Template.addrent.events({
     const detailed = instance.$('#detaileddescription').val();
     const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#priceM').val();
-<<<<<<< HEAD
-    const contact = instance.$('#contactinformation').val();
-    const pic=instance.$('#rentalpic')[0].files[0];
-=======
+
     const contact = instance.$('#contact-information').val();
     const pic1=instance.$('#rentalpic1')[0].files[0];
     const pic2=instance.$('#rentalpic2')[0].files[0];
     const pic3=instance.$('#rentalpic3')[0].files[0];
     const pic_status = Template.instance().pic_status;
 
->>>>>>> f8f9566e5f315092613211fb85b39b1994d71adb
     console.log("adding " + location);
     var rentpost =
     { location:location,
