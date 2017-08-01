@@ -3,12 +3,17 @@ Template.postforum.helpers({
     return Forum.find();
   },
 })
+Template.showreply.helpers({
+  replys(){
+    return Reply.find({replyId:this.p._id});
+  }
+})
 Template.showpost.helpers({
   isNotOwnPost(){
     if(this.p.owner!=Meteor.userId()){
       return true;
     }
-  }
+  },
 })
 Template.showpost.events({
   'click #submitreply':function(elt,instance){
