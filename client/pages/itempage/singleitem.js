@@ -1,16 +1,3 @@
-if(Meteor.isClient){
-    Template.singleitem.onCreated(function(){
-      Meteor.subscribe('product');
-    })
-    Template.singleitem.onCreated(function(){
-      Meteor.subscribe('chat');
-    })
-    Template.singleitem.onCreated(function(){
-      Meteor.subscribe('allusers');
-    })
-}
-
-
 Template.singleitem.events({
   'click #add'(elt,instance){
     if (AllUsers.findOne({owner:Meteor.userId()})!=undefined){

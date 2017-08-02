@@ -45,8 +45,12 @@ Template.makepost.events({
       text: text
     };
     console.log(post);
-    Meteor.call('forum.insert',post);
-    alert("Post added!");
+    if (Meteor.users.findOne(Meteor.userId())) {
+      Meteor.call('forum.insert',post);
+      alert("Post added!");
+    } else {
+      alert("You have to log in to post any request");
+    }
     instance.$("#forumpost").val("");
   },
 
