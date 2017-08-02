@@ -1,25 +1,25 @@
 <template name="main">
 		 <div class="ui menu" id="navigation-bar" style="min-height:50px; font-size:16px;">
-	   		<a class="item" href="{{pathFor 'home'}}">
+	   		<a class="item" href="{{pathFor 'home'}}" style="display:block;">
 	     		Home
 	   		</a>
-		 		<a class="item" href="{{pathFor 'about'}}">
+		 		<a class="item" href="{{pathFor 'about'}}" style="display:block;">
 	     		About
 	   		</a>
 		 		<div class="ui simple dropdown item">
 	 	 			Rental Posts
 	 			<i class="dropdown icon"></i>
 	 			  <div class="menu">
-		 			<div class="item"><a href="{{pathFor 'displayrent'}}">View all Rental Posts</a></div>
-		 			<div class="item"><a href="{{pathFor 'createrent'}}">Create a Rental Post</a></div>
+		 			<div class="item" style="display:block;"><a href="{{pathFor 'displayrent'}}" style="display:block;">View all Rental Posts</a></div>
+		 			<div class="item"><a href="{{pathFor 'createrent'}}" style="display:block;">Create a Rental Post</a></div>
 	 			</div>
 			</div>
 	 		<div class="ui simple dropdown item">
 					Product Posts
 				<i class="dropdown icon"></i>
 				<div class="menu">
-					<div class="item"><a href="{{pathFor 'allproducts'}}">View all Products</a></div>
-	 			  <div class="item"><a href="{{pathFor 'createinfo'}}">Create a Product Post</a></div>
+					<div class="item"><a href="{{pathFor 'allproducts'}}" style="display:block;">View all Products</a></div>
+	 			  <div class="item"><a href="{{pathFor 'createinfo'}}" style="display:block;">Create a Product Post</a></div>
  		    </div>
 			</div>
 
@@ -27,8 +27,8 @@
  			 Requesting
  			 <i class="dropdown icon"></i>
  			 <div class="menu">
- 			 		<div class="item"><a href="{{pathFor 'forum'}}">Create a Requesting Post</a></div>
- 			 		<div class="item"><a href="{{pathFor 'postforum'}}">View all Requests</a></div>
+ 			 		<div class="item"><a href="{{pathFor 'forum'}}" style="display:block;">Create a Request Post</a></div>
+ 			 		<div class="item"><a href="{{pathFor 'postforum'}}" style="display:block;">View all Requests</a></div>
  		 	 </div>
  		 </div>
 
@@ -37,13 +37,13 @@
 				My Cubicle
 				<i class="dropdown icon"></i>
 				<div class="menu">
-					<div class="item"><a href="{{pathFor 'users'}}">My Profile</a></div>
-					<div class="item"><a href="{{pathFor 'chatroom'}}">Chat</a></div>
-					<div class="item"><a href="{{pathFor 'salehistory'}}">Sold History</a></div>
+					<div class="item"><a href="{{pathFor 'users'}}" style="display:block;">My Profile</a></div>
+					<div class="item"><a href="{{pathFor 'chatroom'}}" style="display:block;">Chat</a></div>
+					<div class="item"><a href="{{pathFor 'salehistory'}}" style="display:block;">Sold History</a></div>
 				</div>
 			 </div>
 
-	   <a class="item" href="{{pathFor 'contact'}}">
+	   <a class="item" href="{{pathFor 'contact'}}" style="display:block;">
 	     Contact Us
 	   </a>
 		 <div class="right menu">
