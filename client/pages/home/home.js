@@ -46,15 +46,11 @@ Template.home.events ({
         console.log("hi"+rentcity);
         var rentprice = $('#searchpriceM').val();
         console.log(rentprice);
-        var rentdatestart = $('#date-start :selected').val();
-        var rentmonthstart = $('#searchavailable-start :selected').val();
-        var rentyearstart = $('#search-start-year').val();
-        var rentdateend = $('#date-end :selected').val();
-        var rentmonthend = $('#searchavailable-end :selected').val();
-        var rentyearend = $('#search-end-year').val();
-        console.log("startyear" + rentyearstart + "rentmonthstart" + rentmonthstart);
+        var rentstart = $('#search-date-start').val();
+        var rentend = $('#search-date-end').val();
+        console.log("here?");
         var rentfacility = $('#searchfacilities').val();
-        Router.go("rentsearch", {}, {query:'location='+rentcity+'&price='+rentprice+'&rentstart' + rentdatestart + '&rentmonthstart='+rentmonthstart+ '&rentyearstart=' + rentyearstart + '&rentdateend'+rentdateend + '&rentmonthend='+rentmonthend+ '&rentyearend' +rentyearend + '&facilities='+rentfacility});
+        Router.go("rentsearch", {}, {query:'location='+rentcity+'&price='+rentprice+'&rentstart=' + rentstart +'&rentend='+rentend+ '&facilities='+rentfacility});
       }
     })
   },

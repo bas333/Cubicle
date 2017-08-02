@@ -17,9 +17,14 @@ Meteor.publish('forum',function(){
   return Forum.find();
 })
 
-Meteor.publish('rent_search',function(searchcriteria){
+Meteor.publish('rent_search',function(location,price,rentstart,rentend,facilities){
   var faci = new RegExp(facilities, "i");
-  return Rent.find({location:location, price:{$lt:price}, start:start, end:end, facilities:{$regex:faci}});
+  var startdate = new Date(rentstart);
+  var isostart = startdate.toISOString();
+  var enddate = new Date(rentend);
+  var isoend = startdate.toISOString();
+  console.log(Rent.find({location:location,price:{$lte:price},startdate:{$lte:isostart}}).fetch());
+  return Rent.find({location:location, price:{$lte:price}, startdate:{$lte:isostart}, enddate:{$gte:isoend}, facilities:{$regex:faci}});
 })
 
 Meteor.publish('info_allproducts', function(keywords){

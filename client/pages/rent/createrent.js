@@ -12,15 +12,9 @@ Template.addrent.events({
     elt.preventDefault();
     const location = instance.$('#location :selected').val();
     const street = instance.$('#streetaddress').val();
-    const startdate = instance.$('#createdatestart :selected').val();
-    console.log("startdate" + startdate);
-    const startmonth = instance.$('#timestart :selected').val();
-    console.log("startmonth" + startmonth);
-    const startyear = instance.$('#monthstartyear').val();
-    console.log("startyear" + startyear);
-    const enddate = instance.$('#createdateend :selected').val();
-    const endmonth = instance.$('#timeend :selected').val();
-    const endyear = instance.$('#monthendyear').val();
+    const startdate = instance.$('#start-datepicker').val();
+    console.log("startdate "+startdate);
+    const enddate = instance.$('#end-datepicker').val();
     const roomsize = instance.$('#roomsize').val();
     const facilities = instance.$('#facilities').val();
     const detailed = instance.$('#detaileddescription').val();
@@ -35,12 +29,8 @@ Template.addrent.events({
     var rentpost =
     { location:location,
       street:street,
-      startdate:startdate,
-      startmonth:startmonth,
-      startyear:startyear,
-      enddate:enddate,
-      endmonth:endmonth,
-      endyear:endyear,
+      startdate:new Date(startdate).toISOString(),
+      enddate:new Date(enddate).toISOString(),
       roomsize:roomsize,
       facilities:facilities,
       detailed:detailed,
