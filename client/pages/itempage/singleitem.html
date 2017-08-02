@@ -7,10 +7,12 @@
       <div>
         {{#if isOwner}}
           <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>You are the owner</button>
-        {{else if isInCart}}
-          <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>This product is in cart</button>
         {{else}}
-          <button class="ui button" id="add"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
+          {{#if isInCart}}
+            <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>This product is in cart</button>
+          {{else}}
+            <button class="ui button" id="add"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
+          {{/if}}
           <hr>
           <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button>
         {{/if}}
@@ -22,12 +24,30 @@
         <h1>{{itemname}}</h1>
         <h3>{{category}}</h3>
         <h4 style="margin-top:0rem; margin-bottom:3rem;">by {{sellername}}</h4><br>
+<<<<<<< HEAD
+=======
+        <div class="image">
+          {{#if hasPic1}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic1}}" style="display:inline-block; max-height:600px;max-width:600px; padding-right:10px;">
+          {{/if}}
+          <br>
+          {{#if hasPic2}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic2}}" style="display:inline-block; max-height:600px;max-width:600px; padding-right:10px;">
+          {{/if}}
+          <br>
+          {{#if hasPic3}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic3}}" style="display:inline-block; max-height:600px;max-width:600px; padding-right:10px;">
+          {{/if}}
+          <br>
+        </div>
+>>>>>>> e5e22fc3b130e89dd47249f0829af8d0f1790daa
         <h3>Condition</h3>
         <p>{{condition}}</p>
         <h3>Delivery</h3>
         <p>{{delivery}}</p>
         <h3>Description</h3>
         <p>{{description}}</p>
+<<<<<<< HEAD
         <div class="image">
           {{#if hasPic1}}
           <img class="ui image" src="data:image/jpeg;base64, {{pic1}}" style="display:inline-block; height:500px;width:500px; padding-right:10px;">
@@ -39,6 +59,9 @@
           <img class="ui image" src="data:image/jpeg;base64, {{pic3}}" style="display:inline-block; height:500px;width:500px; padding-right:10px;">
           {{/if}}
         </div>
+=======
+        <hr>
+>>>>>>> e5e22fc3b130e89dd47249f0829af8d0f1790daa
       </div>
       </div>
     <hr>
