@@ -225,7 +225,7 @@
 <template name="ownpostrow">
   {{#if isOwner rent}}
   <td>{{rent.location}}</td>
-  <td>{{rent.street}}</td>
+  <td><a href="/rentpost/{{rent._id}}">{{rent.street}}</a></td>
   <td>{{rent.startdate}}/{{rent.start}}/{{rent.startyear}} - {{rent.enddate}}/{{rent.end}}/{{rent.endyear}}</td>
   <td>{{rent.roomsize}}</td>
   <td>{{rent.facilities}}</td>
@@ -233,21 +233,18 @@
   <td>{{rent.roommate}}</td>
   <td>{{rent.price}}</td>
   <td>{{rent.contact}}</td>
-  <td>
+  <td width="330px">
         {{#if hasPic1 rent}}
-        <img src="data:image/jpeg;base64, {{rent.pic1}}" style="display:block; height:300px;width:300px;">
-
+        <img src="data:image/jpeg;base64, {{rent.pic1}}" style="display:inline-block; height:100px; width:100px;" align="left">
         {{/if}}
-
-
-
         {{#if hasPic2 rent}}
-        <img src="data:image/jpeg;base64, {{rent.pic2}}" style="display:block; height:300px;width:300px;">
+        <img src="data:image/jpeg;base64, {{rent.pic2}}" style="display:inline-block; height:100px; width:100px;" align="center">
         {{/if}}
-
+        <span>
         {{#if hasPic3 rent}}
-        <img src="data:image/jpeg;base64, {{rent.pic3}}" style="display:block; height:300px;width:300px;">
+        <img src="data:image/jpeg;base64, {{rent.pic3}}" style="display:inline-block; height:100px; width:100px;">
         {{/if}}
+      </span>
 </td>
   <!-- Button trigger modal -->
   <td><button type="button" id="editRentPost" class="ui button" data-toggle="modal" data-target="#myModal_{{rent._id}}">Edit</button>
