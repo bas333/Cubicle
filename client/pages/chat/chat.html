@@ -1,8 +1,10 @@
 <template name="chatroom">
-
-    <h1 style="padding:5em;">Chat History</h1>
+  <div class="ui grid">
+    <div class="four wide column" style="padding:2.8em;">
+      <h1 class="ui dividing header" style="padding-top:2em; padding-left:2.8em; padding-bot:2em; display:block;">Chat History</h1>
+    </div>
+  </div>
     {{#each c in mychatlist}}
-
       {{> showchat c=c dict=dict}}
       <br>
     {{/each}}
