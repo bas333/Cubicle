@@ -72,17 +72,17 @@ Template.singleitem.helpers({
     return user.username;
   },
   hasPic1(){
-    if(pic1!=undefined){
+    if(this.pic1!=undefined){
       return true;
     }
   },
   hasPic2(){
-    if(pic2!=undefined){
+    if(this.pic2!=undefined){
       return true;
     }
   },
   hasPic3(){
-    if(pic3!=undefined){
+    if(this.pic3!=undefined){
       return true;
     }
   },
