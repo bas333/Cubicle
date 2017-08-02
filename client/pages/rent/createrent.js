@@ -26,19 +26,11 @@ Template.addrent.events({
     const detailed = instance.$('#detaileddescription').val();
     const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#priceM').val();
-<<<<<<< HEAD
-
-=======
->>>>>>> 429c78e1d76713e5c096e6d646272c039d4cee6f
     const contact = instance.$('#contact-information').val();
     const pic1=instance.$('#rentalpic1')[0].files[0];
     const pic2=instance.$('#rentalpic2')[0].files[0];
     const pic3=instance.$('#rentalpic3')[0].files[0];
     const pic_status = Template.instance().pic_status;
-<<<<<<< HEAD
-
-=======
->>>>>>> 429c78e1d76713e5c096e6d646272c039d4cee6f
     console.log("adding " + location);
     var rentpost =
     { location:location,

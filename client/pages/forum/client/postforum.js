@@ -2,16 +2,7 @@ Template.postforum.helpers({
   requests(){
     return Forum.find();
   },
-})
-Template.showreply.helpers({
-  replys(){
-    return Reply.find({replyId:this.p._id});
-  },
-  isOwnReply(){
-    if(this.p.owner==Meteor.userId()){
-      return true;
-    }
-  }
+
 })
 Template.showpost.helpers({
   isNotOwnPost(){
@@ -19,12 +10,20 @@ Template.showpost.helpers({
       return true;
     }
   },
+  replys(){
+    return Reply.find({replyId:this.p._id});
+  },
+  isOwnReply(r){
+    if(r.owner==Meteor.userId()){
+      return true;
+    }
+  }
 })
 Template.showpost.events({
-  'click #submitreply':function(elt,instance){
+  'click .submitreply':function(elt,instance){
     var name = AllUsers.findOne({owner:Meteor.userId()}).username;
     var now = new Date();
-    var text = instance.$("#replypost").val();
+    var text = instance.$("#replypost_"+this.p._id).val();
     var replyId=this.p._id;
     var reply = {
       owner:Meteor.userId(),
@@ -35,11 +34,13 @@ Template.showpost.events({
     };
     console.log(reply);
     Meteor.call('reply.insert',reply);
-  }
-})
-
-Template.showreply.events({
-  'click #deletereply':function(elt,instance){
-    Meteor.call('reply.delete',this.p);
+    instance.$("#replypost_"+this.p._id).val("")
+  },
+  'click .deletereply':function(elt,instance){
+    console.log("delete");
+    console.log(elt.currentTarget.id);
+    var str=elt.currentTarget.id;
+    var id=str.split("deletereply_")[1];
+    Meteor.call('reply.delete',id);
   }
 })
