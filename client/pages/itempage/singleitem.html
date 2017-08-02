@@ -1,5 +1,5 @@
 <template name="singleitem">
-  <div class="main ui container" style="padding-top:20px; padding-left:0px;">
+  <div class="main ui container" style="padding:5em; ">
     <div class="ui dividing" style="float:right; border-left-width:1px; border-left-style:solid; border-left-color:rgba(34, 36, 38, 0.15);">
       <div class="ui sticky" style="left:765px; width:240px; height 350px; padding-top:40px; padding-left:20px;">
       <!-- <div class="content"> -->
@@ -20,13 +20,18 @@
     <div class="ui dividing">
       <!-- <div class="content"> -->
         <h1>{{itemname}}</h1>
-        <h4 style="margin-top:0rem; margin-bottom:3rem;">by {{sellername}}</h4>
+        <h3>{{category}}</h3>
+        <h4 style="margin-top:0rem; margin-bottom:3rem;">by {{sellername}}</h4><br>
         <div class="image">
           {{#if hasPic}}
           <img class="ui image" src="data:image/jpeg;base64, {{pic}}" style="display:inline-block; max-height:500px;max-width:500px; padding-right:10px;">
           {{/if}}
         </div>
-        <h2>Description</h2>
+        <h3>Condition</h3>
+        <p>{{condition}}</p>
+        <h3>Delivery</h3>
+        <p>{{delivery}}</p>
+        <h3>Description</h3>
         <p>{{description}}</p>
       </div>
       </div>

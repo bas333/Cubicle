@@ -24,8 +24,16 @@
         </div>
       </div>
     </div>
-    <!-- {{> showreply r=r}} -->
+  <button id="submitreply">Add Reply</button>
+</div>
+</template>
 
+<template name="showreply">
+  {{#each p in replys}}
+    {{p.name}}<br>
+    {{p.createdAt}}<br>
+    {{p.text}}
+  {{/each}}
     {{#each r in replys}}
       <div class="field">
         <p>{{r.name}}</p>
@@ -48,9 +56,4 @@
     </form>
     <button class="submitreply" id="submitreply_{{p._id}}">Add Reply</button>
     {{/if}}
-  </div>
-</template>
-
-<template name="showreply">
-
 </template>
