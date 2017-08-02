@@ -26,7 +26,7 @@ Template.addrent.events({
     const detailed = instance.$('#detaileddescription').val();
     const roommate = instance.$('#roommatedescription').val();
     const price = instance.$('#priceM').val();
-    const contact = instance.$('#contact-information').val();
+    const contact = instance.$('#contactinformation').val();
     const pic1=instance.$('#rentalpic1')[0].files[0];
     const pic2=instance.$('#rentalpic2')[0].files[0];
     const pic3=instance.$('#rentalpic3')[0].files[0];
@@ -185,6 +185,16 @@ Template.addrent.events({
   },
   'click #addrentalrec': function(elt,instance){
     var recognition;
+    var checkingtime=0;
+    var acity=false;
+    var astreet=false;
+    var afacilities=false;
+    var adetail=false;
+    var aroommate=false;
+    var aprice=false;
+    var acontact=false;
+    var adate=false;
+    var asize=false;
     var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
     var baseUrl = "https://api.api.ai/v1/";
     switchRecognition();
@@ -203,19 +213,20 @@ Template.addrent.events({
       };
       recognition.onresult = function(event) {
         var text = "";
+        checkingtime++;
           for (var i = event.resultIndex; i < event.results.length; ++i) {
             text += event.results[i][0].transcript;
             if(event.results[i][0].transcript.includes('stop')){
               console.log("stop recording");
               instance.$('#location').val("")==null;
-              instance.$('#street-address').val("");
+              instance.$('#streetaddress').val("");
               instance.$('#time').val("");
               instance.$('#roomsize').val("");
               instance.$('#facilities').val("");
               instance.$('#detaileddescription').val("");
               instance.$('#roommatedescription').val("");
               instance.$('#priceM').val("");
-              instance.$('#contact-information').val("");
+              instance.$('#contactinformation').val("");
 
               console.log("user want stop");
               recognition.stop();
@@ -224,14 +235,14 @@ Template.addrent.events({
             }else if(event.results[i][0].transcript.includes('submit')){
               console.log("user want to submit");
               const location = instance.$('#location :selected').val();
-              const street = instance.$('#street-address').val();
+              const street = instance.$('#streetaddress').val();
               const time = instance.$('#time').val();
               const roomsize = instance.$('#roomsize').val();
               const facilities = instance.$('#facilities').val();
               const detailed = instance.$('#detaileddescription').val();
               const roommate = instance.$('#roommatedescription').val();
               const price = instance.$('#priceM').val();
-              const contact = instance.$('#contact-information').val();
+              const contact = instance.$('#contactinformation').val();
               var rentpost =
               { location:location,
                 street:street,
@@ -258,30 +269,30 @@ Template.addrent.events({
 
               console.log("insert");
               instance.$('#location').val("")==null;
-              instance.$('#street-address').val("");
+              instance.$('#streetaddress').val("");
               instance.$('#time').val("");
               instance.$('#roomsize').val("");
               instance.$('#facilities').val("");
               instance.$('#detaileddescription').val("");
               instance.$('#roommatedescription').val("");
               instance.$('#priceM').val("");
-              instance.$('#contact-information').val("");
+              instance.$('#contactinformation').val("");
               console.log("you submit we stop");
               recognition.stop();
               stopRecognition();
               instance.$("#usersay").val("");
-            } else if((instance.$('#location').val()!="")&&(instance.$('#contact-information').val()!="")&&(instance.$('#priceM').val()!="")&&(instance.$('#roommatedescription').val()!="")&&(instance.$('#facilities').val()!="")
-            &&(instance.$('#detaileddescription').val()!="")&&(instance.$('#street-address').val()!="")&&(instance.$('#time').val()!="")&&(instance.$('#roomsize').val()!="")){
+            } else if((instance.$('#location').val()!="")&&(instance.$('#contactinformation').val()!="")&&(instance.$('#priceM').val()!="")&&(instance.$('#roommatedescription').val()!="")&&(instance.$('#facilities').val()!="")
+            &&(instance.$('#detaileddescription').val()!="")&&(instance.$('#streetaddress').val()!="")&&(instance.$('#time').val()!="")&&(instance.$('#roomsize').val()!="")){
               console.log("user has filled all the fields")
               const location = instance.$('#location :selected').val();
-              const street = instance.$('#street-address').val();
+              const street = instance.$('#streetaddress').val();
               const time = instance.$('#time').val();
               const roomsize = instance.$('#roomsize').val();
               const facilities = instance.$('#facilities').val();
               const detailed = instance.$('#detaileddescription').val();
               const roommate = instance.$('#roommatedescription').val();
               const price = instance.$('#priceM').val();
-              const contact = instance.$('#contact-information').val();
+              const contact = instance.$('#contactinformation').val();
               var rentpost =
               { location:location,
                 street:street,
@@ -312,14 +323,14 @@ Template.addrent.events({
               console.log("aaa");
               recognition.stop();
               instance.$('#location').val("")==null;
-              instance.$('#street-address').val("");
+              instance.$('#streetaddress').val("");
               instance.$('#time').val("");
               instance.$('#roomsize').val("");
               instance.$('#facilities').val("");
               instance.$('#detaileddescription').val("");
               instance.$('#roommatedescription').val("");
               instance.$('#priceM').val("");
-              instance.$('#contact-information').val("");
+              instance.$('#contactinformation').val("");
               console.log("mmm");
               stopRecognition();
               console.log("rrr");
@@ -338,29 +349,31 @@ Template.addrent.events({
       if (recognition) {
         recognition.stop();
         recognition = null;
+        checkingtime = 0;
         instance.$('#location').val("")==null;
-        instance.$('#street-address').val("");
+        instance.$('#streetaddress').val("");
         instance.$('#time').val("");
         instance.$('#roomsize').val("");
         instance.$('#facilities').val("");
         instance.$('#detaileddescription').val("");
         instance.$('#roommatedescription').val("");
         instance.$('#priceM').val("");
-        instance.$('#contact-information').val("");
+        instance.$('#contactinformation').val("");
       }
       updateRec();
     }
 
     function setInput(text) {
       $("#userrental").val(text);
-      send();
+      send(checkingtime,acity,astreet,afacilities,adetail,aroommate,aprice,acontact,adate,asize);
     }
     function updateRec() {
       $("#addrentalrec").text(recognition ? "Stop" : "Speak");
     }
 
-    function send() {
+    function send(checkingtime,acity,astreet,afacilities,adetail,aroommate,aprice,acontact,adate,asize) {
       var text = $("#userrental").val();
+      console.log(checkingtime);
       $.ajax({
         type: "POST",
         url: baseUrl + "query?v=20150910",
@@ -377,222 +390,247 @@ Template.addrent.events({
           if(text.includes(substring1)||text.includes(substring2)){
             console.log("into stop or submit condition");
           }else{
+          console.log(checkingtime);
           console.log("---");
           console.log(data);
           console.log($("#location").val());
           var isAdded=false;
-          if(instance.$("#location").val()==null){
-            console.log("into location");
-            console.log(instance.$("#location").val());
-            console.log(data.result.parameters.location);
-            if(data.result.parameters.location!=""){
-              console.log(data.result.parameters.location);
-              $("#location").val(data.result.parameters.location).trigger("change");
+          if(checkingtime==1&&data.result.metadata.intentName!="RentalPost"){
+            checkingtime=0;
+            responsiveVoice.speak("Sorry I don't understand, please say that again");
+          }else{
+            if($("#location").val()==null&&acity==false){
+              console.log("into location");
               console.log(instance.$("#location").val());
-              responsiveVoice.speak("city added");
-              if(data.result.parameters.streetaddress==""){
-                responsiveVoice.speak("What is the street address of this rent?","UK English Female");
-              }
-            }else if(data.result.parameters.location==""){
-              if(data.result.parameters.location==""&&instance.$("#location").val()==null){
-                instance.$("#location").val("Please say the city of this rent");
-                responsiveVoice.speak("What is the city of this rent? The category you can choose are waltham, watertown, boston, cambridge, newton, brookline, somerville and malden","UK English Female",{rate:0.9});
-                console.log("enter first condition for location!!!");
-              }else if(data.result.parameters.location==""&&instance.$("#category").val()!=""){
-                console.log("enter second rent condition!!!!");
-                instance.$("#category").val(text);
+              console.log(data.result.parameters.location);
+              if(data.result.parameters.location!=""){
+                console.log(data.result.parameters.location);
+                $("#location").val(data.result.parameters.location).trigger("change");
+                acity=true;
+                console.log(instance.$("#location").val());
                 responsiveVoice.speak("city added");
-                responsiveVoice.speak("What is the street address of this rent?","UK English Female");
-              }
-              return;
-            }
-          }
-
-          console.log(instance.$("#street-address").val());
-          if(instance.$("#street-address").val()==""||instance.$("#street-address").val()=="Please say the street-address now"){
-            console.log("into street-address");
-            if(data.result.parameters.streetaddress!=""){
-              console.log("existed street-address");
-              $("#street-address").val(data.result.parameters.streetaddress);
-              responsiveVoice.speak("street-address added");
-              responsiveVoice.speak("What is the facilities of this rent?","UK English Female");
-            }else if(data.result.parameters.streetaddress==""){
-                  console.log(data.result.parameters.streetaddress=="");
-                  console.log(instance.$("#street-address").val()=="");
-                if(data.result.parameters.streetaddress==""&&instance.$("#street-address").val()==""){
-                  console.log("enter first condition");
-                  console.log("user said "+text);
-                  instance.$("#street-address").val("Please say the street-address now");
-                }else if(data.result.parameters.streetaddress==""&&instance.$("#street-address").val()!=""){
-                console.log("enter second condition");
-                instance.$("#street-address").val(text);
-                responsiveVoice.speak("street-address added");
-                responsiveVoice.speak("What is the facilities of this rent?","UK English Female");
+                if(data.result.parameters.streetaddress==""){
+                  responsiveVoice.speak("What is the street address of this rent?","UK English Female");
                 }
-              return;
+              }else if(data.result.parameters.location==""){
+                if(data.result.parameters.location==""&&instance.$("#location").val()==null){
+                  instance.$("#location").val("Please say the city of this rent");
+                  responsiveVoice.speak("What is the city of this rent? The city you can choose are waltham, watertown, boston, cambridge, newton, brookline, somerville and malden","UK English Female",{rate:0.9});
+                  console.log("enter first condition for location!!!");
+                }else if(data.result.parameters.location==""&&instance.$("#location").val()!=null){
+                  console.log("enter second rent condition!!!!");
+                  $("#location").val(text).trigger("change");
+                  acity=true;
+                  responsiveVoice.speak("city added");
+                  responsiveVoice.speak("What is the street address of this rent?","UK English Female");
+                }
+                return;
+              }
             }
-          }
 
 
-          console.log(instance.$("#facilities").val());
-          if(instance.$("#facilities").val()==""||instance.$("#facilities").val()=="Please say the facilities now"){
-            console.log("into facilities");
-            if(data.result.parameters.facilities!=""){
-              $("#facilities").val(data.result.parameters.facilities);
-              responsiveVoice.speak("facilities added");
-              responsiveVoice.speak("What is the detailed description of this rent","UK English Female",{rate:0.9});
-            }else if(data.result.parameters.facilities==""){
-              if(data.result.parameters.facilities==""&&instance.$("#facilities").val()==""){
-                console.log("enter first facilities condition!!!");
-                instance.$("#facilities").val("Please say the facilities now");
-              }else if(data.result.parameters.facilities==""&&instance.$("#facilities").val()!=""){
-                console.log("enter second facilities condition!!!!");
-                instance.$("#facilities").val(text);
+            if($("#streetaddress").val()==""&&astreet==false||$("#streetaddress").val()=="Please say the street address now"&&astreet==false){
+              console.log("into streetaddress");
+              if(data.result.parameters.streetaddress!=""){
+                console.log("existed streetaddress");
+                $("#streetaddress").val(data.result.parameters.streetaddress);
+                astreet=true;
+                responsiveVoice.speak("streetaddress added");
+                responsiveVoice.speak("What is the facilities of this rent?","UK English Female");
+              }else if(data.result.parameters.streetaddress==""){
+                    console.log(data.result.parameters.streetaddress=="");
+                    console.log($("#streetaddress").val());
+                  if(data.result.parameters.streetaddress==""&&$("#streetaddress").val()==""){
+                    console.log("enter first condition");
+                    console.log("user said "+text);
+                    $("#streetaddress").val("Please say the street address now");
+                  }else if(data.result.parameters.streetaddress==""&&$("#streetaddress").val()!=""){
+                  console.log("enter second condition");
+                  $("#streetaddress").val(text);
+                  astreet=true;
+                  responsiveVoice.speak("streetaddress added");
+                  responsiveVoice.speak("What is the facilities of this rent?","UK English Female");
+                  }
+                return;
+              }
+            }
+
+
+            console.log($("#facilities").val());
+            if($("#facilities").val()==""&&afacilities==false||$("#facilities").val()=="Please say the facilities now"&&afacilities==false){
+              console.log("into facilities");
+              if(data.result.parameters.facilities!=""){
+                $("#facilities").val(data.result.parameters.facilities);
+                afacilities=true;
                 responsiveVoice.speak("facilities added");
                 responsiveVoice.speak("What is the detailed description of this rent","UK English Female",{rate:0.9});
+              }else if(data.result.parameters.facilities==""){
+                if(data.result.parameters.facilities==""&&$("#facilities").val()==""){
+                  console.log("enter first facilities condition!!!");
+                  $("#facilities").val("Please say the facilities now");
+                }else if(data.result.parameters.facilities==""&&$("#facilities").val()!=""){
+                  console.log("enter second facilities condition!!!!");
+                  $("#facilities").val(text);
+                  afacilities=true;
+                  responsiveVoice.speak("facilities added");
+                  responsiveVoice.speak("What is the detailed description of this rent","UK English Female",{rate:0.9});
+                }
+                return;
               }
-              return;
             }
-          }
 
-          console.log($("#detaileddescription").val());
-          if(instance.$("#detaileddescription").val()==""){
-            console.log("into detailed description");
-            if(data.result.parameters.detaileddescription!=""){
-              instance.$("#detaileddescription").val(data.result.parameters.detaileddescription);
-              responsiveVoice.speak("detailed description added","UK English Female");
-              responsiveVoice.speak("Please add some roommate description to this rent","UK English Female");
-              return;
-            }else if(data.result.parameters.detaileddescription==""){
-              if(data.result.parameters.detaileddescription==""&&instance.$("#detaileddescription").val()==""){
-                console.log("enter first detail description condition!!!");
-                instance.$("#detaileddescription").val(text);
-                responsiveVoice.speak("detaileddescription added");
+            console.log($("#detaileddescription").val());
+            if($("#detaileddescription").val()==""&&adetail==false||adetail==false&&$("#detaileddescription").val()=="Please say detailed description now"){
+              console.log("into detailed description");
+              if(data.result.parameters.detaileddescription!=""){
+                $("#detaileddescription").val(data.result.parameters.detaileddescription);
+                adetail=true;
+                responsiveVoice.speak("detailed description added","UK English Female");
                 responsiveVoice.speak("Please add some roommate description to this rent","UK English Female");
+                return;
+              }else if(data.result.parameters.detaileddescription==""){
+                if(data.result.parameters.detaileddescription==""&&$("#detaileddescription").val()==""){
+                  console.log("enter first detail description condition!!!");
+                  // $("#detaileddescription").val("Please say detailed description now");
+                  $("#detaileddescription").val(text);
+                  adetail=true;
+                  responsiveVoice.speak("detaileddescription added");
+                  responsiveVoice.speak("Please add some roommate description to this rent","UK English Female");
+                }
+                // else if(data.result.parameters.detaileddescription==""&&instance.$("#detaileddescription").val()!=""){
+                //   console.log("enter second detail description condition!!!!");
+                //   instance.$("#detaileddescription").val(text);
+                //   responsiveVoice.speak("detaileddescription added");
+                //   responsiveVoice.speak("Please add some roommate description to this rent","UK English Female");
+                // }
+                return;
               }
-              /*else if(data.result.parameters.detaileddescription==""&&instance.$("#detaileddescription").val()!=""){
-                console.log("enter second detail description condition!!!!");
-                instance.$("#detaileddescription").val(text);
-                responsiveVoice.speak("detaileddescription added");
-                responsiveVoice.speak("Please add some roommate description to this rent","UK English Female");
-              }*/
-              return;
             }
-          }
 
-          console.log($("#roommatedescription").val());
-          if(instance.$("#roommatedescription").val()==""){
-            console.log("into roommate description");
-            if(data.result.parameters.roommates!=""){
-              instance.$("#roommatedescription").val(data.result.parameters.roommates);
-              responsiveVoice.speak("roommate description added","UK English Female");
-              responsiveVoice.speak("Please add the price of this rent","UK English Female");
-              return;
-            }else if(data.result.parameters.roommates==""){
-              if(data.result.parameters.roommates==""&&instance.$("#roommatedescription").val()==""){
-                console.log("enter first roommatedescription condition!!!");
-                instance.$("#roommatedescription").val(text);
-            //}else if(data.result.parameters.roommates==""&&instance.$("#roommatedescription").val()!=""){
-              //console.log("enter second roommatedescription condition!!!!");
-              //instance.$("#roommatedescription").val(text);
-                responsiveVoice.speak("roommatedescription added");
-                responsiveVoice.speak("Please add the price to this rent","UK English Female");
+            console.log($("#roommatedescription").val());
+            if($("#roommatedescription").val()==""&&aroommate==false){
+              console.log("into roommate description");
+              if(data.result.parameters.roommates!=""){
+                $("#roommatedescription").val(data.result.parameters.roommates);
+                aroommate=true;
+                responsiveVoice.speak("roommate description added","UK English Female");
+                responsiveVoice.speak("Please add the price of this rent","UK English Female");
+                return;
+              }else if(data.result.parameters.roommates==""){
+                if(data.result.parameters.roommates==""&&$("#roommatedescription").val()==""){
+                  console.log("enter first roommatedescription condition!!!");
+                  $("#roommatedescription").val(text);
+                  aroommate=true;
+              //}else if(data.result.parameters.roommates==""&&instance.$("#roommatedescription").val()!=""){
+                //console.log("enter second roommatedescription condition!!!!");
+                //instance.$("#roommatedescription").val(text);
+                  responsiveVoice.speak("roommatedescription added");
+                  responsiveVoice.speak("Please add the price to this rent","UK English Female");
+                }
+                return;
               }
-              return;
             }
-          }
 
-          console.log($("#priceM").val());
-          if(instance.$("#priceM").val()==""){
-            console.log("into price");
-            if(data.result.parameters.price!=""){
-              console.log("existed price");
-              instance.$("#priceM").val(data.result.parameters.price);
-              responsiveVoice.speak("price added","UK English Female");
-              responsiveVoice.speak("Please add contact infomation of this rent","UK English Female");
-              return;
-            }else if(data.result.parameters.price==""){
-              if(data.result.parameters.price==""&&instance.$("#priceM").val()==""){
-                console.log("enter first price condition!!!");
-              //  instance.$("#price").val("Please say price now");
-            //  }else if(data.result.parameters.price==""&&instance.$("#priceM").val()!=""){
-                //console.log("enter second price condition!!!!");
-                instance.$("#priceM").val(text);
-                responsiveVoice.speak("price added");
-                responsiveVoice.speak("Please add the contact to this rent","UK English Female");
+            console.log($("#priceM").val());
+            if(instance.$("#priceM").val()==""&&aprice==false){
+              console.log("into price");
+              if(data.result.parameters.price!=""){
+                console.log("existed price");
+                $("#priceM").val(data.result.parameters.price);
+                aprice=true;
+                responsiveVoice.speak("price added","UK English Female");
+                responsiveVoice.speak("Please add contact infomation of this rent","UK English Female");
+                return;
+              }else if(data.result.parameters.price==""){
+                if(data.result.parameters.price==""&&instance.$("#priceM").val()==""){
+                  console.log("enter first price condition!!!");
+                //  instance.$("#price").val("Please say price now");
+              //  }else if(data.result.parameters.price==""&&instance.$("#priceM").val()!=""){
+                  //console.log("enter second price condition!!!!");
+                  console.log(data.result.resolvedQuery)
+                  $("#priceM").val(data.result.resolvedQuery);
+                  aprice=true;
+                  responsiveVoice.speak("price added");
+                  responsiveVoice.speak("Please add the contact to this rent","UK English Female");
+                }
+                return;
               }
-              return;
             }
-          }
 
 
-          console.log($("#contact-information").val());
-          if(instance.$("#contact-information").val()==""){
-            console.log("into contact-information");
-            if(data.result.parameters.contactinfo!=""){
-              instance.$("#contact-information").val(data.result.parameters.contactinfo);
-              responsiveVoice.speak("contact info added","UK English Female");
-              responsiveVoice.speak("Please add the room size of this rent","UK English Female");
-              return;
-            }else if(data.result.parameters.contactinfo==""){
-              if(data.result.parameters.contactinfo==""&&instance.$("#contact-information").val()==""){
-                console.log("enter first contact-information condition!!!");
-              //  instance.$("#contact-information").val("Please say your contact information now");
-            //  }else if(data.result.parameters.contactinfo==""&&instance.$("#contact-information").val()!=""){
-              //  console.log("enter second contact-information condition!!!!");
-                instance.$("#contact-information").val(text);
-                responsiveVoice.speak("contact-information added");
-                responsiveVoice.speak("Please add the room size to this rent","UK English Female");
+            console.log($("#contactinformation").val());
+            if(instance.$("#contactinformation").val()==""&&acontact==false){
+              console.log("into contactinformation");
+              if(data.result.parameters.contactinfo!=""){
+                $("#contactinformation").val(data.result.parameters.contactinfo);
+                acontact=true;
+                responsiveVoice.speak("contact info added","UK English Female");
+                responsiveVoice.speak("Please add the room size of this rent","UK English Female");
+                return;
+              }else if(data.result.parameters.contactinfo==""){
+                if(data.result.parameters.contactinfo==""&&instance.$("#contactinformation").val()==""){
+                  console.log("enter first contactinformation condition!!!");
+                //  instance.$("#contactinformation").val("Please say your contact information now");
+              //  }else if(data.result.parameters.contactinfo==""&&instance.$("#contactinformation").val()!=""){
+                //  console.log("enter second contactinformation condition!!!!");
+                  $("#contactinformation").val(text);
+                  acontact=true;
+                  responsiveVoice.speak("contactinformation added");
+                  responsiveVoice.speak("Please add the room size to this rent","UK English Female");
+                }
+                return;
               }
-              return;
             }
-          }
 
-          console.log($("#roomsize").val());
-          if(instance.$("#roomsize").val()==""){
-            console.log("into roomsize");
-            if(data.result.parameters.roomsize!=""){
-              instance.$("#roomsize").val(data.result.parameters.roomsize);
-              responsiveVoice.speak("roomsize added","UK English Female");
-              responsiveVoice.speak("Please add availabletime to this rent","UK English Female");
-              return;
-            }else if(data.result.parameters.roomsize==""){
-              if(data.result.parameters.roomsize==""&&instance.$("#roomsize").val()==""){
-                console.log("enter first roomsize condition!!!");
-                instance.$("#roomsize").val(text);
-                responsiveVoice.speak("roomsize added");
+            console.log($("#roomsize").val());
+            if($("#roomsize").val()==""&&asize==false){
+              console.log("into roomsize");
+              if(data.result.parameters.roomsize!=""){
+                $("#roomsize").val(data.result.parameters.roomsize);
+                asize=true;
+                responsiveVoice.speak("roomsize added","UK English Female");
                 responsiveVoice.speak("Please add availabletime to this rent","UK English Female");
+                return;
+              }else if(data.result.parameters.roomsize==""){
+                if(data.result.parameters.roomsize==""&&$("#roomsize").val()==""){
+                  console.log("enter first roomsize condition!!!");
+                  $("#roomsize").val(text);
+                  asize=true;
+                  responsiveVoice.speak("roomsize added");
+                  responsiveVoice.speak("Please add availabletime to this rent","UK English Female");
+                }
+                /*else if(data.result.parameters.detaileddescription==""&&instance.$("#detaileddescription").val()!=""){
+                  console.log("enter second detail description condition!!!!");
+                  instance.$("#detaileddescription").val(text);
+                  responsiveVoice.speak("detaileddescription added");
+                  responsiveVoice.speak("Please add some roommate description to this rent","UK English Female");
+                }*/
+                return;
               }
-              /*else if(data.result.parameters.detaileddescription==""&&instance.$("#detaileddescription").val()!=""){
-                console.log("enter second detail description condition!!!!");
-                instance.$("#detaileddescription").val(text);
-                responsiveVoice.speak("detaileddescription added");
-                responsiveVoice.speak("Please add some roommate description to this rent","UK English Female");
-              }*/
-              return;
             }
-          }
 
-          console.log($("#time").val());
-          if(instance.$("#time").val()==""){
-            console.log("into time");
-            if(data.result.parameters.availabletime!=""){
-              instance.$("#time").val(data.result.parameters.availabletime);
-              responsiveVoice.speak("availabletime added","UK English Female");
-            //  responsiveVoice.speak("Please add the available time of this rent","UK English Female");
-              return;
-            }else if(data.result.parameters.availabletime==""){
-              if(data.result.parameters.availabletime==""&&instance.$("#time").val()==""){
-                console.log("enter first contact-information condition!!!");
-              //  instance.$("#contact-information").val("Please say your contact information now");
-            //  }else if(data.result.parameters.contactinfo==""&&instance.$("#contact-information").val()!=""){
-              //  console.log("enter second contact-information condition!!!!");
-                instance.$("#contact-information").val(text);
-                responsiveVoice.speak("availabletime added");
-              //  responsiveVoice.speak("Please add the available time to this rent","UK English Female");
+            console.log($("#time").val());
+            if(instance.$("#time").val()==""){
+              console.log("into time");
+              if(data.result.parameters.availabletime!=""){
+                instance.$("#time").val(data.result.parameters.availabletime);
+                responsiveVoice.speak("availabletime added","UK English Female");
+              //  responsiveVoice.speak("Please add the available time of this rent","UK English Female");
+                return;
+              }else if(data.result.parameters.availabletime==""){
+                if(data.result.parameters.availabletime==""&&instance.$("#time").val()==""){
+                  console.log("enter first contactinformation condition!!!");
+                //  instance.$("#contactinformation").val("Please say your contact information now");
+              //  }else if(data.result.parameters.contactinfo==""&&instance.$("#contactinformation").val()!=""){
+                //  console.log("enter second contactinformation condition!!!!");
+                  instance.$("#contactinformation").val(text);
+                  responsiveVoice.speak("availabletime added");
+                //  responsiveVoice.speak("Please add the available time to this rent","UK English Female");
+                }
+                return;
               }
-              return;
             }
+
           }
 
           }},

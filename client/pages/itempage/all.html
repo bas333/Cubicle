@@ -18,12 +18,18 @@
 {{>productrow p=p}}
   <div style="float:right; padding-right:40px;">
     {{#if isOwner p}}
-      <i class="big ban icon"></i>
+    <div data-tooltip="You are the owner of this product">
+      <i  class="big ban icon"></i>
+    </div>
     {{else}}
       {{#if isInCart p}}
+      <div data-tooltip="This product is already in cart">
         <i class="big ban icon" aria-hidden="true"></i>
+      </div>
       {{else}}
+      <div data-tooltip="Add to cart">
         <i id="add" class="big add to cart icon"></i>
+      </div>
       {{/if}}
     {{/if}}
   </div>

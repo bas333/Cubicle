@@ -8,15 +8,6 @@ Template.addproduct.onCreated(function(){
  Template.ownerproduct.onCreated(function ownerproductOnCreated(){
    this.itemsold= new ReactiveVar(false);
  })
- // if(Meteor.isClient){
- //     Template.showproduct.onCreated(function(){
- //       Meteor.subscribe('product');
- //
- //     });
- //     Template.showproduct.onCreated(function(){
- //       Meteor.subscribe('allusers');
- //     })
- // }
  Template.createinfo.onRendered(function() {
    this.$('#category').dropdown({on: 'hover'});
    // other SUI modules initialization
@@ -196,6 +187,11 @@ Template.addproduct.events({
 },
   'click #additemrec':function(elt,instance){
       var recognition;
+      var addedname=false;
+      var addeddes=false;
+      var addedprice=false;
+      var addedcategory=false;
+      var addedcondition=false;
       var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
       var baseUrl = "https://api.api.ai/v1/";
       switchRecognition();
@@ -209,6 +205,7 @@ Template.addproduct.events({
       function startRecognition() {
   			recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
+
   			recognition.onstart = function(event) {
   				updateRec();
   			};
@@ -296,8 +293,8 @@ Template.addproduct.events({
                 console.log('adding'+itemname);
                 instance.$('#itemname').val("");
                 instance.$('#price').val("");
-                instance.$('#condition').val()==null;
-                instance.$('#category').val()==null;
+                instance.$('#condition').val("");
+                instance.$('#category').val("");
                 instance.$('#description').val("");
                 console.log("mmm");
                 stopRecognition();
@@ -327,12 +324,12 @@ Template.addproduct.events({
   		}
   		function setInput(text) {
   			$("#usersay").val(text);
-  			send();
+  			send(addedcategory,addedprice,addedname,addedcondition,addeddes);
   		}
   		function updateRec() {
   			$("#additemrec").text(recognition ? "Stop" : "Speak");
   		}
-  		function send() {
+  		function send(addedcategory,addedprice,addedname,addedcondition,addeddes) {
   			var text = $("#usersay").val();
   			$.ajax({
   				type: "POST",
@@ -350,27 +347,32 @@ Template.addproduct.events({
             if(text.includes(substring1)||text.includes(substring2)){
               console.log("into stop or submit condition");
             }else{
+              console.log("addedcategory"+addedcategory);
+              console.log("addeddes"+addeddes);
+              console.log("addedname"+addedname);
+              console.log("addedprice"+addedprice);
+              console.log("addedcondition"+addedcondition);
             console.log("---");
             console.log(data);
-            var isAdded=false;
-            if($("#category").val()==null){
+            if($("#category").val()==null&&addedcategory==false){
               console.log("into category");
               console.log($("#category").val());
               console.log(data.result.parameters.Category);
               if(data.result.parameters.Category!=""){
                 console.log(data.result.parameters.Category);
                 $("#category").val(data.result.parameters.Category).trigger("change");
-                $("#category").val();
+                addedcategory=true;
                 responsiveVoice.speak("Category added");
                 responsiveVoice.speak("What is the price of this product?","UK English Female");
 
               }else if(data.result.parameters.Category==""){
-                if(data.result.parameters.Category==""&&instance.$("#category").val()==null){
+                if(data.result.parameters.Category==""&&$("#category").val()==null){
                   responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.9});
+                  $("#category").val("waiting for input");
                   console.log("enter first condition for category!!!");
-                }else if(data.result.parameters.Category==""&&instance.$("#category").val()!=""){
-                  console.log("enter second category condition!!!!");
-                  instance.$("#category").val(text);
+                }else if(data.result.parameters.Category==""&&instance.$("#category").val()!=null){
+                  $("#category").val(text).trigger("change");
+                  addedcategory=true;
                   responsiveVoice.speak("Category added");
                   responsiveVoice.speak("What is the price of this product?","UK English Female");
                 }
@@ -379,76 +381,91 @@ Template.addproduct.events({
             }
 
             console.log(instance.$("#price").val());
-            if(instance.$("#price").val()==""||instance.$("#price").val()=="0"){
+            if($("#price").val()==""&&addedprice==false||$("#price").val()=="0"&&addedprice==false){
               console.log("into price");
               if(data.result.parameters.Price!=""){
                 console.log("existed price");
                 $("#price").val(data.result.parameters.Price);
                 responsiveVoice.speak("Price added");
+                addedprice=true;
                 responsiveVoice.speak("What is the name of this product?","UK English Female");
               }else if(data.result.parameters.Price==""){
                     console.log(data.result.parameters.Price=="");
                     console.log(($("#price").val())=="");
-                  if(data.result.parameters.Price==""&&instance.$("#price").val()==""){
+                  if(data.result.parameters.Price==""&&$("#price").val()==""){
                     console.log("enter first condition");
                     console.log("user said "+text);
                     instance.$("#price").val()=="0";
-                  }else if(data.result.parameters.Price==""&&instance.$("#price").val()!=""){
+                  }else if(data.result.parameters.Price==""&&$("#price").val()!=""){
                   console.log("enter second condition");
-                  instance.$("#price").val(text);
+                  $("#price").val(text);
                   responsiveVoice.speak("Price added");
+                  addedprice=true;
                   responsiveVoice.speak("What is the name of this product?","UK English Female");
                   }
                 return;
               }
             }
-            console.log(instance.$("#itemname").val());
-            if(instance.$("#itemname").val()==""||instance.$("#itemname").val()=="Please say name now"){
+
+
+
+
+
+            console.log($("#itemname").val());
+            if($("#itemname").val()==""&&addedname==false||$("#itemname").val()=="Please say name now"&&addedname==false){
               console.log("into itemname");
               if(data.result.parameters.Name!=""){
                 $("#itemname").val(data.result.parameters.Name);
                 responsiveVoice.speak("Name added");
+                addedname=true;
                 responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
               }else if(data.result.parameters.Name==""){
-                if(data.result.parameters.Name==""&&instance.$("#itemname").val()==""){
+                if(data.result.parameters.Name==""&&$("#itemname").val()==""){
                   console.log("enter first condition!!!");
-                  instance.$("#itemname").val("Please say name now");
-                }else if(data.result.parameters.Name==""&&instance.$("#itemname").val()!=""){
+                  $("#itemname").val("Please say name now");
+                }else if(data.result.parameters.Name==""&&$("#itemname").val()!=""){
                   console.log("enter second condition!!!!");
                   instance.$("#itemname").val(text);
+                  addedname=true;
                   responsiveVoice.speak("Name added");
                   responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
                 }
                 return;
               }
             }
+
+
             console.log($("#condition").val());
-            if(instance.$("#condition").val()==null){
+            if($("#condition").val()==null&&addedcondition==false){
               console.log("into condition");
               if(data.result.parameters.Quality!=""){
                 $("#condition").val(data.result.parameters.Quality).trigger("change");
+                addedcondition=true;
                 responsiveVoice.speak("Condition added","UK English Female");
                 responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
                 return;
               }else if(data.result.parameters.Quality==""){
-                if(data.result.parameters.Quality==""&&instance.$("#condition").val()==""){
+                if(data.result.parameters.Quality==""&&$("#condition").val()==null){
                   console.log("enter first quality condition!!!");
-
-                }else if(data.result.parameters.Quality==""&&instance.$("#condition").val()!=""){
-                  console.log("enter second quality condition!!!!");
-                  instance.$("#condition").val(text);
+                  $("#condition").val(text).trigger("change");
+                  addedcondition=true;
                   responsiveVoice.speak("Condition added");
                   responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
                 }
                 return;
               }
             }
+
+
+
             console.log($("#description").val());
-            if(instance.$("#description").val()==""){
+            if($("#description").val()==""&&addeddes==false){
               console.log("into description");
               console.log(data.result.parameters);
               console.log("description: "+data.result.parameters.Detaildescription);
-              instance.$("#description").val(text);
+              $("#description").val(text);
+              addeddes==true;
+              responsiveVoice.speak("Description added");
               return;
   				    }
             }},
