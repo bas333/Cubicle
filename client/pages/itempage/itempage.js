@@ -3,8 +3,3 @@ Template.itempage.helpers({
     return Product.find({},{sort:{itemname:1}});
   },
 })
-if(Meteor.isClient){
-    Template.itempage.onCreated(function(){
-      Meteor.subscribe('product');
-    })
-}

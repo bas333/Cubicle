@@ -21,11 +21,3 @@ Template.rentpost.helpers({
     }
   }
 })
-if(Meteor.isClient){
-    Template.rentpost.onCreated(function(){
-      Meteor.subscribe('rent');
-    })
-    Template.singleitem.onCreated(function(){
-      Meteor.subscribe('allusers');
-    })
-}
