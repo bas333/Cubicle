@@ -18,7 +18,6 @@
 {{>productrow p=p}}
   <div style="float:right; padding-right:40px;">
     {{#if isOwner p}}
-      <!-- <span class="ban icon" aria-hidden="true"></span> -->
       <i class="big ban icon"></i>
     {{else}}
       {{#if isInCart p}}
@@ -31,18 +30,17 @@
 </template>
 
 <template name="productrow">
-
-      {{#if hasPic1 p}}
-      <img class="ui image" src="data:image/jpeg;base64, {{p.pic1}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
-      {{/if}}
-      {{#if hasPic2 p}}
-      <img class="ui image" src="data:image/jpeg;base64, {{p.pic2}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
-      {{/if}}
-      {{#if hasPic3 p}}
-      <img class="ui image" src="data:image/jpeg;base64, {{p.pic3}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
-      {{/if}}
       <div class="content" style="float:left; text-align:left; color:rgb(159, 159, 160);">
         <h2><a href="/singleitem/{{p.itemname}}">{{p.itemname}}</a></h2>
+        {{#if hasPic1 p}}
+        <img class="ui image" src="data:image/jpeg;base64, {{p.pic1}}" style="display:inline-block; max-height:400px;max-width:400px; float:left; padding-right:10px;">
+        {{/if}}
+        <!-- {{#if hasPic2 p}}
+        <img class="ui image" src="data:image/jpeg;base64, {{p.pic2}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
+        {{/if}}
+        {{#if hasPic3 p}}
+        <img class="ui image" src="data:image/jpeg;base64, {{p.pic3}}" style="display:inline-block; max-height:240px;max-width:240px; float:left; padding-right:10px;">
+        {{/if}} -->
         <h3>{{p.category}}</h3>
         <h4>by {{sellername p}}</h4>
         <h3>${{p.price}}<br>Condition: {{p.condition}}<br>{{p.delivery}}</h3>

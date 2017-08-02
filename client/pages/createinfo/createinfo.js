@@ -136,7 +136,7 @@ Template.addproduct.events({
       owner:Meteor.userId()
     };
     const template=Template.instance();
-    for(var i=0;i<=3;i++){
+    for(var i=1;i<=3;i++){
       if($('#productpic'+i).val()){
         if($('#productpic'+i)[0].files&&$('#productpic'+i)[0].files[0]&&($('#productpic'+i)[0].files[0].type).match(/(jpg|png|jpeg|gif)$/)){
           if($('#productpic'+i)[0].files[0].size>1048576){
