@@ -18,12 +18,16 @@
                 <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
                 </form>
             </div>
-            <a href="users" class="text-center new-account">Create an account </a>
+            <a href="users" class="text-left new-account">Create an account</a>
         </div>
     </div>
 </div>
 
 <div class="other-login">
-  <h2>{{>loginButtons}}</h2>
+  <h2></h2>
+</div>
+
+<div class="toProfile">
+  <button class="ui basic button"><a href="{{pathFor 'users'}}">View Profile</a></button>
 </div>
 </template>
