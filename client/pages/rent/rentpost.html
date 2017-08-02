@@ -1,57 +1,53 @@
 <template name="rentpost">
-  {{#if hasPic1 rent}}
-  <!-- <i class="photo icon"></i> -->
-    <img src="data:image/jpeg;base64, {{rent.pic1}}" style="max-height:300px;max-width:300px;">
+  <div class="ui divided grid" style="padding-top:50px;">
+  <div class="ten wide column" style="padding-left:70px;">
+  {{#if hasPic1}}
+    <img src="data:image/jpeg;base64, {{pic1}}" style="max-height:700px;max-width:700px;">
   {{/if}}
-<!-- </div>
-<div class="item">
-  <button class="ui button"><a href="/rentpost/{{rent._id}}">Click to view more</a></button>
+  <br>
+  {{#if hasPic2}}
+    <img src="data:image/jpeg;base64, {{pic2}}" style="max-height:700px;max-width:700px;">
+  {{/if}}
+  <br>
+  {{#if hasPic3}}
+    <img src="data:image/jpeg;base64, {{pic3}}" style="max-height:700px;max-width:700px;">
+  {{/if}}
 </div>
-<div class="item"> -->
-  <!-- <i class="marker icon"></i> -->
-   <div style="float:left;"><i class="marker icon"></i>Location: </div><div style="float:right;">{{rent.location}}</div>
+  <div class="six wide column" style="padding-right:70px; font-size:18px; line-height:2.5rem;">
+   <div style="float:left;"><i class="marker icon"></i>Location: </div><div style="float:right;">{{location}}</div>
    <br>
-<!-- </div>
-<div class="item"> -->
-  <!-- <i class="address book icon"></i> -->
-   <div style="float:left;"><i class="address book icon"></i>Address: </div><div style="float:right;">{{rent.street}}</div>
+
+   <div style="float:left;"><i class="address book icon"></i>Address: </div><div style="float:right;">{{street}}</div>
    <br>
-<!-- </div>
-<div class="item"> -->
+
   <div style="float:left;"><i class="address to calendar icon"></i>
-  <!-- <h1>{{rent.startmonth}}</h1> -->
+
    Available Time:</div>
-   <div style="float:right;"> {{rent.startmonth}}/{{rent.startdate}}/{{rent.startyear}}  - {{rent.endmonth}}/{{rent.enddate}}/{{rent.endyear}}</div>
+   <div style="float:right;"> {{startmonth}}/{{startdate}}/{{startyear}}  - {{endmonth}}/{{enddate}}/{{endyear}}</div>
    <br>
-<!-- </div>
-<div class="item"> -->
+
   <div style="float:left;"><i class="dollar icon"></i>Price/Month: </div>
-  <div style="float:right;">{{rent.price}}</div>
+  <div style="float:right;">{{price}}</div>
   <br>
-<!-- </div>
-<div class="item"> -->
+
   <div style="float:left;"><i class="home icon"></i>Room Size: </div>
-  <div style="float:right;">{{rent.roomsize}}</div>
+  <div style="float:right;">{{roomsize}}</div>
   <br>
-<!-- </div>
-<div class="item"> -->
   <div style="float:left;"><i class="building outline icon"></i>Facilities: </div>
-  <div style="float:right;">{{rent.facilities}}</div>
+  <div style="float:right;">{{facilities}}</div>
   <br>
-<!-- </div>
-<div class="item"> -->
   <div style="float:left;"><i class="sticky note outline icon"></i>Detailed Description: </div>
-  <div style="float:right;">{{rent.detailed}}</div>
+  <div style="float:right;">{{detailed}}</div>
   <br>
-<!-- </div>
-<div class="item"> -->
   <div style="float:left;"><i class="users icon"></i>Roommate Description: </div>
   <div style="float:right;">{{roommate}}</div>
   <br>
-<!-- </div>
-
-<div class="item"> -->
   <div style="float:left;"><i class="volume control phone icon"></i>Contact info: </div>
   <div style="float:right;">{{contact}}</div>
   <br>
+<<<<<<< HEAD
+=======
+</div>
+</div>
+>>>>>>> cbf2d616e64761289c52e5eb540f1a7c2ea6e4b0
 </template>
