@@ -21,7 +21,6 @@
     </div>
   <div class="rentform">
     <form class="ui form">
-      <!--<h4 class="ui dividing header">Create a Post for your Rental Information</h4>-->
       <div class="inline fields">
         <div class="five wide field">
           <label>City</label>
@@ -127,29 +126,31 @@
 <template name="ownpostrow">
   {{#if isOwner rent}}
   <td>{{rent.location}}</td>
+<<<<<<< HEAD
   <td>{{rent.street}}</td>
   <td>{{rent.startdate}} -- {{rent.enddate}}</td>
+=======
+  <td><a href="/rentpost/{{rent._id}}">{{rent.street}}</a></td>
+  <td>{{rent.startdate}}/{{rent.start}}/{{rent.startyear}} - {{rent.enddate}}/{{rent.end}}/{{rent.endyear}}</td>
+>>>>>>> 1c47958afbbb441dcca16ab182b855b7f36044f6
   <td>{{rent.roomsize}}</td>
   <td>{{rent.facilities}}</td>
   <td>{{rent.detailed}}</td>
   <td>{{rent.roommate}}</td>
   <td>{{rent.price}}</td>
   <td>{{rent.contact}}</td>
-  <td>
+  <td width="330px">
         {{#if hasPic1 rent}}
-        <img src="data:image/jpeg;base64, {{rent.pic1}}" style="display:block; height:300px;width:300px;">
-
+        <img src="data:image/jpeg;base64, {{rent.pic1}}" style="display:inline-block; height:100px; width:100px;" align="left">
         {{/if}}
-
-
-
         {{#if hasPic2 rent}}
-        <img src="data:image/jpeg;base64, {{rent.pic2}}" style="display:block; height:300px;width:300px;">
+        <img src="data:image/jpeg;base64, {{rent.pic2}}" style="display:inline-block; height:100px; width:100px;" align="center">
         {{/if}}
-
+        <span>
         {{#if hasPic3 rent}}
-        <img src="data:image/jpeg;base64, {{rent.pic3}}" style="display:block; height:300px;width:300px;">
+        <img src="data:image/jpeg;base64, {{rent.pic3}}" style="display:inline-block; height:100px; width:100px;">
         {{/if}}
+      </span>
 </td>
   <!-- Button trigger modal -->
   <td><button type="button" id="editRentPost" class="ui button" data-toggle="modal" data-target="#myModal_{{rent._id}}">Edit</button>

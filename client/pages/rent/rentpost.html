@@ -1,19 +1,20 @@
 <template name="rentpost">
   <div class="ui divided grid" style="padding-top:50px;">
-  <div class="ten wide column" style="padding-left:70px;">
+  <div class="nine wide column" style="padding-left:70px;">
   {{#if hasPic1}}
     <img src="data:image/jpeg;base64, {{pic1}}" style="max-height:700px;max-width:700px;">
   {{/if}}
-  <br>
+  <br><hr>
   {{#if hasPic2}}
     <img src="data:image/jpeg;base64, {{pic2}}" style="max-height:700px;max-width:700px;">
   {{/if}}
-  <br>
+  <br><hr>
   {{#if hasPic3}}
     <img src="data:image/jpeg;base64, {{pic3}}" style="max-height:700px;max-width:700px;">
   {{/if}}
+  <hr>
 </div>
-  <div class="six wide column" style="padding-right:70px; font-size:18px; line-height:2.5rem;">
+  <div class="seven wide column" style="padding-right:70px; font-size:18px; line-height:2.5rem;">
    <div style="float:left;"><i class="marker icon"></i>Location: </div><div style="float:right;">{{location}}</div>
    <br>
 
@@ -33,17 +34,18 @@
   <div style="float:left;"><i class="home icon"></i>Room Size: </div>
   <div style="float:right;">{{roomsize}}</div>
   <br>
+  <div style="float:left;"><i class="volume control phone icon"></i>Contact info: </div>
+  <div style="float:right;">{{contact}}</div>
+  <br>
+  <hr>
   <div style="float:left;"><i class="building outline icon"></i>Facilities: </div>
   <div style="float:right;">{{facilities}}</div>
-  <br>
-  <div style="float:left;"><i class="sticky note outline icon"></i>Detailed Description: </div>
-  <div style="float:right;">{{detailed}}</div>
   <br>
   <div style="float:left;"><i class="users icon"></i>Roommate Description: </div>
   <div style="float:right;">{{roommate}}</div>
   <br>
-  <div style="float:left;"><i class="volume control phone icon"></i>Contact info: </div>
-  <div style="float:right;">{{contact}}</div>
+  <div style="float:left;"><i class="sticky note outline icon"></i>Detailed Description: </div>
+  <div style="float:right;">{{detailed}}</div>
   <br>
 </div>
 </div>

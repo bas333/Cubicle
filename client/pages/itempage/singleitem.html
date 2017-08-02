@@ -7,10 +7,12 @@
       <div>
         {{#if isOwner}}
           <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>You are the owner</button>
-        {{else if isInCart}}
-          <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>This product is in cart</button>
         {{else}}
-          <button class="ui button" id="add"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
+          {{#if isInCart}}
+            <button class="ui button"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>This product is in cart</button>
+          {{else}}
+            <button class="ui button" id="add"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to Cart</button>
+          {{/if}}
           <hr>
           <button class="ui button" id="chatnow" data-toggle="modal" data-target="#myModal">Contact Seller</button>
         {{/if}}
@@ -23,10 +25,20 @@
         <h3>{{category}}</h3>
         <h4 style="margin-top:0rem; margin-bottom:3rem;">by {{sellername}}</h4><br>
         <div class="image">
-          {{#if hasPic}}
-          <img class="ui image" src="data:image/jpeg;base64, {{pic}}" style="display:inline-block; max-height:500px;max-width:500px; padding-right:10px;">
+          {{#if hasPic1}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic1}}" style="display:inline-block; max-height:350px;max-width:350px; padding-right:10px;">
           {{/if}}
+          <br>
+          {{#if hasPic2}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic2}}" style="display:inline-block; max-height:350px;max-width:350px; padding-right:10px;">
+          {{/if}}
+          <br>
+          {{#if hasPic3}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic3}}" style="display:inline-block; max-height:350px;max-width:350px; padding-right:10px;">
+          {{/if}}
+          <br>
         </div>
+
         <h3>Condition</h3>
         <p>{{condition}}</p>
         <h3>Delivery</h3>
