@@ -37,8 +37,6 @@ Template.showpost.events({
     instance.$("#replypost_"+this.p._id).val("")
   },
   'click .deletereply':function(elt,instance){
-    console.log("delete");
-    console.log(elt.currentTarget.id);
     var str=elt.currentTarget.id;
     var id=str.split("deletereply_")[1];
     Meteor.call('reply.delete',id);
