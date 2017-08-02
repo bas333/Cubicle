@@ -44,5 +44,20 @@ Template.productrow.helpers({
   sellername(product){
     var user=AllUsers.findOne({owner:product.owner});
     return user.username;
-  }
+  },
+  hasPic1(p){
+    if(p.pic1!=undefined){
+      return true;
+    }
+  },
+  hasPic2(p){
+    if(p.pic2!=undefined){
+      return true;
+    }
+  },
+  hasPic3(p){
+    if(p.pic3!=undefined){
+      return true;
+    }
+  },
 })
