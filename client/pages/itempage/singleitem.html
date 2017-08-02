@@ -22,17 +22,23 @@
         <h1>{{itemname}}</h1>
         <h3>{{category}}</h3>
         <h4 style="margin-top:0rem; margin-bottom:3rem;">by {{sellername}}</h4><br>
-        <div class="image">
-          {{#if hasPic}}
-          <img class="ui image" src="data:image/jpeg;base64, {{pic}}" style="display:inline-block; max-height:500px;max-width:500px; padding-right:10px;">
-          {{/if}}
-        </div>
         <h3>Condition</h3>
         <p>{{condition}}</p>
         <h3>Delivery</h3>
         <p>{{delivery}}</p>
         <h3>Description</h3>
         <p>{{description}}</p>
+        <div class="image">
+          {{#if hasPic1}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic1}}" style="display:inline-block; height:500px;width:500px; padding-right:10px;">
+          {{/if}}
+          {{#if hasPic2}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic2}}" style="display:inline-block; height:500px;width:500px; padding-right:10px;">
+          {{/if}}
+          {{#if hasPic3}}
+          <img class="ui image" src="data:image/jpeg;base64, {{pic3}}" style="display:inline-block; height:500px;width:500px; padding-right:10px;">
+          {{/if}}
+        </div>
       </div>
       </div>
     <hr>
