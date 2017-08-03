@@ -29,8 +29,8 @@ Template.addrent.events({
     var rentpost =
     { location:location,
       street:street,
-      startdate: Date(startdate),
-      enddate: Date(enddate),
+      startdate: startdate,
+      enddate: enddate,
       roomsize:roomsize,
       facilities:facilities,
       detailed:detailed,
