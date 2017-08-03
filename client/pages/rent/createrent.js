@@ -186,6 +186,12 @@ Template.addrent.events({
     var adate1=false;
     var adate2=false;
     var asize=false;
+    var day1="";
+    var day2="";
+    var month1="";
+    var month2="";
+    var year1="";
+    var year2="";
     var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
     var baseUrl = "https://api.api.ai/v1/";
     switchRecognition();
@@ -313,13 +319,13 @@ Template.addrent.events({
 
     function setInput(text) {
       $("#userrental").val(text);
-      send(checkingtime,acity,astreet,afacilities,adetail,aroommate,aprice,acontact,adate1,adate2,asize);
+      send(month1,month2, year1, year2, day1, day2, checkingtime,acity,astreet,afacilities,adetail,aroommate,aprice,acontact,adate1,adate2,asize);
     }
     function updateRec() {
       $("#addrentalrec").text(recognition ? "Stop" : "Speak");
     }
 
-    function send(checkingtime,acity,astreet,afacilities,adetail,aroommate,aprice,acontact,adate1,adate2,asize) {
+    function send(month1,month2, year1, year2, day1, day2,checkingtime,acity,astreet,afacilities,adetail,aroommate,aprice,acontact,adate1,adate2,asize) {
       var text = $("#userrental").val();
       console.log(checkingtime);
       $.ajax({
@@ -370,21 +376,29 @@ Template.addrent.events({
                   $("#location").val(text).trigger("change");
                   acity=true;
                   responsiveVoice.speak("city added");
+                  if(data.result.parameters.streetaddress==""){
                   responsiveVoice.speak("What is the street address of this rent?","UK English Female");
+                  }
                 }
-                return;
               }
+              return;
             }
 
 
             if($("#streetaddress").val()==""&&astreet==false){
-              console.log("into streetaddress");
-                  console.log("enter second condition");
-                  $("#streetaddress").val(text);
-                  astreet=true;
+              if(data.result.parameters.streetaddress!=""){
+                  $("#streetaddress").val(data.result.parameters.streetaddress);
                   responsiveVoice.speak("streetaddress added");
                   responsiveVoice.speak("What is the facilities of this rent?","UK English Female");
-                return;
+              }else{
+                    console.log("into streetaddress");
+                    console.log("enter second condition");
+                    $("#streetaddress").val(text);
+                    astreet=true;
+                    responsiveVoice.speak("streetaddress added");
+                    responsiveVoice.speak("What is the facilities of this rent?","UK English Female");
+              }
+              return;
             }
 
 
@@ -396,9 +410,7 @@ Template.addrent.events({
                   afacilities=true;
                   responsiveVoice.speak("facilities added");
                   responsiveVoice.speak("What is the detailed description of this rent","UK English Female",{rate:0.9});
-                // }
                 return;
-              // }
             }
 
             console.log($("#detaileddescription").val());
@@ -413,7 +425,6 @@ Template.addrent.events({
               }else if(data.result.parameters.detaileddescription==""){
                 if(data.result.parameters.detaileddescription==""&&$("#detaileddescription").val()==""){
                   console.log("enter first detail description condition!!!");
-                  // $("#detaileddescription").val("Please say detailed description now");
                   $("#detaileddescription").val(text);
                   adetail=true;
                   responsiveVoice.speak("detaileddescription added");
@@ -466,7 +477,6 @@ Template.addrent.events({
                   responsiveVoice.speak("contact information added");
                   responsiveVoice.speak("Please add the room size to this rent","UK English Female");
                 return;
-              // }
             }
 
             console.log($("#roomsize").val());
@@ -476,48 +486,29 @@ Template.addrent.events({
                   $("#roomsize").val(text);
                   asize=true;
                   responsiveVoice.speak("roomsize added");
-                  responsiveVoice.speak("Please add available start time to this rent","UK English Female");
+                  responsiveVoice.speak("Please add available time period to this rent","UK English Female");
                 return;
-              // }
             }
 
             console.log($("#start-datepicker").val());
-            if($("#start-datepicker").val()==""&&adate1==false){
-              console.log("into time");
-                  console.log("enter first contactinformation condition!!!");
-                $("start-datepicker").datepicker({
-                  onSelect: function() {
-                    $(start-datepicker).change("text");
-                    adate1=true
-                  }
-                });
-                  responsiveVoice.speak("available start time added", "UK English Female");
-                  responsiveVoice.speak("Please say the available end timeof this rent", "UK English Female");
-                //  responsiveVoice.speak("Please add the available time to this rent","UK English Female");
-                // }
+            if($("#start-datepicker").val()==""&&adate1==false&&$("#end-datepicker").val()==""&&adate2==false){
+              console.log(data.result.parameters.availabletime);
+              var total=data.result.parameters.availabletime;
+              var startone=total.split("/")[0];
+              var endone=total.split("/")[1];
+              console.log(startone);
+              console.log(endone);
+                    $("#start-datepicker").val(startone);
+                    adate1=true;
+                    $("#end-datepicker").val(endone);
+                    adate2=true;
+                  responsiveVoice.speak("available time period added", "UK English Female");
                 return;
-              // }
             }
 
-
-
-            console.log($("#end-datepicker").val());
-            if($("#end-datepicker").val()==""&&adate2==false){
-              console.log("into time2");
-                  console.log("enter first contactinformation condition!!!");
-                $("end-datepicker").datepicker({
-                  onSelect: function() {
-                    $(text).change();
-                    adate2=true
-                  }
-                });
-                  responsiveVoice.speak("available end time added", "UK English Female");
-                return;
-              // }
-            }
           }
-
-          }},
+        }
+        },
         error: function() {
           setResponse("Internal Server Error");
         }
