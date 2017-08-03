@@ -36,17 +36,22 @@
         <label for="itemname">Product Name:</label>
         <input type="text" id="itemname">
       </div>
-      <div class="four wide field">
-        <div class="ui radio checkbox">
+      <div class="five wide field">
+          <label for="delivery">Delivery Way:</label>
+          <select name="select" class="ui fluid dropdown" id="deliveryway">
+            <option value="delivery">Delivery</option>
+            <option value="pickup">Pick Up</option>
+          </select>
+        </div>
+        <!-- <div class="ui radio checkbox">
             <input type="radio" id="checkdelivery" name="delivery" value="Delivery">
             <label for="checkdelivery" >Delivery</label>
           </div>
           <div class="ui radio checkbox">
             <input type="radio" id="checkpickup" name="delivery" value="PickUp">
             <label for="checkpickup">Pick Up</label>
-          </div>
+          </div> -->
       </div>
-    </div>
       <div class="fields">
         <div class="seven wide field">
           <label for="category">Category:</label>
@@ -213,14 +218,19 @@
                   <input type="text" id="newitemname_{{p._id}}" value="{{p.itemname}}">
               </div>
               <div class="field">
-              <div class="ui radio checkbox">
+                <label for="deliveryway">Delivery Way</label>
+                <select name="select" id="newdelivery_{{p._id}}" value={{p.delivery}}>
+                    <option value="delivery">Delivery</option>
+                    <option value="pickup">Pick Up</option>
+                </select>
+              <!-- <div class="ui radio checkbox">
                   <input type="radio" id="newcheckdelivery_{{p._id}}" name="newdelivery" value="Delivery">
                   <label for="checkdelivery" >Delivery</label>
                 </div>
                 <div class="ui radio checkbox">
                   <input type="radio" id="newcheckpickup_{{p._id}}" name="newdelivery" value="PickUp">
                   <label for="checkpickup">Pick Up</label>
-                </div>
+                </div> -->
               </div>
               <div class="field">
                 <label for="category">Category:</label>
