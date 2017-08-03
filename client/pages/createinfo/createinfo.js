@@ -195,6 +195,7 @@ Template.addproduct.events({
       var addedprice=false;
       var addedcategory=false;
       var addedcondition=false;
+      var addeddelivery=false;
       var checkingtime=0;
       var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
       var baseUrl = "https://api.api.ai/v1/";
@@ -278,6 +279,12 @@ Template.addproduct.events({
   		function stopRecognition() {
   			if (recognition) {
   				recognition.stop();
+          addedname=false;
+          addeddes=false;
+          addedprice=false;
+          addedcategory=false;
+          addedcondition=false;
+          addeddelivery=false;
   				recognition = null;
           checkingtime=0;
           instance.$('#itemname').val("");
@@ -380,7 +387,7 @@ Template.addproduct.events({
                   $("#itemname").val(data.result.parameters.Name);
                   responsiveVoice.speak("Name added");
                   addedname=true;
-                  responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
+                  responsiveVoice.speak("What is the delivery way of this product? You can choose from delivery and pick up","UK English Female",{rate:0.9});
                 }else if(data.result.parameters.Name==""){
                   if(data.result.parameters.Name==""&&$("#itemname").val()==""){
                     console.log("enter first condition!!!");
@@ -390,15 +397,34 @@ Template.addproduct.events({
                     instance.$("#itemname").val(text);
                     addedname=true;
                     responsiveVoice.speak("Name added");
-                    responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
+                    responsiveVoice.speak("What is the deliveryway of this product? You can choose from delivery and pick up","UK English Female",{rate:0.9});
                   }
                   return;
                 }
               }
 
+              console.log($("#deliveryway").val())
+              if($("#deliveryway").val()==null&&addeddelivery==false){
+                console.log("enter delivery");
+                if(data.result.parameters.Delivery!=""){
+                  $("#deliveryway").val(data.result.parameters.Delivery).trigger("change");
+                  addeddelivery=true;
+                  responsiveVoice.speak("Delivery way added");
+                  responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
+                }else{
+                  console.log("into delivery");
+                      $("#deliveryway").val(text).trigger("change");
+                      addeddelivery=true;
+                      responsiveVoice.speak("Delivery way added");
+                      responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
+                    // }
+                }
+                  return;
+                // }
+              }
 
               console.log($("#condition").val());
-              if($("#condition").val()==null&&addedcondition==false){
+              if($("#condition").val()==null&&addedcondition==false&&addeddelivery==true){
                 console.log("into condition");
                 if(data.result.parameters.Quality!=""){
                   $("#condition").val(data.result.parameters.Quality).trigger("change");
