@@ -1,5 +1,5 @@
 <template name="singleitem">
-  <div class="main ui container" style="padding:5em; ">
+  <div class="main ui container" style="padding-top:5em; padding-left:3em;">
     <div class="ui dividing" style="float:right; border-left-width:1px; border-left-style:solid; border-left-color:rgba(34, 36, 38, 0.15);">
       <div class="ui sticky" style="left:765px; width:240px; height 350px; padding-top:40px; padding-left:20px;">
       <!-- <div class="content"> -->
@@ -22,11 +22,11 @@
     <div class="ui dividing">
       <!-- <div class="content"> -->
         <h1>{{itemname}}</h1>
+        <h4 style="margin-top:0rem; margin-bottom:0rem;">by {{sellername}}</h4><br>
         <h3>{{category}}</h3>
-        <h4 style="margin-top:0rem; margin-bottom:3rem;">by {{sellername}}</h4><br>
         <div class="image">
           {{#if hasPic1}}
-          <img class="ui image" src="data:image/jpeg;base64, {{pic1}}" style="display:inline-block; max-height:350px;max-width:350px; padding-right:10px;">
+          <img class="ui image" src="data:image/jpeg;base64, {{pic1}}" style="display:inline-block; max-height:500px;max-width:500px; padding-right:10px;">
           {{/if}}
           <br>
           {{#if hasPic2}}
@@ -39,11 +39,11 @@
           <br>
         </div>
 
-        <h3>Condition</h3>
+        <h3 style="margin:0rem;">Condition</h3>
         <p>{{condition}}</p>
-        <h3>Delivery</h3>
+        <h3 style="margin:0rem;">Delivery</h3>
         <p>{{delivery}}</p>
-        <h3>Description</h3>
+        <h3 style="margin:0rem;">Description</h3>
         <p>{{description}}</p>
       </div>
       </div>

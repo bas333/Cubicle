@@ -19,12 +19,10 @@ Meteor.publish('forum',function(){
 
 Meteor.publish('rent_search',function(location,price,rentstart,rentend,facilities){
   var faci = new RegExp(facilities, "i");
-  var startdate = new Date(rentstart);
-  var isostart = startdate.toISOString();
-  var enddate = new Date(rentend);
-  var isoend = startdate.toISOString();
-  console.log(Rent.find({location:location,price:{$lte:price},startdate:{$lte:isostart}}).fetch());
-  return Rent.find({location:location, price:{$lte:price}, startdate:{$lte:isostart}, enddate:{$gte:isoend}, facilities:{$regex:faci}});
+  var startdate = Date(rentstart);
+  var enddate = Date(rentend);
+  console.log("here we are" + Rent.find({location:location,price:{$lte:price},startdate:{$lte: startdate}}).fetch());
+  return Rent.find({location:location, price:{$lte:price}, facilities:{$regex:faci}});
 })
 
 Meteor.publish('info_allproducts', function(keywords){
