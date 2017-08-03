@@ -192,6 +192,7 @@ Template.addproduct.events({
       var addedprice=false;
       var addedcategory=false;
       var addedcondition=false;
+      var checking=0;
       var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
       var baseUrl = "https://api.api.ai/v1/";
       switchRecognition();
@@ -211,6 +212,7 @@ Template.addproduct.events({
   			};
   			recognition.onresult = function(event) {
   				var text = "";
+          checking++;
   			    for (var i = event.resultIndex; i < event.results.length; ++i) {
   			    	text += event.results[i][0].transcript;
               if(event.results[i][0].transcript.includes('stop')){
@@ -248,58 +250,59 @@ Template.addproduct.events({
                 }
                 console.log("insert");
                 console.log('adding'+itemname);
-                instance.$('#itemname').val("");
-                instance.$('#price').val("");
-                instance.$('#condition').val("");
-                instance.$('#category').val("");
-                instance.$('#description').val("");
+                $('#itemname').val("");
+                $('#price').val("");
+                $('#condition').val("");
+                $('#category').val("");
+                $('#description').val("");
                 Meteor.call('product.insert',productinfo);
 
-                console.log("you stop we stop");
+                console.log("you submit we stop");
                 recognition.stop();
                 stopRecognition();
                 instance.$("#usersay").val("");
-              } else if(($('#itemname').val()!="")&&($('#price').val()!="")&&($('#condition').val()!="")&&($('#category').val()!="")&&($('#description').val()!="Please say description now")&&($('#description').val()!="")){
-                console.log("user has filled all the fields")
-                const itemname = instance.$('#itemname').val();
-                const condition=instance.$('#condition :selected').val();
-                const category=instance.$('#category :selected').val();
-                const description= instance.$('#description').val();
-                const price= instance.$('#price').val();
-                var status=instance.$('#sold').val();
-                const buyer=instance.$('#buyer').val();
-                console.log("bbb");
-                var productinfo =
-                {
-                  itemname:itemname,
-                  price:price,
-                  condition:condition,
-                  category:category,
-                  description:description,
-                  createdAt:new Date(),
-                  buyer:buyer,
-                  owner:Meteor.userId()
-                }
-
-                console.log("qqq");
-                console.log(itemname);
-                console.log(price);
-                console.log(category);
-                console.log(description);
-                console.log(condition);
-                Meteor.call('product.insert',productinfo);
-                console.log("aaa");
-                recognition.stop();
-                console.log('adding'+itemname);
-                instance.$('#itemname').val("");
-                instance.$('#price').val("");
-                instance.$('#condition').val("");
-                instance.$('#category').val("");
-                instance.$('#description').val("");
-                console.log("mmm");
-                stopRecognition();
-                console.log("rrr");
-              }
+               }
+               //else if(($('#itemname').val()!="")&&($('#price').val()!="")&&($('#condition').val()!="")&&($('#category').val()!="")&&($('#description').val()!="Please say description now")&&($('#description').val()!="")){
+              //   console.log("user has filled all the fields")
+              //   const itemname = instance.$('#itemname').val();
+              //   const condition=instance.$('#condition :selected').val();
+              //   const category=instance.$('#category :selected').val();
+              //   const description= instance.$('#description').val();
+              //   const price= instance.$('#price').val();
+              //   var status=instance.$('#sold').val();
+              //   const buyer=instance.$('#buyer').val();
+              //   console.log("bbb");
+              //   var productinfo =
+              //   {
+              //     itemname:itemname,
+              //     price:price,
+              //     condition:condition,
+              //     category:category,
+              //     description:description,
+              //     createdAt:new Date(),
+              //     buyer:buyer,
+              //     owner:Meteor.userId()
+              //   }
+              //
+              //   console.log("qqq");
+              //   console.log(itemname);
+              //   console.log(price);
+              //   console.log(category);
+              //   console.log(description);
+              //   console.log(condition);
+              //   Meteor.call('product.insert',productinfo);
+              //   console.log("aaa");
+              //   recognition.stop();
+              //   console.log('adding'+itemname);
+              //   instance.$('#itemname').val("");
+              //   instance.$('#price').val("");
+              //   instance.$('#condition').val("");
+              //   instance.$('#category').val("");
+              //   instance.$('#description').val("");
+              //   console.log("mmm");
+              //   stopRecognition();
+              //   console.log("rrr");
+              // }
   			    }
   			    setInput(text);
   			};
@@ -314,6 +317,7 @@ Template.addproduct.events({
   			if (recognition) {
   				recognition.stop();
   				recognition = null;
+          checking=0;
           instance.$('#itemname').val("");
           instance.$('#price').val("");
           instance.$('#condition').val("");
@@ -324,12 +328,12 @@ Template.addproduct.events({
   		}
   		function setInput(text) {
   			$("#usersay").val(text);
-  			send(addedcategory,addedprice,addedname,addedcondition,addeddes);
+  			send(checking,addedcategory,addedprice,addedname,addedcondition,addeddes);
   		}
   		function updateRec() {
   			$("#additemrec").text(recognition ? "Stop" : "Speak");
   		}
-  		function send(addedcategory,addedprice,addedname,addedcondition,addeddes) {
+  		function send(checking, addedcategory,addedprice,addedname,addedcondition,addeddes) {
   			var text = $("#usersay").val();
   			$.ajax({
   				type: "POST",
@@ -347,128 +351,134 @@ Template.addproduct.events({
             if(text.includes(substring1)||text.includes(substring2)){
               console.log("into stop or submit condition");
             }else{
-              console.log("addedcategory"+addedcategory);
-              console.log("addeddes"+addeddes);
-              console.log("addedname"+addedname);
-              console.log("addedprice"+addedprice);
-              console.log("addedcondition"+addedcondition);
-            console.log("---");
-            console.log(data);
-            if($("#category").val()==null&&addedcategory==false){
-              console.log("into category");
-              console.log($("#category").val());
-              console.log(data.result.parameters.Category);
-              if(data.result.parameters.Category!=""){
+              if(checking==1&&data.result.metadata.intentName!="AddItem"){
+                checking=0;
+                responsiveVoice.speak("Sorry I don't understand, please repeat or rephrase");
+                console.log(checking);
+              }else{
+                console.log(checking+"lol");
+              //   console.log("addedcategory"+addedcategory);
+              //   console.log("addeddes"+addeddes);
+              //   console.log("addedname"+addedname);
+              //   console.log("addedprice"+addedprice);
+              //   console.log("addedcondition"+addedcondition);
+              // console.log("---");
+              console.log(data);
+              if($("#category").val()==null&&addedcategory==false){
+                console.log("into category");
+                console.log($("#category").val());
                 console.log(data.result.parameters.Category);
-                $("#category").val(data.result.parameters.Category).trigger("change");
-                addedcategory=true;
-                responsiveVoice.speak("Category added");
-                responsiveVoice.speak("What is the price of this product?","UK English Female");
-
-              }else if(data.result.parameters.Category==""){
-                if(data.result.parameters.Category==""&&$("#category").val()==null){
-                  responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.9});
-                  $("#category").val("waiting for input");
-                  console.log("enter first condition for category!!!");
-                }else if(data.result.parameters.Category==""&&instance.$("#category").val()!=null){
-                  $("#category").val(text).trigger("change");
+                if(data.result.parameters.Category!=""){
+                  console.log(data.result.parameters.Category);
+                  $("#category").val(data.result.parameters.Category).trigger("change");
                   addedcategory=true;
                   responsiveVoice.speak("Category added");
                   responsiveVoice.speak("What is the price of this product?","UK English Female");
-                }
-                return;
-              }
-            }
 
-            console.log(instance.$("#price").val());
-            if($("#price").val()==""&&addedprice==false||$("#price").val()=="0"&&addedprice==false){
-              console.log("into price");
-              if(data.result.parameters.Price!=""){
-                console.log("existed price");
-                $("#price").val(data.result.parameters.Price);
-                responsiveVoice.speak("Price added");
-                addedprice=true;
-                responsiveVoice.speak("What is the name of this product?","UK English Female");
-              }else if(data.result.parameters.Price==""){
-                    console.log(data.result.parameters.Price=="");
-                    console.log(($("#price").val())=="");
-                  if(data.result.parameters.Price==""&&$("#price").val()==""){
-                    console.log("enter first condition");
-                    console.log("user said "+text);
-                    instance.$("#price").val()=="0";
-                  }else if(data.result.parameters.Price==""&&$("#price").val()!=""){
-                  console.log("enter second condition");
-                  $("#price").val(text);
+                }else if(data.result.parameters.Category==""){
+                  if(data.result.parameters.Category==""&&$("#category").val()==null){
+                    responsiveVoice.speak("What is the category of this product? The category you can choose are Textbooks/books, electronics, clothes,shoes,and accessories, furniture/home, art/handcrafts, and others","UK English Female",{rate:0.9});
+                    $("#category").val("waiting for input");
+                    console.log("enter first condition for category!!!");
+                  }else if(data.result.parameters.Category==""&&instance.$("#category").val()!=null){
+                    $("#category").val(text).trigger("change");
+                    addedcategory=true;
+                    responsiveVoice.speak("Category added");
+                    responsiveVoice.speak("What is the price of this product?","UK English Female");
+                  }
+                  return;
+                }
+              }
+
+              console.log(instance.$("#price").val());
+              if($("#price").val()==""&&addedprice==false||$("#price").val()=="0"&&addedprice==false){
+                console.log("into price");
+                if(data.result.parameters.Price!=""){
+                  console.log("existed price");
+                  $("#price").val(data.result.parameters.Price);
                   responsiveVoice.speak("Price added");
                   addedprice=true;
                   responsiveVoice.speak("What is the name of this product?","UK English Female");
-                  }
-                return;
+                }else if(data.result.parameters.Price==""){
+                      console.log(data.result.parameters.Price=="");
+                      console.log(($("#price").val())=="");
+                    if(data.result.parameters.Price==""&&$("#price").val()==""){
+                      console.log("enter first condition");
+                      console.log("user said "+text);
+                      instance.$("#price").val()=="0";
+                    }else if(data.result.parameters.Price==""&&$("#price").val()!=""){
+                    console.log("enter second condition");
+                    $("#price").val(text);
+                    responsiveVoice.speak("Price added");
+                    addedprice=true;
+                    responsiveVoice.speak("What is the name of this product?","UK English Female");
+                    }
+                  return;
+                }
               }
-            }
 
-
-
-
-
-            console.log($("#itemname").val());
-            if($("#itemname").val()==""&&addedname==false||$("#itemname").val()=="Please say name now"&&addedname==false){
-              console.log("into itemname");
-              if(data.result.parameters.Name!=""){
-                $("#itemname").val(data.result.parameters.Name);
-                responsiveVoice.speak("Name added");
-                addedname=true;
-                responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
-              }else if(data.result.parameters.Name==""){
-                if(data.result.parameters.Name==""&&$("#itemname").val()==""){
-                  console.log("enter first condition!!!");
-                  $("#itemname").val("Please say name now");
-                }else if(data.result.parameters.Name==""&&$("#itemname").val()!=""){
-                  console.log("enter second condition!!!!");
-                  instance.$("#itemname").val(text);
-                  addedname=true;
+              console.log($("#itemname").val());
+              if($("#itemname").val()==""&&addedname==false||$("#itemname").val()=="Please say name now"&&addedname==false){
+                console.log("into itemname");
+                if(data.result.parameters.Name!=""){
+                  $("#itemname").val(data.result.parameters.Name);
                   responsiveVoice.speak("Name added");
+                  addedname=true;
                   responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
+                }else if(data.result.parameters.Name==""){
+                  if(data.result.parameters.Name==""&&$("#itemname").val()==""){
+                    console.log("enter first condition!!!");
+                    $("#itemname").val("Please say name now");
+                  }else if(data.result.parameters.Name==""&&$("#itemname").val()!=""){
+                    console.log("enter second condition!!!!");
+                    instance.$("#itemname").val(text);
+                    addedname=true;
+                    responsiveVoice.speak("Name added");
+                    responsiveVoice.speak("What is the condition of this product? You can choose from like new, very good, good and acceptable","UK English Female",{rate:0.9});
+                  }
+                  return;
                 }
-                return;
               }
-            }
 
 
-            console.log($("#condition").val());
-            if($("#condition").val()==null&&addedcondition==false){
-              console.log("into condition");
-              if(data.result.parameters.Quality!=""){
-                $("#condition").val(data.result.parameters.Quality).trigger("change");
-                addedcondition=true;
-                responsiveVoice.speak("Condition added","UK English Female");
-                responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
-                return;
-              }else if(data.result.parameters.Quality==""){
-                if(data.result.parameters.Quality==""&&$("#condition").val()==null){
-                  console.log("enter first quality condition!!!");
-                  $("#condition").val(text).trigger("change");
+              console.log($("#condition").val());
+              if($("#condition").val()==null&&addedcondition==false){
+                console.log("into condition");
+                if(data.result.parameters.Quality!=""){
+                  $("#condition").val(data.result.parameters.Quality).trigger("change");
                   addedcondition=true;
-                  responsiveVoice.speak("Condition added");
+                  responsiveVoice.speak("Condition added","UK English Female");
                   responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
+                  return;
+                }else if(data.result.parameters.Quality==""){
+                  if(data.result.parameters.Quality==""&&$("#condition").val()==null){
+                    console.log("enter first quality condition!!!");
+                    $("#condition").val(text).trigger("change");
+                    addedcondition=true;
+                    responsiveVoice.speak("Condition added");
+                    responsiveVoice.speak("Please add some detailed description to this product","UK English Female");
+                  }
+                  return;
                 }
-                return;
               }
+
+
+
+              console.log($("#description").val());
+              if($("#description").val()==""&&addeddes==false){
+                console.log("into description");
+                console.log(data.result.parameters);
+                console.log("description: "+data.result.parameters.Detaildescription);
+                $("#description").val(text);
+                addeddes==true;
+                responsiveVoice.speak("Description added");
+                return;
+    				   }
+
+             }
             }
+          },
 
-
-
-            console.log($("#description").val());
-            if($("#description").val()==""&&addeddes==false){
-              console.log("into description");
-              console.log(data.result.parameters);
-              console.log("description: "+data.result.parameters.Detaildescription);
-              $("#description").val(text);
-              addeddes==true;
-              responsiveVoice.speak("Description added");
-              return;
-  				    }
-            }},
   				error: function() {
   					setResponse("Internal Server Error");
   				}
@@ -479,6 +489,7 @@ Template.addproduct.events({
   			$("#response").text(val);
   		}
   },
+
   'keypress #usersay' (elt,instance){
     if (event.which == 13) {
       event.preventDefault();
