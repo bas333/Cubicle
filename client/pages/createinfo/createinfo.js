@@ -12,6 +12,7 @@ Template.addproduct.onCreated(function(){
    this.$('#category').dropdown({on: 'hover'});
    // other SUI modules initialization
    this.$('#condition').dropdown({on: 'hover'});
+   this.$('#deliveryway').dropdown({on: 'hover'});
  });
 Template.showproduct.helpers({
   productlist() {
@@ -22,6 +23,7 @@ Template.showproduct.helpers({
 Template.addproduct.onRendered(function(){
   $("#condition").val("");
   $("#category").val("");
+  $('#deliveryway').val("");
 })
 
 Template.addproduct.events({
@@ -103,7 +105,8 @@ Template.addproduct.events({
   'click #addproduct':function(elt,instance){
     elt.preventDefault();
     const itemname = instance.$('#itemname').val();
-    const delivery = instance.$('input[name="delivery"]:checked').val();
+    const delivery = instance.$('#deliveryway').val();
+    // const delivery = instance.$('input[name="delivery"]:checked').val();
     const condition=instance.$('#condition :selected').val();
     const category=instance.$('#category :selected').val();
     const description= instance.$('#description').val();
@@ -192,7 +195,7 @@ Template.addproduct.events({
       var addedprice=false;
       var addedcategory=false;
       var addedcondition=false;
-      var checking=0;
+      var checkingtime=0;
       var accessToken = "1b1610a6d61d46959c56b8d0bf607881";
       var baseUrl = "https://api.api.ai/v1/";
       switchRecognition();
@@ -212,7 +215,7 @@ Template.addproduct.events({
   			};
   			recognition.onresult = function(event) {
   				var text = "";
-          checking++;
+          checkingtime++;
   			    for (var i = event.resultIndex; i < event.results.length; ++i) {
   			    	text += event.results[i][0].transcript;
               if(event.results[i][0].transcript.includes('stop')){
@@ -262,47 +265,6 @@ Template.addproduct.events({
                 stopRecognition();
                 instance.$("#usersay").val("");
                }
-               //else if(($('#itemname').val()!="")&&($('#price').val()!="")&&($('#condition').val()!="")&&($('#category').val()!="")&&($('#description').val()!="Please say description now")&&($('#description').val()!="")){
-              //   console.log("user has filled all the fields")
-              //   const itemname = instance.$('#itemname').val();
-              //   const condition=instance.$('#condition :selected').val();
-              //   const category=instance.$('#category :selected').val();
-              //   const description= instance.$('#description').val();
-              //   const price= instance.$('#price').val();
-              //   var status=instance.$('#sold').val();
-              //   const buyer=instance.$('#buyer').val();
-              //   console.log("bbb");
-              //   var productinfo =
-              //   {
-              //     itemname:itemname,
-              //     price:price,
-              //     condition:condition,
-              //     category:category,
-              //     description:description,
-              //     createdAt:new Date(),
-              //     buyer:buyer,
-              //     owner:Meteor.userId()
-              //   }
-              //
-              //   console.log("qqq");
-              //   console.log(itemname);
-              //   console.log(price);
-              //   console.log(category);
-              //   console.log(description);
-              //   console.log(condition);
-              //   Meteor.call('product.insert',productinfo);
-              //   console.log("aaa");
-              //   recognition.stop();
-              //   console.log('adding'+itemname);
-              //   instance.$('#itemname').val("");
-              //   instance.$('#price').val("");
-              //   instance.$('#condition').val("");
-              //   instance.$('#category').val("");
-              //   instance.$('#description').val("");
-              //   console.log("mmm");
-              //   stopRecognition();
-              //   console.log("rrr");
-              // }
   			    }
   			    setInput(text);
   			};
@@ -317,7 +279,7 @@ Template.addproduct.events({
   			if (recognition) {
   				recognition.stop();
   				recognition = null;
-          checking=0;
+          checkingtime=0;
           instance.$('#itemname').val("");
           instance.$('#price').val("");
           instance.$('#condition').val("");
@@ -328,12 +290,12 @@ Template.addproduct.events({
   		}
   		function setInput(text) {
   			$("#usersay").val(text);
-  			send(checking,addedcategory,addedprice,addedname,addedcondition,addeddes);
+  			send(checkingtime,addedcategory,addedprice,addedname,addedcondition,addeddes);
   		}
   		function updateRec() {
   			$("#additemrec").text(recognition ? "Stop" : "Speak");
   		}
-  		function send(checking, addedcategory,addedprice,addedname,addedcondition,addeddes) {
+  		function send(checkingtime, addedcategory,addedprice,addedname,addedcondition,addeddes) {
   			var text = $("#usersay").val();
   			$.ajax({
   				type: "POST",
@@ -351,18 +313,12 @@ Template.addproduct.events({
             if(text.includes(substring1)||text.includes(substring2)){
               console.log("into stop or submit condition");
             }else{
-              if(checking==1&&data.result.metadata.intentName!="AddItem"){
-                checking=0;
+              if(checkingtime==1&&data.result.metadata.intentName!="AddItem"){
+                checkingtime=0;
                 responsiveVoice.speak("Sorry I don't understand, please repeat or rephrase");
-                console.log(checking);
+                console.log(checkingtime);
               }else{
-                console.log(checking+"lol");
-              //   console.log("addedcategory"+addedcategory);
-              //   console.log("addeddes"+addeddes);
-              //   console.log("addedname"+addedname);
-              //   console.log("addedprice"+addedprice);
-              //   console.log("addedcondition"+addedcondition);
-              // console.log("---");
+                console.log(checkingtime+"lol");
               console.log(data);
               if($("#category").val()==null&&addedcategory==false){
                 console.log("into category");
@@ -579,7 +535,8 @@ Template.ownerproduct.helpers({
     }
  })
  Template.ownerproduct.onRendered(function() {
-   this.$('.ui.radio.checkbox').checkbox();
+   this.$('#deliveryway').dropdown({on: 'hover'});
+  //  this.$('.ui.radio.checkbox').checkbox();
  })
  Template.ownerproduct.onCreated(function() {
    this.pic_status = new ReactiveVar([]);
@@ -594,7 +551,8 @@ Template.ownerproduct.events({
   const product_id = this.p._id;
   const newitemname = $('#newitemname_'+product_id).val();
   const newcondition = $('#newcondition_'+product_id+' :selected').text();
-  const newdelivery = $('input[name="newdelivery"]:checked').val();
+  const newdelivery = $('#newdelivery_'+product_id+' :selected').val();
+  // const newdelivery = $('input[name="newdelivery"]:checked').val();
   const newcategory=$('#newcategory_'+product_id+' :selected').val();
   const newdescription=$('#newdescription_' +product_id).val();
   const newprice=$('#newprice_'+product_id).val();
